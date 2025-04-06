@@ -32,7 +32,7 @@ namespace pixel_walle
                 {
                     Background=Brushes.White,
                     BorderBrush=Brushes.Black,
-                    BorderThickness=new Thickness(1),
+                    BorderThickness=new Thickness(0.5),
                 };
                 PixelGrid.Children.Add(pixel);
             }
