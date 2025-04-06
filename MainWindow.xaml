@@ -11,6 +11,7 @@
         Background="#d2bcfd"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize">
+    
 
     <Grid Margin="10,0,0,-16">
         <Grid.RowDefinitions>
@@ -21,23 +22,19 @@
         </Grid.ColumnDefinitions>
 
         <Canvas Margin="10,0,0,32" HorizontalAlignment="Left" Width="1346">
-
-            <Rectangle Width ="670"
-           Height ="635"
-           Fill="White"
-           Canvas.Left="57"
-           Stroke="#ffa4dc"
-           StrokeThickness="5"
-           Canvas.Right="300" Canvas.Top="36" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            
 
             <UniformGrid x:Name="PixelGrid"
-             Rows="10"
-             Columns="10"
              Background="White"
+             Rows="8"
+             Columns="8"
              Canvas.Left="57"
              Canvas.Top="36"
              Width ="670"
-             Height ="635" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+             Height ="635" 
+             HorizontalAlignment="Center" 
+             VerticalAlignment="Center"/>
+
 
             <TextBox Width="464" 
                      Height="564" 

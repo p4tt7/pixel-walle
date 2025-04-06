@@ -19,6 +19,26 @@ namespace pixel_walle
         public MainWindow()
         {
             InitializeComponent();
+            InitializePixelGrid();
+ 
+        }
+
+        private void InitializePixelGrid()
+        {
+
+            for (int i = 0; i < 64; i++) 
+            {
+                var pixel = new Border
+                {
+                    Background=Brushes.White,
+                    BorderBrush=Brushes.Black,
+                    BorderThickness=new Thickness(1),
+                };
+                PixelGrid.Children.Add(pixel);
+            }
         }
     }
+
+
+
 }
