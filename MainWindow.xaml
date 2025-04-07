@@ -26,8 +26,8 @@
 
             <UniformGrid x:Name="PixelGrid"
              Background="White"
-             Rows="8"
-             Columns="8"
+             Rows="256"
+             Columns="256"
              Canvas.Left="57"
              Canvas.Top="36"
              Width ="670"
