@@ -1,4 +1,5 @@
 ﻿using pixel_walle.src.Errors;
+using static pixel_walle.src.Lexical.Token;
 
 namespace pixel_walle.src.Lexical
 {
@@ -20,12 +21,22 @@ namespace pixel_walle.src.Lexical
 
         }
 
-        public bool EOF => position >= code.Length;
-
-        public (string file, int line, int column) Location
+        public CodeLocation Location
         {
-            get { return (fileName, line, position-lastLineBreakPos); }
+            get
+            {
+                return new CodeLocation
+                {
+                    File = fileName,
+                    Line = line,
+                    Column = position - lastLineBreakPos
+                };
+            }
         }
+
+        public bool EOF => position >= code.Length;
+        public bool EOL => EOF || code[position] == '\n';
+
 
         public char Read()
         {
@@ -75,10 +86,10 @@ namespace pixel_walle.src.Lexical
             if (c == '_') return true;
 
             if (start && !char.IsLetter(c))
-                throw new SyntaxError($"Carácter inicial inválido: '{c}'", fileName, line, position - lastLineBreakPos, code);
+                throw new SyntaxError(fileName, line, position - lastLineBreakPos);
 
             if (!start && !char.IsLetterOrDigit(c))
-                throw new SyntaxError($"Carácter inicial inválido: '{c}'", fileName, line, position - lastLineBreakPos, code);
+                throw new SyntaxError(fileName, line, position - lastLineBreakPos);
 
             return true;
         }
@@ -127,7 +138,28 @@ namespace pixel_walle.src.Lexical
             return number.Length > 0;
         }
 
-       
+        public bool ReadWhiteSpace()
+        {
+            if (char.IsWhiteSpace(Peek()))
+            {
+                ReadAny();
+                return true;
+            }
+            return false;
+        }
+
+        public char ReadAny()
+        {
+            if (EOF)
+                throw new InvalidOperationException();
+
+            if (EOL)
+            {
+                line++;
+                lastLineBreakPos = position;
+            }
+            return code[position++];
+        }
 
 
     }

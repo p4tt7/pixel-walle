@@ -12,17 +12,14 @@ namespace pixel_walle.src.Errors
         public string FileName { get; }
         public int Line { get; }
         public int Column { get; }
-        public string ErrorCode { get; }
 
 
 
-        public SyntaxError(string message, string fileName, int line, int column, string errorCode = null)
+        public SyntaxError(string fileName, int line, int column)
         {
-            ErrorMesssage = message;
             FileName = fileName;
             Line = line;
             Column = column;
-            ErrorCode = errorCode;
         }
     }
 }
