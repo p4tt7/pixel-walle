@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace pixel_walle_logic
+namespace pixel_walle.src.Errors
 {
-    internal class IntegerOperations
+    public class Errors
     {
+
+
     }
 }

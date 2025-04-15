@@ -8,10 +8,10 @@
  Title="MainWindow" 
         Height="768" 
         Width="1366" 
-        Background="#d2bcfd"
+        Background="#130b20"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize">
-    
+
 
     <Grid Margin="10,0,0,-16">
         <Grid.RowDefinitions>
@@ -21,46 +21,62 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Canvas Margin="10,0,0,32" HorizontalAlignment="Left" Width="1346">
-            
+        <Canvas Margin="10,0,0,32" 
+                HorizontalAlignment="Left" 
+                Width="1346">
+
 
             <UniformGrid x:Name="PixelGrid"
              Background="White"
-             Rows="256"
-             Columns="256"
-             Canvas.Left="57"
-             Canvas.Top="36"
-             Width ="670"
-             Height ="635" 
+             Rows="20"
+             Columns="20"
+             Canvas.Left="67"
+             Canvas.Top="27"
+             Width ="632"
+             Height ="593" 
              HorizontalAlignment="Center" 
-             VerticalAlignment="Center"/>
+             VerticalAlignment="Top"/>
 
 
-            <TextBox Width="464" 
-                     Height="564" 
-                     Canvas.Left="755" 
-                     Canvas.Top="107" 
+            <TextBox Width="438" 
+                     Height="594" 
+                     Canvas.Left="726" 
+                     Canvas.Top="27" 
                      Text="Code here..." 
+                     TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Auto"
                      VerticalContentAlignment="Top" 
-                     FontSize="38" 
-                     Foreground="#80d2bcfd" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                     FontSize="20" 
+                     BorderBrush="#a4ffc7"
+                     BorderThickness="1"
+                     Background="#130b20"
+                     Padding="30,30,0,0"
+                     Foreground="#65c5e9" 
+                     HorizontalAlignment="Center" 
+                     AcceptsReturn="True" 
+                     VerticalAlignment="Top"/>
 
-            <Button Content="RUN!" 
+            <Button Content="RUN!"
+                    Width="141"
+                    Height="51"
+                    FontSize="25"
                     FontWeight="Bold"
-                    Background="#ffa4dc" 
-                    Foreground="White" 
-                    FontSize="29" 
-                    Height="54" 
-                    Width="464" 
-                    Canvas.Left="755"
-                    Canvas.Top="617" HorizontalAlignment="Center" VerticalAlignment="Top"
-             />
-
-            <Rectangle Width="464" 
-                       Height="71"
-                       Fill="#ffa4dc"
-                       Canvas.Left="755"
-                       Canvas.Top="36" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    Background="#130b20"
+                    Foreground="#a4ffc7"
+                    BorderBrush="#a4ffc7"
+                    BorderThickness="2"
+                    Padding="10"
+                    Cursor="Hand"
+                    Canvas.Right="150"
+                    Canvas.Bottom="20"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top" Canvas.Left="1001" Canvas.Top="545">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
 
         </Canvas>
     </Grid>

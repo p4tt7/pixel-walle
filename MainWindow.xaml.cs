@@ -26,7 +26,7 @@ namespace pixel_walle
         private void InitializePixelGrid()
         {
 
-            for (int i = 0; i < 65536; i++) 
+            for (int i = 0; i < 400; i++) 
             {
                 var pixel = new Border
                 {
