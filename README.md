@@ -1,3 +1,3 @@
 # PIXEL-WALLE
 
-![pincel](https://github.com/user-attachments/assets/3395b290-f3f0-462c-a4c2-b364b2f1d5a8)
+![pincel](https://github.com/user-attachments/assets/ef5b157e-2b2e-4b39-8b13-ff53ae021ac2)
