@@ -8,7 +8,7 @@
  Title="MainWindow" 
         Height="768" 
         Width="1366" 
-        Background="#130b20"
+        Background="#f5e4d8"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize">
 
@@ -28,8 +28,6 @@
 
             <UniformGrid x:Name="PixelGrid"
              Background="White"
-             Rows="20"
-             Columns="20"
              Canvas.Left="67"
              Canvas.Top="27"
              Width ="632"
@@ -47,11 +45,10 @@
                      VerticalScrollBarVisibility="Auto"
                      VerticalContentAlignment="Top" 
                      FontSize="20" 
-                     BorderBrush="#a4ffc7"
+                     BorderBrush="#d4fce8"
                      BorderThickness="1"
-                     Background="#130b20"
                      Padding="30,30,0,0"
-                     Foreground="#65c5e9" 
+                     Foreground="Black" 
                      HorizontalAlignment="Center" 
                      AcceptsReturn="True" 
                      VerticalAlignment="Top"/>
@@ -61,21 +58,16 @@
                     Height="51"
                     FontSize="25"
                     FontWeight="Bold"
-                    Background="#130b20"
-                    Foreground="#a4ffc7"
-                    BorderBrush="#a4ffc7"
-                    BorderThickness="2"
+                    Background="#d4fce8"
+                    Foreground="White"
                     Padding="10"
+                    BorderBrush="#d4fce8"
                     Cursor="Hand"
                     Canvas.Right="150"
                     Canvas.Bottom="20"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top" Canvas.Left="1001" Canvas.Top="545">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </Button.Resources>
+               
             </Button>
 
         </Canvas>

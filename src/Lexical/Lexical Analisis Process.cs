@@ -68,7 +68,8 @@ namespace pixel_walle.src.Lexical
                 }
 
                 char UnknownOP = stream.ReadAny();
-                errors.Add(new SyntaxError());
+
+                errors.Add(new SyntaxError(fileName, stream.Location.Line, stream.Location.Column));
 
             }
 

@@ -6,21 +6,14 @@ using System.Threading.Tasks;
 
 namespace pixel_walle.src.Errors
 {
-    public class SyntaxError : Exception
+    public class SyntaxError : Error
     {
-        public string ErrorMesssage { get; }
-        public string FileName { get; }
-        public int Line { get; }
-        public int Column { get; }
-
-
 
         public SyntaxError(string fileName, int line, int column)
+            : base($"Syntax error at {fileName}({line},{column})", fileName, line, column)
         {
-            FileName = fileName;
-            Line = line;
-            Column = column;
         }
+
     }
 }
     

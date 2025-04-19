@@ -84,14 +84,8 @@ namespace pixel_walle.src.Lexical
         public bool ValidIDCharacter(char c, bool start)
         {
             if (c == '_') return true;
-
-            if (start && !char.IsLetter(c))
-                throw new SyntaxError(fileName, line, position - lastLineBreakPos);
-
-            if (!start && !char.IsLetterOrDigit(c))
-                throw new SyntaxError(fileName, line, position - lastLineBreakPos);
-
-            return true;
+            if (start) return char.IsLetter(c);
+            return char.IsLetterOrDigit(c);
         }
 
 

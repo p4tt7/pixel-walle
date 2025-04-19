@@ -16,9 +16,12 @@ namespace pixel_walle
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public int Dimension { get; private set; }
+
+        public MainWindow(int dimension)
         {
             InitializeComponent();
+            Dimension = dimension;
             InitializePixelGrid();
  
         }
@@ -26,7 +29,10 @@ namespace pixel_walle
         private void InitializePixelGrid()
         {
 
-            for (int i = 0; i < 400; i++) 
+            PixelGrid.Rows = Dimension;
+            PixelGrid.Columns = Dimension;
+
+            for (int i = 0; i < Dimension * Dimension; i++) 
             {
                 var pixel = new Border
                 {
