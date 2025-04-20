@@ -16,6 +16,8 @@ namespace pixel_walle.src.Lexical
         Dictionary<string, string> operators = new Dictionary<string, string>();
         Dictionary<string, string> keywords = new Dictionary<string, string>();
 
+
+
         public void RegisterOperator(string op, string token_value)
         {
             this.operators[op] = token_value;
@@ -36,6 +38,8 @@ namespace pixel_walle.src.Lexical
                 }
             return false;
         }
+
+
 
        public List<Token> GetTokens(string fileName, string code, List<SyntaxError> errors)
        {

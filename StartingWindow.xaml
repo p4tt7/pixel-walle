@@ -10,34 +10,34 @@
     <Grid>
         <Canvas>
 
+            <Image Source="C:\Users\david\Downloads\pixel_logo-removebg-preview.png" HorizontalAlignment="Left" Canvas.Left="400" VerticalAlignment="Top" Canvas.Top="-27"></Image>
+
             <TextBox Name="DimensionInput" 
                      Text="Enter the canva's dimension..." 
                      Foreground="#d4fce8"
-                     Width="940.5" 
-                     Height="86.2" 
+                     Width="940" 
+                     Height="86" 
                      BorderBrush="White"
-                     FontSize="30"
-                     Margin="10,30,0,0"                 
+                     FontSize="30"                 
                      Background="White"
-                     Canvas.Left="169.7"
-                     Canvas.Top="400.3"
+                     Canvas.Left="180"
+                     Canvas.Top="456"
                      />
 
             <Button Content="OK" 
-                    Width="150.5" 
+                    Width="150" 
                     Height="56" 
-                    FontWeight="Bold"
-                    Margin="10,70,0,0" 
+                    FontWeight="Bold" 
                     BorderBrush="#f5e4d8"
                     FontSize="30"
                     Click="Aceptar_Click"
                     Background ="#f5e4d8"
                     Foreground="White"
-                    Canvas.Left="997.6"
+                    Canvas.Left="970"
                     Cursor="Hand"
-                    Canvas.Top="490.2"/>
+                    Canvas.Top="560"/>
         </Canvas>
 
-        
+
     </Grid>
 </Window>
