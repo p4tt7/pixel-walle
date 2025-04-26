@@ -24,20 +24,21 @@ namespace pixel_walle
             InitializeComponent();
         }
 
-        private void Aceptar_Click(object sender, RoutedEventArgs e)
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {  
+            Application.Current.Shutdown();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (int.TryParse(DimensionInput.Text, out int dimension))
-            {
-                MainWindow mainWindow = new MainWindow(dimension);
-                mainWindow.Show();
-                this.Close();
-            }
-            else
-            {
-                MessageBox.Show("Enter a valid number.");
-            }
+            DimensionMenu ventana = new DimensionMenu();
+            ventana.Show();
+            this.Close();
+
         }
     }
 
-
 }
+
+
+

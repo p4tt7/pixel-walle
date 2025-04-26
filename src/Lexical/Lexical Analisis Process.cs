@@ -41,7 +41,7 @@ namespace pixel_walle.src.Lexical
 
 
 
-       public List<Token> GetTokens(string fileName, string code, List<SyntaxError> errors)
+       public List<Token> GetTokens(string fileName, string code, List<Error> errors)
        {
             List<Token> tokens = new List<Token>();
             TokenReader stream = new TokenReader(fileName, code);
@@ -73,7 +73,13 @@ namespace pixel_walle.src.Lexical
 
                 char UnknownOP = stream.ReadAny();
 
-                errors.Add(new SyntaxError(fileName, stream.Location.Line, stream.Location.Column));
+                //errors.Add(new Error(
+                 //   Error.ErrorType.InvalidTokenError,
+                 //   $"Símbolo no reconocido: '{UnknownOP}'",
+                 //   fileName,
+                 //   stream.line,
+                 //   stream.column
+                //    ));
 
             }
 

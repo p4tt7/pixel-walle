@@ -4,40 +4,63 @@
         Title="Definir Dimensiones" 
         Height="768" 
         Width="1366"
-        Background ="#d4fce8"
+        Background ="White"
         >
 
     <Grid>
-        <Canvas>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0*"/>
+            <RowDefinition Height="725*"/>
+            <RowDefinition Height="27*"/>
+        </Grid.RowDefinitions>
+        <Canvas Grid.RowSpan="2">
 
-            <Image Source="C:\Users\david\Downloads\pixel_logo-removebg-preview.png" HorizontalAlignment="Left" Canvas.Left="400" VerticalAlignment="Top" Canvas.Top="-27"></Image>
-
-            <TextBox Name="DimensionInput" 
-                     Text="Enter the canva's dimension..." 
-                     Foreground="#d4fce8"
-                     Width="940" 
-                     Height="86" 
-                     BorderBrush="White"
-                     FontSize="30"                 
-                     Background="White"
-                     Canvas.Left="180"
-                     Canvas.Top="456"
-                     />
-
-            <Button Content="OK" 
-                    Width="150" 
-                    Height="56" 
-                    FontWeight="Bold" 
-                    BorderBrush="#f5e4d8"
-                    FontSize="30"
-                    Click="Aceptar_Click"
-                    Background ="#f5e4d8"
-                    Foreground="White"
-                    Canvas.Left="970"
-                    Cursor="Hand"
-                    Canvas.Top="560"/>
+            <Image Source="C:\Users\david\OneDrive\Pictures\logo2.png" HorizontalAlignment="Left" Canvas.Left="67" VerticalAlignment="Top" Canvas.Top="82" Height="526" Width="517"></Image>
         </Canvas>
 
+        <Button Content="NEW PROJECT"
+                Click="Button_Click"
+                Background="White"
+                BorderBrush="Black"
+                BorderThickness="3"
+                FontSize="25"
+                FontWeight="Bold"
+                Foreground="Black"
+                Width="372"
+                Cursor="Hand"
+                HorizontalAlignment="Left" Margin="777,130,0,451" Grid.RowSpan="2"
+                />
+
+        <Button Content="LOAD PROJECT"
+            Background="White"
+            BorderBrush="Black"
+            BorderThickness="3"
+            FontSize="25"
+            Width="372"
+            FontWeight="Bold"
+            Foreground="Black"
+            Cursor="Hand" Click="Button_Click"
+                HorizontalAlignment="Left" Margin="777,280,0,300" Grid.RowSpan="2"
+                />
+
+        <Button Content="EXIT"
+            Background="LightGray"
+            BorderBrush="Black"
+            Click="ExitButton_Click"
+            BorderThickness="3"
+            FontSize="25"
+            FontWeight="Bold"
+            Foreground="Black"
+            Width="372"
+            Cursor="Hand"
+            HorizontalAlignment="Left" 
+                Margin="777,433,0,147" 
+                Grid.RowSpan="2"
+                />
 
     </Grid>
 </Window>

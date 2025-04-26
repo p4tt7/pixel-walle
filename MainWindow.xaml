@@ -5,13 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:pixel_walle"
         mc:Ignorable="d"
- Title="MainWindow" 
+        Title="MainWindow" 
         Height="768" 
         Width="1366" 
-        Background="#f5e4d8"
+        Background="White"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize">
-
 
     <Grid Margin="10,0,0,-16">
         <Grid.RowDefinitions>
@@ -25,53 +24,94 @@
                 HorizontalAlignment="Left" 
                 Width="1346">
 
-
             <UniformGrid x:Name="PixelGrid"
-             Background="White"
-             Canvas.Left="67"
-             Canvas.Top="27"
-             Width ="632"
-             Height ="593" 
-             HorizontalAlignment="Center" 
-             VerticalAlignment="Top"/>
+                         Background="Gray"
+                         Canvas.Left="354"
+                         Canvas.Top="61" 
+                         HorizontalAlignment="Center" 
+                         VerticalAlignment="Top"/>
 
-
-            <TextBox Width="438" 
-                     Height="594" 
-                     Canvas.Left="726" 
-                     Canvas.Top="27" 
+            <TextBox Width="245" 
+                     Height="554" 
+                     Canvas.Top="67" 
                      Text="Code here..." 
                      TextWrapping="Wrap"
                      VerticalScrollBarVisibility="Auto"
                      VerticalContentAlignment="Top" 
-                     FontSize="20" 
-                     BorderBrush="#d4fce8"
-                     BorderThickness="1"
+                     FontSize="20"               
+                     BorderBrush="Black"
+                     BorderThickness="3"
                      Padding="30,30,0,0"
                      Foreground="Black" 
-                     HorizontalAlignment="Center" 
+                     HorizontalAlignment="Left" 
                      AcceptsReturn="True" 
-                     VerticalAlignment="Top"/>
+                     VerticalAlignment="Center" TextChanged="TextBox_TextChanged" Canvas.Left="38"/>
+
+            <Rectangle 
+                      Width="239"
+                      Height="404"
+                      Fill="White"
+                      Stroke="Black"
+                      StrokeThickness="3" Canvas.Left="953" Canvas.Top="67" HorizontalAlignment="Left" VerticalAlignment="Center"
+             />
 
             <Button Content="RUN!"
-                    Width="141"
-                    Height="51"
-                    FontSize="25"
+                    Width="239"
+                    Height="43"
+                    FontSize="20"
                     FontWeight="Bold"
-                    Background="#d4fce8"
-                    Foreground="White"
-                    Padding="10"
-                    BorderBrush="#d4fce8"
+                    Background="LightGray"
+Foreground="Black"
+    BorderBrush="Black"
+    BorderThickness="3"
                     Cursor="Hand"
-                    Canvas.Right="150"
-                    Canvas.Bottom="20"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Top" Canvas.Left="1001" Canvas.Top="545">
-               
-            </Button>
+                    Canvas.Top="476"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center" RenderTransformOrigin="-5.137,1.145" Canvas.Left="953"/>
+            <Rectangle 
+                Width="245"
+                Height="39"
+                Fill="Black" 
+                Canvas.Top="28" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Center" Canvas.Left="38"
+             />
+            <Rectangle 
+                Width="239"
+                Height="39"
+                Fill="Black"
+                Canvas.Left="953" 
+                Canvas.Top="28" 
+                HorizontalAlignment="Left" VerticalAlignment="Center"
+             />
 
+
+            <Button Content="CLEAR"
+                Width="239"
+                Height="43"
+                FontSize="20"
+                FontWeight="Bold"
+                Background="White"
+                Foreground="Black"
+                    BorderBrush="Black"
+                    BorderThickness="3"
+                Cursor="Hand"
+                Canvas.Top="524"
+                RenderTransformOrigin="-5.137,1.145" Canvas.Left="953" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+
+            <Button Content="SAVE"
+                Width="239"
+                Height="43"
+                FontSize="20"
+                FontWeight="Bold"
+                Background="White"
+                Foreground="Black"
+                BorderBrush="Black"
+                BorderThickness="3"
+                Cursor="Hand"
+                Canvas.Top="573"
+                RenderTransformOrigin="-5.137,1.145" Canvas.Left="953" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         </Canvas>
     </Grid>
-
-
 </Window>
