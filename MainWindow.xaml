@@ -26,10 +26,10 @@
 
             <UniformGrid x:Name="PixelGrid"
                          Background="Gray"
-                         Canvas.Left="354"
-                         Canvas.Top="61" 
-                         HorizontalAlignment="Center" 
-                         VerticalAlignment="Top"/>
+                         Canvas.Left="323"
+                         Canvas.Top="28" 
+                         HorizontalAlignment="Left" 
+                         VerticalAlignment="Center" Height="592" Width="592"/>
 
             <TextBox Width="245" 
                      Height="554" 

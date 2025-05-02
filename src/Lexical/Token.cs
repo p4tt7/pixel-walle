@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using pixel_walle.src.CodeLocation_;
 
 namespace pixel_walle.src.Lexical
 {
-    public class Token
+    public partial class Token
     {
         public string Value { get; private set; }
         public TokenType Type { get; private set; }
         public CodeLocation Location { get; private set; }
+
 
         public Token(TokenType type, string value, CodeLocation location)
         {
@@ -21,71 +24,61 @@ namespace pixel_walle.src.Lexical
             this.Location = location;
         }
 
-        public class CodeLocation
+        public readonly static Dictionary<string, string> operators = new Dictionary<string, string>
         {
-            public string File;
-            public int Line;
-            public int Column;
+            { "+", TokenValue.Add },
+            { "-", TokenValue.Sub },
+            { "*", TokenValue.Mul },
+            { "/", TokenValue.Div },
+            { "**", TokenValue.Pow },
+            { "%", TokenValue.Mod },
+            { "<", TokenValue.LessThan },
+            { ">", TokenValue.GreaterThan },
+            { "<=", TokenValue.LessOrEqualThan },
+            { ">=", TokenValue.GreaterOrEqualThan },
+            {"," , TokenValue.Comma },
+            {"(", TokenValue.OpenBracket },  
+            {")", TokenValue.CloseBracket },
+            { "}", TokenValue.ClosedCurlyBraces },
+            { "{", TokenValue.OpenCurlyBraces },
+        };
 
-        }
+        public readonly static Dictionary<string, string> keywords = new Dictionary<string, string>
+        {
+            {"GoTo" , TokenValue.GoTo }
+
+        };
+
+        public readonly static Dictionary<string, string> built_in_functions = new Dictionary<string, string>
+        {
+            {"Spawn" , TokenValue.Spawn },
+            {"Size" , TokenValue.Size },
+            {"DrawLine",TokenValue.DrawLine },
+            {"DrawCircle",TokenValue.DrawCircle },
+            {"DrawRectangule",TokenValue.DrawRectangle },
+            {"Fill", TokenValue.Fill },
+            {"GetActualX" , TokenValue.GetActualX },
+            {"GetActualY", TokenValue.GetActualY },
+            {"GetCanvaSize",TokenValue.GetCanvasSize },
+            {"IsBrushColor", TokenValue.IsBrushColor },
+            {"IsBrushSize",TokenValue.IsBrushSize },
+            {"IsCanvasColor",TokenValue.IsBrushSize},
+
+        };
 
         public enum TokenType
         {
             Unknown,
             Number,
             Text,
+            Color,
             Keyword,
             Identifier,
             Symbol,
-            EOF, //end of file
+            EOF, 
             Newline
 
         }
-
-    }
-
-    public class TokenValues
-    {
-        protected TokenValues() { }
-
-        public const string Add = "Add";
-        public const string Sub = "Sub";
-        public const string Mul = "Mul";
-        public const string Div = "Div";
-        public const string Assign = "Assign";
-        public const string And = "And";
-        public const string Or = "Or";
-        public const string LessThan = "LessThan";
-        public const string LessOrEqualThan = "LessOrEqualThan";
-        public const string GreaterThan = "GreaterThan";
-        public const string GreaterOrEqualThan = "GreaterOrEqualThan";
-        public const string Pow = "Pow";
-        public const string Mod = "Mod";
-
-        public const string GoTo = "GoTo";
-        public const string Comma = "Comma";
-        public const string OpenBracket = "OpenBracket";
-        public const string CloseBracket = "CloseBracket";
-        public const string OpenCurlyBraces = "OpenCurlyBraces";
-        public const string ClosedCurlyBraces = "ClosedCurlyBraces";
-
-        public const string Spawn = "Spawn";
-        public const string Color = "Color";
-        public const string Size = "Size";
-        public const string DrawLine = "DrawLine";
-        public const string DrawCircle = "DrawCircle";
-        public const string DrawRectangle = "DrawRectangle";
-        public const string Fill = "Fill";
-
-        public const string GetActualX = "GetActualX";
-        public const string GetActualY = "GetActualY";
-        public const string GetCanvasSize = "GetCanvasSize";
-        public const string GetColorCount = "GetColorCount";
-        public const string IsBrushColor = "IsBrushColor";
-        public const string IsBrushSize = "IsBrushSize";
-        public const string IsCanvasColor = "IsCanvasColor";
-
-
 
     }
 }

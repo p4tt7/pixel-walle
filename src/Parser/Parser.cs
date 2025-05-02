@@ -16,10 +16,6 @@ namespace pixel_walle.src.Parser
         {
             Stream = stream;
         }
-
-
-
-
-
     }
+
 }

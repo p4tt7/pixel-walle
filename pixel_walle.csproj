@@ -9,8 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="src\AST\Expressions\Binary\" />
-    <Folder Include="src\AST\Expressions\Atomic\" />
+    <Folder Include="controllers\" />
   </ItemGroup>
 
 </Project>

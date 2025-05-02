@@ -3,24 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using pixel_walle.src.Lexical;
+using pixel_walle.src.CodeLocation_;
 
 namespace pixel_walle.src.Errors
 {
     public class Error : Exception
     {
-        public string FileName { get; protected set; }
-        public int Line { get; protected set; }
-        public int Column { get; protected set; }
+        public CodeLocation Location { get; set; }
 
         public ErrorType Type { get; protected set; }
 
-        public Error(ErrorType type, string message, string fileName = "", int line = 0, int column = 0)
+        public Error(ErrorType type, string message, CodeLocation location)
          : base($"[{type}] {message}")
         {
             Type = type;
-            FileName = fileName;
-            Line = line;
-            Column = column;
+            Location = location;
         }
 
 

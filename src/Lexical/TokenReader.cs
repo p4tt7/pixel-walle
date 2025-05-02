@@ -1,5 +1,5 @@
 ﻿using pixel_walle.src.Errors;
-using static pixel_walle.src.Lexical.Token;
+using pixel_walle.src.CodeLocation_;
 
 namespace pixel_walle.src.Lexical
 {
@@ -131,6 +131,8 @@ namespace pixel_walle.src.Lexical
 
             return number.Length > 0;
         }
+
+        
 
         public bool ReadWhiteSpace()
         {

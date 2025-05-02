@@ -8,27 +8,14 @@ using System.Threading.Tasks;
 using static pixel_walle.src.Lexical.Token;
 using pixel_walle.src.Errors;
 using System.Windows.Shapes;
+using pixel_walle.src.Colores;
 
 namespace pixel_walle.src.Lexical
 {
     public class LexicalAnalizer
     {
-        Dictionary<string, string> operators = new Dictionary<string, string>();
-        Dictionary<string, string> keywords = new Dictionary<string, string>();
 
-
-
-        public void RegisterOperator(string op, string token_value)
-        {
-            this.operators[op] = token_value;
-        }
-
-        public void RegisterKeyword(string keyword, string token_value)
-        {
-            this.keywords[keyword] = token_value;
-        }
-
-        private bool MatchSymbol(TokenReader stream, List<Token> tokens)
+        public bool MatchOperator(TokenReader stream, List<Token> tokens)
         {
             foreach (var op in operators.Keys.OrderByDescending(k => k.Length))
                 if (stream.Match(op))
@@ -39,7 +26,17 @@ namespace pixel_walle.src.Lexical
             return false;
         }
 
+        public bool MatchColor(TokenReader stream, List<Token> tokens)
+        {
+            foreach (var color in Color.colores.Keys.OrderByDescending(k => k.Length))
+                if (stream.Match(color))
+                {
+                    tokens.Add(new Token(TokenType.Color, color, stream.Location));
+                    return true;
+                }
+            return false;
 
+        }
 
        public List<Token> GetTokens(string fileName, string code, List<Error> errors)
        {
@@ -54,7 +51,17 @@ namespace pixel_walle.src.Lexical
 
                 if (stream.ReadID(out value))
                 {
-                    TokenType type = keywords.ContainsKey(value) ? TokenType.Keyword : TokenType.Identifier;
+                    TokenType type;
+
+                    if(keywords.ContainsKey(value))
+                    {
+                        type = TokenType.Keyword;
+                    }
+                    else
+                    {
+                        type = TokenType.Identifier;
+                    }
+
                     tokens.Add(new Token(type,value,stream.Location));
                     continue;
 
@@ -66,20 +73,19 @@ namespace pixel_walle.src.Lexical
                     continue;
                 }
 
-                if(MatchSymbol(stream, tokens))
+
+                if(MatchOperator(stream, tokens))
                 {
                     continue;
                 }
 
+
                 char UnknownOP = stream.ReadAny();
 
-                //errors.Add(new Error(
-                 //   Error.ErrorType.InvalidTokenError,
-                 //   $"Símbolo no reconocido: '{UnknownOP}'",
-                 //   fileName,
-                 //   stream.line,
-                 //   stream.column
-                //    ));
+
+                errors.Add(new Error(
+                    Error.ErrorType.InvalidTokenError,
+                    $"Símbolo no reconocido: '{UnknownOP}'", stream.Location));
 
             }
 
@@ -88,9 +94,7 @@ namespace pixel_walle.src.Lexical
 
        }
 
-    
-
-       
+      
 
     }
 
