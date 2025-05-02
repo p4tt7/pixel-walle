@@ -3,10 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static pixel_walle.src.Lexical.Token;
+using static System.Formats.Asn1.AsnWriter;
+using pixel_walle.src.Errors;
+using pixel_walle.src.CodeLocation_;
+
 
 namespace pixel_walle.src.AST
 {
-    internal class AST_Node
+    public abstract class ASTNode
     {
+        public CodeLocation Location { get; private set; }
+
+
+        public ASTNode(CodeLocation locantion)
+        {
+            Location = locantion;
+
+
+        }
+
+        public abstract void CheckSemantic(Scope scope);
     }
 }
