@@ -30,6 +30,7 @@ namespace pixel_walle.src.Lexical
             {
                 return tokens[new_position];
             }
+
             return null;
 
         }

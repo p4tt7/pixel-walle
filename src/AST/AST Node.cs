@@ -20,9 +20,8 @@ namespace pixel_walle.src.AST
         {
             Location = locantion;
 
-
         }
 
-        public abstract void CheckSemantic(Scope scope);
+        public abstract bool CheckSemantic(Scope scope);
     }
 }

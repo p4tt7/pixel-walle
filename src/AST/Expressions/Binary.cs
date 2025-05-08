@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using pixel_walle.src.CodeLocation_;
 
-namespace pixel_walle.src.AST.Expressions.Binary
+namespace pixel_walle.src.AST.Expressions
 {
     public abstract class BinaryExpression : Expression
     {
@@ -19,7 +19,7 @@ namespace pixel_walle.src.AST.Expressions.Binary
         }
 
 
-        public override void CheckSemantic(Scope scope){ }
+        //public override void CheckSemantic(Scope scope){ }
 
 
     }

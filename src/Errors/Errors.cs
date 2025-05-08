@@ -25,7 +25,8 @@ namespace pixel_walle.src.Errors
         public enum ErrorType
         {
             SyntaxError,                   
-            TypeError,                       
+            TypeError,            
+            Undefined,
             UndeclaredVariableError,        
             DivisionByZeroError,            
             FunctionNotFoundError,          

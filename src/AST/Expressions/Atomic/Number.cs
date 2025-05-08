@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace pixel_walle.src.AST.Expressions.Atomic
+namespace pixel_walle.src.AST.Expressions
 {
     public class Number : Atom
     {
@@ -18,8 +18,25 @@ namespace pixel_walle.src.AST.Expressions.Atomic
 
         }
 
-        public override void CheckSemantic(Scope scope)
+        public bool IsInt
         {
+            get
+            {
+                int a;
+                return int.TryParse(Value.ToString(), out a);
+            }
+        }
+
+        public override bool CheckSemantic(Scope scope)
+        {
+
+            if(Value <= 0)
+            {
+                return false;
+            }
+
+            return true;
+            
 
         }
         public override object? Evaluate(Scope scope)

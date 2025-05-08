@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using pixel_walle.src.CodeLocation_;
 
-namespace pixel_walle.src.AST.Expressions.Atomic
+namespace pixel_walle.src.AST.Expressions
 {
     public abstract class Atom : Expression
     {

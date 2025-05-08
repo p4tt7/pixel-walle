@@ -30,25 +30,39 @@ namespace pixel_walle
 
         private void InitializePixelGrid()
         {
+            const double maxWidth = 818;
+            const double maxHeight = 622;
 
-            double ladoPixel = 2.5;
+            double cellWidth = maxWidth / Columns;
+            double cellHeight = maxHeight / Rows;
 
-            double cellWidth = ladoPixel * Columns;
-            double cellHeight = ladoPixel * Rows;
+            double pixelSize = Math.Min(cellWidth, cellHeight);
+
+            double remainingWidth = maxWidth - (Columns * pixelSize);
+            double remainingHeight = maxHeight - (Rows * pixelSize);
 
             PixelGrid.Rows = Rows;
             PixelGrid.Columns = Columns;
 
-            PixelGrid.Width = cellWidth;
-            PixelGrid.Height = cellHeight;
+            PixelGrid.Width = Columns * pixelSize;
+            PixelGrid.Height = Rows * pixelSize;
 
+ 
+            PixelGrid.Margin = new Thickness(
+                remainingWidth / 2,  
+                remainingHeight / 2, 
+                0,                  
+                0                   
+            );
+
+            PixelGrid.Children.Clear();
 
             for (int i = 0; i < Rows * Columns; i++)
             {
                 var pixel = new Border
                 {
-                    Width = cellWidth,
-                    Height = cellHeight,
+                    Width = pixelSize,
+                    Height = pixelSize,
                     Background = Brushes.White,
                     BorderBrush = Brushes.Black,
                     BorderThickness = new Thickness(0.5),
@@ -56,7 +70,7 @@ namespace pixel_walle
                 PixelGrid.Children.Add(pixel);
             }
         }
-        
+
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {

@@ -121,11 +121,6 @@ namespace pixel_walle.src.Lexical
         {
             number = "";
 
-            if(!EOF && Peek() == '-')
-            {
-                throw new InvalidOperationException("Negative numbers aren't allowed");
-            }
-
             while (!EOF && char.IsDigit(Peek()))
                 number += Read();
 

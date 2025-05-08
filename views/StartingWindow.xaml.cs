@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.Win32;
+
 
 namespace pixel_walle
 {
@@ -29,13 +31,30 @@ namespace pixel_walle
             Application.Current.Shutdown();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void New_Project(object sender, RoutedEventArgs e)
         {
             DimensionMenu ventana = new DimensionMenu();
             ventana.Show();
             this.Close();
 
         }
+
+        private void Load_Project(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Pixel Walle Project (*.pwe)|*.pwe";
+            openFileDialog.Title = "Cargar Proyecto";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string filePath = openFileDialog.FileName;
+                MessageBox.Show($"Archivo seleccionado: {filePath}");
+
+            }
+        }
+
+
+
     }
 
 }
