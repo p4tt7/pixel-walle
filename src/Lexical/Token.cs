@@ -41,6 +41,7 @@ namespace pixel_walle.src.Lexical
             {")", TokenValue.CloseBracket },
             { "}", TokenValue.ClosedCurlyBraces },
             { "{", TokenValue.OpenCurlyBraces },
+            { "<-", TokenValue.Assign }
         };
 
         public readonly static Dictionary<string, string> keywords = new Dictionary<string, string>
@@ -65,20 +66,6 @@ namespace pixel_walle.src.Lexical
             {"IsCanvasColor",TokenValue.IsBrushSize},
 
         };
-
-        public enum TokenType
-        {
-            Unknown,
-            Number,
-            Text,
-            Color,
-            Keyword,
-            Identifier,
-            Symbol,
-            EOF, 
-            Newline
-
-        }
 
     }
 }

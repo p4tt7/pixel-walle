@@ -13,6 +13,7 @@ namespace pixel_walle.src.AST.Instructions
 
     public class Function : Instruction
     {
+
         public string FunctionName { get; }
         public List<Expression> Arguments { get; }
 
@@ -27,8 +28,7 @@ namespace pixel_walle.src.AST.Instructions
         {
             get
             {
-                return FunctionInfo.Functions.ContainsKey(FunctionName);
-
+                return FunctionInfo.Built_In_Functions.ContainsKey(FunctionName);
             }
         }
 
@@ -40,7 +40,7 @@ namespace pixel_walle.src.AST.Instructions
         public override bool CheckSemantic(Scope scope)
         {
 
-            var expected = FunctionInfo.Functions[FunctionName].Parameters;
+            var expected = FunctionInfo.Built_In_Functions[FunctionName].Parameters;
             if (Arguments.Count != expected.Count)
             {
                 return false;
@@ -49,7 +49,6 @@ namespace pixel_walle.src.AST.Instructions
             return true;
         }
 
-
-
     }
+
 }
