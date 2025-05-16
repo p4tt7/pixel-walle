@@ -60,7 +60,11 @@
                       Height="431"
                       Fill="White"
                       Stroke="Black"
-                      StrokeThickness="3" Canvas.Left="1030" Canvas.Top="43" HorizontalAlignment="Center" VerticalAlignment="Top"
+                      StrokeThickness="3" 
+                      Canvas.Left="1030" 
+                      Canvas.Top="43" 
+                      HorizontalAlignment="Center" 
+                      VerticalAlignment="Top"
              />
 
             <Button Content="RUN!"

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using pixel_walle.src.CodeLocation_;
 using System.Threading.Tasks;
+using pixel_walle.src.Errors;
 
 namespace pixel_walle.src.AST.Instructions
 {
@@ -16,7 +17,7 @@ namespace pixel_walle.src.AST.Instructions
             Label = label;
         }
 
-        public override bool CheckSemantic(Scope scope)
+        public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
             throw new NotImplementedException();
         }

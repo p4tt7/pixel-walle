@@ -11,44 +11,34 @@ using pixel_walle.src.AST.Expressions;
 namespace pixel_walle.src.AST.Instructions
 {
 
-    public class Function : Instruction
+    public class BuiltInFunction : Expression
     {
-
         public string FunctionName { get; }
         public List<Expression> Arguments { get; }
 
-        public Function(string name, List<Expression> args, CodeLocation location)
+        public BuiltInFunction(string name, List<Expression> args, CodeLocation location)
             : base(location)
         {
             FunctionName = name;
             Arguments = args;
         }
 
-        public bool IsFunction
-        {
-            get
-            {
-                return FunctionInfo.Built_In_Functions.ContainsKey(FunctionName);
-            }
-        }
+        public bool Exists => FunctionInfo.BuiltIns.ContainsKey(FunctionName);
 
-        public override object? Evaluate(Scope scope)
+        public override ExpressionType Type { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override object? Value { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public override object? Evaluate()
         {
             return null;
         }
 
-        public override bool CheckSemantic(Scope scope)
+        public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
+            return false;
 
-            var expected = FunctionInfo.Built_In_Functions[FunctionName].Parameters;
-            if (Arguments.Count != expected.Count)
-            {
-                return false;
-            }
-
-            return true;
         }
-
     }
 
 }
+

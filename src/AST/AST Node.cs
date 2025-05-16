@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using pixel_walle.src.Errors;
 using static pixel_walle.src.Lexical.Token;
 using static System.Formats.Asn1.AsnWriter;
 using pixel_walle.src.Errors;
@@ -22,6 +23,6 @@ namespace pixel_walle.src.AST
 
         }
 
-        public abstract bool CheckSemantic(Scope scope);
+        public abstract bool CheckSemantic(Scope scope, List<Error> errors);
     }
 }

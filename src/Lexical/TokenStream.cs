@@ -59,9 +59,15 @@ namespace pixel_walle.src.Lexical
 
         }
 
-        public void Rollback(int steps = 1)
+        public Token Rollback()
         {
-            position = Math.Max(position - steps, 0);
+            if(position > tokens.Count)
+            {
+                return tokens[position--];
+            }
+
+            return null;
+            
         }
         
 

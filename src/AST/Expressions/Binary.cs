@@ -12,14 +12,9 @@ namespace pixel_walle.src.AST.Expressions
         public Expression? Right { get; set; }
         public Expression? Left { get; set; }
 
-        public BinaryExpression(Expression left, Expression right, CodeLocation location) : base(location)
+        public BinaryExpression(CodeLocation location) : base(location)
         {
-            Left = left;
-            Right = right;
         }
-
-
-        //public override void CheckSemantic(Scope scope){ }
 
 
     }

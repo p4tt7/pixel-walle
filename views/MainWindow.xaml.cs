@@ -65,7 +65,7 @@ namespace pixel_walle
                     Height = pixelSize,
                     Background = Brushes.White,
                     BorderBrush = Brushes.Black,
-                    BorderThickness = new Thickness(0.5),
+                    BorderThickness = new Thickness(0.3),
                 };
                 PixelGrid.Children.Add(pixel);
             }

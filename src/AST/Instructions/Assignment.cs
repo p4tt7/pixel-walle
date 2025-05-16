@@ -3,7 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using pixel_walle.src.AST.Expressions;
 using System.Threading.Tasks;
+using pixel_walle.src.Errors;
+
 
 namespace pixel_walle.src.AST.Instructions
 {
@@ -18,7 +21,7 @@ namespace pixel_walle.src.AST.Instructions
            
         }
 
-        public override bool CheckSemantic(Scope scope)
+        public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
             throw new NotImplementedException();
         }

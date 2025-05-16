@@ -26,19 +26,46 @@ namespace pixel_walle.src.Parser
 
 
 
-        public Expression? ParseNumber()
+
+        private bool GoToCheck(List<Error> errors)
         {
             Token token = Stream.Advance();
 
-            if (token.Type != TokenType.Number)
-                return null;
+            if (token.Value != TokenValue.OpenBracket)
+            {
+                errors.Add(new Error(Error.ErrorType.SyntaxError, $"Syntax Error. '(' expected", Stream.Advance().Location));
+                return false;
+            }
 
-            int number = int.Parse(token.Value.ToString());
-
-            return new Number(token.Location, number);
-
+            return true;
 
         }
+
+        private bool VariableNameValidator(string name)
+        {
+            if (name == null)
+            {
+                return false;
+            }
+
+            if (Char.IsDigit(name[0]))
+            {
+                return false;
+            }
+
+            foreach (char c in name)
+            {
+                if (!char.IsLetterOrDigit(c) && c != '_')
+                {
+                    return false;
+                }
+            }
+            return true;
+
+        }
+
+
+
 
 
 
@@ -70,6 +97,68 @@ namespace pixel_walle.src.Parser
 
 
 
+        public Expression? ParseNumber()
+        {
+            Token token = Stream.Advance();
+
+            if (token.Type != TokenType.Number)
+                return null;
+
+            int number = int.Parse(token.Value.ToString());
+
+            return new Number(token.Location, number);
+
+
+        }
+
+
+
+
+        public void ParseFunctionCall(List<Error> errors)
+        {
+            string functionName = Stream.Rollback().Value;
+            Token token = Stream.Advance();
+
+            if (token.Value != TokenValue.OpenBracket)
+            {
+                errors.Add(new Error(Error.ErrorType.SyntaxError, $"Invalid syntax, {TokenValue.OpenBracket} expected", Stream.Advance().Location));
+            }
+
+            
+            List<Expression> arguments = new List<Expression>();
+
+
+            if (Stream.Peek().Value != TokenValue.CloseBracket)
+            {
+                do
+                {
+                    Expression arg = ParseExpression(errors); 
+                    if (arg != null)
+                        arguments.Add(arg);
+                } while (Stream.Match(TokenValue.Comma));
+            }
+
+
+            token = Stream.Advance();
+
+            if (token.Value != TokenValue.CloseBracket)
+            {
+                errors.Add(new Error(Error.ErrorType.SyntaxError,
+                    $"Expected '{TokenValue.CloseBracket}'",
+                    token.Location));
+       //         return null;
+            }
+
+        //    var funcCall = new Function(functionName, arguments, token.Location);
+
+        //    return funcCall;
+
+        }
+
+
+
+
+
 
         public Instruction ParseInstruction(List<Error> errors)
         {
@@ -85,7 +174,7 @@ namespace pixel_walle.src.Parser
                 }
                 else
                 {
-                    return ParseFunctionCall(errors);
+        //            return ParseFunctionCall(errors);
                 }
             }
 
@@ -97,12 +186,6 @@ namespace pixel_walle.src.Parser
             errors.Add(new Error(Error.ErrorType.SyntaxError, "Unknown instruction", token.Location));
             return null;
         }
-
-
-
-
-
-
 
 
 
@@ -131,90 +214,23 @@ namespace pixel_walle.src.Parser
         }
 
 
+        
 
 
-
-
-
-
-
-
-
-        public Function ParseExpression(List<Error> errors)
-        {
-            return null;
-        }
-
-
-
-
-
-
-
-
-
-
-
-        private bool VariableNameValidator(string name)
-        {
-            if(name==null)
-            {
-                return false;
-            }
-
-            if (Char.IsDigit(name[0]))
-            {
-                return false;
-            }
-
-            foreach(char c in name)
-            {
-                if(!char.IsLetterOrDigit(c) &&  c != '_')
-                {
-                    return false;
-                }
-            }
-            return true;
-
-        }
-
-
-
-
-
-
-
-
-
-
-
-        private bool GoToCheck(List<Error> errors)
-        {
-            Token token = Stream.Advance();
-
-            if(token.Value != TokenValue.OpenBracket)
-            {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, $"Syntax Error. '(' expected", Stream.Advance().Location));
-                return false;
-            }
-
-            return true;
-            
-        }
 
         private GoTo ParseGoto(List<Error> errors)
         {
-            Token gotoToken = Stream.Advance(); // debería ser 'goto'
+            Token gotoToken = Stream.Advance(); 
             if (gotoToken.Value != TokenValue.GoTo)
             {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "'goto' expected", gotoToken.Location));
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "'GoTo' expected", gotoToken.Location));
                 return null;
             }
 
             Token openParen = Stream.Advance();
             if (openParen.Value != TokenValue.OpenBracket)
             {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "'(' expected after 'goto'", openParen.Location));
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "'(' expected after 'GoTo'", openParen.Location));
                 return null;
             }
 
@@ -237,6 +253,17 @@ namespace pixel_walle.src.Parser
                 Label = labelToken.Value.ToString()
             };
         }
+
+
+
+
+        public Expression ParseExpression(List<Error> errors)
+        {
+            return null;
+        }
+
+
+
 
 
     }
