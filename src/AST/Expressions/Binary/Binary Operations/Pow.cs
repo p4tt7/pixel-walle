@@ -6,13 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace pixel_walle.src.AST.Expressions.Binary_Operations
+namespace pixel_walle.src.AST.Expressions
 {
     public class Pow : BinaryExpression
     {
-        public Pow(CodeLocation location) : base(location)
+        public Pow(Expression left, Expression right, CodeLocation location) : base(location)
         {
+            Left = left;
+            Right = right;
         }
+
 
         public override ExpressionType Type { get; set; }
         public override object? Value { get; set; }

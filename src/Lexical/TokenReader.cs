@@ -104,7 +104,7 @@ namespace pixel_walle.src.Lexical
 
         public void SkipWhitespace()
         {
-            while (!EOF && char.IsWhiteSpace(Peek()))
+            while (!EOF && char.IsWhiteSpace(Peek()) && Peek() != '\n')
                 Read();
         }
 

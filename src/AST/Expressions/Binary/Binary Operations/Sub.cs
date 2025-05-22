@@ -11,9 +11,12 @@ namespace pixel_walle.src.AST.Expressions
 {
     public class Sub : BinaryExpression
     {
-        public Sub(CodeLocation location) : base(location)
+        public Sub(Expression left, Expression right, CodeLocation location) : base(location)
         {
+            Left = left;
+            Right = right;
         }
+
 
         public override ExpressionType Type { get; set; }
         public override object? Value { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System;
+using pixel_walle.src.AST.Expressions.Atomic;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,49 +10,42 @@ namespace pixel_walle.src
     public class Scope
     {
 
-        private Dictionary<string, object> variables;
+        private Dictionary<string, object> variables = new();
 
-        public Scope Parent { get; private set; }
+        public static Scope Current { get; private set; }
 
-        public Scope(Scope parent = null)
+        public Scope(Scope current = null)
         {
             variables = new Dictionary<string, object>();
-            Parent = parent; 
+            Current = current; 
         }
 
-
-        public void SetVariable(string name, object value)
+        public void Define(string name, object? value)
         {
-            if (variables.ContainsKey(name))
-            {
-                variables[name] = value;
-            }
-            else
-            {
-                variables.Add(name, value);
-            }
+            variables[name] = value;
         }
 
-        public object GetVariable(string name)
+
+
+
+        public object? GetVariable(string name)
         {
             if (variables.ContainsKey(name))
             {
                 return variables[name];
             }
-            else if (Parent != null)
-            {
-                return Parent.GetVariable(name);
-            }
-            else
-            {
-                throw new Exception($"La variable '{name}' no está definida en este scope.");
-            }
+
+            throw new Exception($"Variable '{name}' no definida.");
         }
 
-        public bool IsVariableDefined(string name)
+
+
+
+        public bool Exists(string name)
         {
-            return variables.ContainsKey(name) || (Parent != null && Parent.IsVariableDefined(name));
+            return variables.ContainsKey(name);
         }
+
     }
 
 }

@@ -26,18 +26,6 @@ namespace pixel_walle.src.Lexical
             return false;
         }
 
-        public bool MatchColor(TokenReader stream, List<Token> tokens)
-        {
-            foreach (var color in Color.colores.Keys.OrderByDescending(k => k.Length))
-                if (stream.Match(color))
-                {
-                    tokens.Add(new Token(TokenType.Color, color, stream.Location));
-                    return true;
-                }
-            return false;
-
-        }
-
 
        public List<Token> GetTokens(string fileName, string code, List<Error> errors)
        {
@@ -49,6 +37,12 @@ namespace pixel_walle.src.Lexical
                 stream.SkipWhitespace();
 
                 string value;
+
+                if (stream.Peek() == '\n')
+                {
+                    tokens.Add(new Token(TokenType.Newline, "\\n", stream.Location)); 
+                    continue;
+                }
 
                 if (stream.ReadID(out value))
                 {

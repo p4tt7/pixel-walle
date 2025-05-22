@@ -8,6 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using pixel_walle.src.AST.Expressions.Atomic;
+using System.Security.RightsManagement;
+using pixel_walle.src.AST.Expressions.Binary_Operations;
+using pixel_walle.src.AST.Instructions.Functions;
+
 
 namespace pixel_walle.src.Parser
 {
@@ -18,80 +23,12 @@ namespace pixel_walle.src.Parser
 
 
 
-
         public Parser(TokenStream stream)
         {
             Stream = stream;
         }
 
 
-
-
-        private bool GoToCheck(List<Error> errors)
-        {
-            Token token = Stream.Advance();
-
-            if (token.Value != TokenValue.OpenBracket)
-            {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, $"Syntax Error. '(' expected", Stream.Advance().Location));
-                return false;
-            }
-
-            return true;
-
-        }
-
-        private bool VariableNameValidator(string name)
-        {
-            if (name == null)
-            {
-                return false;
-            }
-
-            if (Char.IsDigit(name[0]))
-            {
-                return false;
-            }
-
-            foreach (char c in name)
-            {
-                if (!char.IsLetterOrDigit(c) && c != '_')
-                {
-                    return false;
-                }
-            }
-            return true;
-
-        }
-
-
-
-
-
-
-
-
-        public object ParseStatement(List<Error> errors)
-        {
-
-            Token token = Stream.Advance();
-
-            if(!VariableNameValidator(token.Value.ToString()))
-            {
-                errors.Add(new Error(Error.ErrorType.AssignmentError, $"Invalid variable name" , Stream.Advance().Location));
-            }
-
-            Token assignToken = Stream.Advance();
-
-            if (assignToken.Value != TokenValue.Assign)
-            {
-                errors.Add(new Error(Error.ErrorType.AssignmentError, $"Invalid assignation symbol, {TokenValue.Assign} expected", Stream.Advance().Location));
-
-            }
-
-            return ParseExpression(errors);  
-            
-        }
 
 
 
@@ -108,27 +45,118 @@ namespace pixel_walle.src.Parser
 
             return new Number(token.Location, number);
 
+             
+        }
+
+        public Expression? ParseText()
+        {
+            Token token = Stream.Peek();
+
+            if (token.Type == TokenType.Text)
+            {
+                Stream.Advance(); 
+                return new Text(token.Location, token.Value);
+            }
+             
+            return null;
+        }
+
+
+
+        public Expression? ParseBool()
+        {
+            Token token = Stream.Peek();
+
+            if (token.Type == TokenType.Bool)
+            {
+                Stream.Advance();
+                bool value = token.Value.ToString() == "true";
+                return new Bool(token.Location, value);
+            }
+
+            return null;
+        }
+
+
+
+
+
+        public Expression ParseBinaryOperation(List<Error> errors)
+        {
+            Expression left = ParseNumber();
+
+            while(IsOperator())
+            {
+                Token operatorToken = Stream.Advance();
+
+                Expression? right = ParseNumber();
+
+                if (right == null)
+                {
+                    errors.Add(new Error(Error.ErrorType.SyntaxError, "Expected right-hand operand", operatorToken.Location));
+                    return null;
+                }
+
+                left = BinaryConstruction(left, operatorToken, right);
+
+            }
+
+            return left;
 
         }
 
 
 
 
-        public void ParseFunctionCall(List<Error> errors)
+
+
+
+
+
+        public object ParseStatement(List<Error> errors)
         {
-            string functionName = Stream.Rollback().Value;
+
             Token token = Stream.Advance();
 
-            if (token.Value != TokenValue.OpenBracket)
+            if (!Assignment.VariableNameValidator(token.Value.ToString()))
             {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, $"Invalid syntax, {TokenValue.OpenBracket} expected", Stream.Advance().Location));
+                errors.Add(new Error(Error.ErrorType.AssignmentError, $"Invalid variable name", Stream.Advance().Location));
+            }
+
+            Token assignToken = Stream.Advance();
+
+            if (assignToken.Value != TokenValue.Assign)
+            {
+                errors.Add(new Error(Error.ErrorType.AssignmentError, $"Invalid assignation symbol, {TokenValue.Assign} expected", Stream.Advance().Location));
+
+            }
+
+            return ParseExpression(errors);
+
+        }
+
+
+
+
+
+
+        public Function ParseFunctionCall(List<Error> errors)
+        {
+            Token token = Stream.Advance();
+
+            string functionName = token.Value.ToString();
+
+
+            if (token.Value != TokenValue.OpenRoundBracket)
+            {
+                errors.Add(new Error(Error.ErrorType.SyntaxError, $"Invalid syntax, {TokenValue.OpenRoundBracket} expected", Stream.Advance().Location));
             }
 
             
             List<Expression> arguments = new List<Expression>();
 
 
-            if (Stream.Peek().Value != TokenValue.CloseBracket)
+            if (Stream.Peek().Value != TokenValue.CloseRoundBracket)
             {
                 do
                 {
@@ -137,55 +165,26 @@ namespace pixel_walle.src.Parser
                         arguments.Add(arg);
                 } while (Stream.Match(TokenValue.Comma));
             }
-
+              
 
             token = Stream.Advance();
 
-            if (token.Value != TokenValue.CloseBracket)
+            if (token.Value != TokenValue.CloseRoundBracket)
             {
                 errors.Add(new Error(Error.ErrorType.SyntaxError,
-                    $"Expected '{TokenValue.CloseBracket}'",
+                    $"Expected '{TokenValue.CloseRoundBracket}'",
                     token.Location));
-       //         return null;
+                return null;
             }
 
-        //    var funcCall = new Function(functionName, arguments, token.Location);
+            FunctionInfo info = FunctionInfo.BuiltIns[functionName];
+            ExpressionType returnType = info.ReturnType;
+            var funcCall = new Function(functionName, arguments, returnType, token.Location);
 
-        //    return funcCall;
+            return funcCall;
 
         }
 
-
-
-
-
-
-        public Instruction ParseInstruction(List<Error> errors)
-        {
-            Token token = Stream.Peek();
-
-            if (token.Type == TokenType.Identifier)
-            {
-                Token next = Stream.Peek(1);
-
-                if (next.Value == TokenValue.Assign)
-                {
-                    return ParseAssignment(errors);
-                }
-                else
-                {
-        //            return ParseFunctionCall(errors);
-                }
-            }
-
-            if (token.Value == TokenValue.GoTo)
-            {
-                return ParseGoto(errors);
-            }
-
-            errors.Add(new Error(Error.ErrorType.SyntaxError, "Unknown instruction", token.Location));
-            return null;
-        }
 
 
 
@@ -195,22 +194,20 @@ namespace pixel_walle.src.Parser
         private Assignment ParseAssignment(List<Error> errors)
         {
             Token nameToken = Stream.Advance(); 
+
             string varName = nameToken.Value.ToString();
 
             Token assignToken = Stream.Advance();
 
             if (assignToken.Value != TokenValue.Assign)
             {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "'=' expected", assignToken.Location));
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "'<-' expected", assignToken.Location));
             }
 
             Expression expr = ParseExpression(errors);
+            
+            return new Assignment(varName, expr, assignToken.Location);
 
-            return new Assignment(assignToken.Location)
-            {
-                VariableName = varName,
-                Expr = expr
-            };
         }
 
 
@@ -228,7 +225,7 @@ namespace pixel_walle.src.Parser
             }
 
             Token openParen = Stream.Advance();
-            if (openParen.Value != TokenValue.OpenBracket)
+            if (openParen.Value != TokenValue.OpenRoundBracket)
             {
                 errors.Add(new Error(Error.ErrorType.SyntaxError, "'(' expected after 'GoTo'", openParen.Location));
                 return null;
@@ -242,7 +239,7 @@ namespace pixel_walle.src.Parser
             }
 
             Token closeParen = Stream.Advance();
-            if (closeParen.Value != TokenValue.CloseBracket)
+            if (closeParen.Value != TokenValue.CloseRoundBracket)
             {
                 errors.Add(new Error(Error.ErrorType.SyntaxError, "')' expected after label", closeParen.Location));
                 return null;
@@ -257,6 +254,8 @@ namespace pixel_walle.src.Parser
 
 
 
+
+
         public Expression ParseExpression(List<Error> errors)
         {
             return null;
@@ -264,6 +263,75 @@ namespace pixel_walle.src.Parser
 
 
 
+
+
+
+
+
+
+        public Instruction ParseInstruction(List<Error> errors)
+        {
+            return null;
+
+        }
+
+
+
+
+
+
+        private static Expression BinaryConstruction(Expression left, Token operatorToken, Expression right)
+        {
+            switch (operatorToken.Value)
+            {
+                case TokenValue.Add:
+                    return new Add(left, right, operatorToken.Location);
+
+                case TokenValue.Sub:
+                    return new Sub(left,right,operatorToken.Location);
+
+                case TokenValue.Mul:
+                    return new Multiplication(left,right,operatorToken.Location);
+
+                case TokenValue.Div:
+                    return new Div(left, right, operatorToken.Location);
+
+                case TokenValue.Pow:
+                    return new Pow(left, right, operatorToken.Location);
+
+                case TokenValue.Mod:
+                    return new Mod(left, right, operatorToken.Location);
+
+                case TokenValue.GreaterThan:
+                    return new GreaterThan(left,right, operatorToken.Location);
+
+                case TokenValue.LessThan:
+                    return new LessThan(left,right, operatorToken.Location);
+
+                case TokenValue.And:
+                    return new And(left, right, operatorToken.Location);
+
+                case TokenValue.Or:
+                    return new Or(left, right, operatorToken.Location);
+
+
+                default:
+                    return null;
+
+            }
+
+
+        }
+
+        private bool IsOperator()
+        {
+            if (Token.operators.ContainsKey(Stream.Peek().Value.ToString()))
+            {
+                return true;
+            }
+
+            return false;
+        }
 
 
     }

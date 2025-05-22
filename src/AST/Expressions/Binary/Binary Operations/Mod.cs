@@ -10,8 +10,10 @@ namespace pixel_walle.src.AST.Expressions
 {
     public class Mod : BinaryExpression
     {
-        public Mod(CodeLocation location) : base(location)
+        public Mod(Expression left, Expression right, CodeLocation location) : base(location)
         {
+            Left = left;
+            Right = right;
         }
 
         public override ExpressionType Type { get; set; }

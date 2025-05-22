@@ -21,8 +21,8 @@
         public const string GoTo = "GoTo";
 
         public const string Comma = "Comma";
-        public const string OpenBracket = "OpenBracket";
-        public const string CloseBracket = "CloseBracket";
+        public const string OpenRoundBracket = "OpenRoundBracket";
+        public const string CloseRoundBracket = "CloseRoundBracket";
         public const string OpenCurlyBraces = "OpenCurlyBraces";
         public const string ClosedCurlyBraces = "ClosedCurlyBraces";
 

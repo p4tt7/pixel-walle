@@ -13,5 +13,6 @@ namespace pixel_walle.src.AST.Instructions
         public Instruction(CodeLocation location) : base(location) { }
 
         public abstract object? Evaluate(Scope scope);
+
     }
 }

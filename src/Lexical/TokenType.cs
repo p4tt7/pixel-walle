@@ -4,6 +4,7 @@
         {
             Unknown,
             Number,
+            Bool,
             Text,
             Color,
             Keyword,

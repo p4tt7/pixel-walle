@@ -7,14 +7,18 @@ using pixel_walle.src.CodeLocation_;
 using pixel_walle.src.Lexical;
 using pixel_walle.src.Errors;
 
-namespace pixel_walle.src.AST.Expressions.Binary_Operations
+namespace pixel_walle.src.AST.Expressions
 {
     public class Or : BinaryExpression
     {
 
-            public Or(CodeLocation location) : base(location) { }
+        public Or(Expression left, Expression right, CodeLocation location) : base(location)
+        {
+            Left = left;
+            Right = right;
+        }
 
-            public override ExpressionType Type { get; set; }
+        public override ExpressionType Type { get; set; }
             public override object? Value { get; set; }
             public override bool CheckSemantic(Scope scope, List<Error> errors)
             {

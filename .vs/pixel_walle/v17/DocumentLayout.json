@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\ast\\ast node.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\ast\\ast node.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\ast\\instructions\\functions\\builtin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\ast\\instructions\\functions\\builtin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\parser\\parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\parser\\parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\ast\\instruction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\ast\\instruction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,8 +18,35 @@
       "DocumentGroups": [
         {
           "DockedWidth": 176,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BuiltIn.cs",
+              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Instructions\\Functions\\BuiltIn.cs",
+              "RelativeDocumentMoniker": "src\\AST\\Instructions\\Functions\\BuiltIn.cs",
+              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Instructions\\Functions\\BuiltIn.cs",
+              "RelativeToolTip": "src\\AST\\Instructions\\Functions\\BuiltIn.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T19:57:30.692Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Instruction.cs",
+              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Instruction.cs",
+              "RelativeDocumentMoniker": "src\\AST\\Instruction.cs",
+              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Instruction.cs",
+              "RelativeToolTip": "src\\AST\\Instruction.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T02:59:20.952Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
@@ -27,32 +54,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AST Node.cs",
-              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\AST Node.cs",
-              "RelativeDocumentMoniker": "src\\AST\\AST Node.cs",
-              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\AST Node.cs",
-              "RelativeToolTip": "src\\AST\\AST Node.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T02:13:04.415Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Parser.cs",
-              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\Parser\\Parser.cs",
-              "RelativeDocumentMoniker": "src\\Parser\\Parser.cs",
-              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\Parser\\Parser.cs",
-              "RelativeToolTip": "src\\Parser\\Parser.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAALAAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-12T21:57:37.61Z",
-              "EditorCaption": ""
             }
           ]
         }

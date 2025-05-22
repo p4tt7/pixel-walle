@@ -37,8 +37,8 @@ namespace pixel_walle.src.Lexical
             { "<=", TokenValue.LessOrEqualThan },
             { ">=", TokenValue.GreaterOrEqualThan },
             {"," , TokenValue.Comma },
-            {"(", TokenValue.OpenBracket },  
-            {")", TokenValue.CloseBracket },
+            {"(", TokenValue.OpenRoundBracket },  
+            {")", TokenValue.CloseRoundBracket },
             { "}", TokenValue.ClosedCurlyBraces },
             { "{", TokenValue.OpenCurlyBraces },
             { "<-", TokenValue.Assign }

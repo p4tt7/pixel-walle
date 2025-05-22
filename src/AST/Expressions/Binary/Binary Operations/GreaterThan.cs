@@ -12,7 +12,11 @@ namespace pixel_walle.src.AST.Expressions.Binary_Operations
     public class GreaterThan : BinaryExpression
     {
 
-        public GreaterThan(CodeLocation location) : base(location) { }
+        public GreaterThan(Expression left, Expression right, CodeLocation location) : base(location)
+        {
+            Left = left;
+            Right = right;
+        }
 
         public override ExpressionType Type { get; set; }
         public override object? Value { get; set; }

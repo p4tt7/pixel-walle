@@ -22,7 +22,6 @@ namespace pixel_walle.src.AST.Expressions
     {
         Number,
         Text,
-        Color,
         Bool
     }
 }

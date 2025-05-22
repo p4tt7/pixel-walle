@@ -10,9 +10,12 @@ namespace pixel_walle.src.AST.Expressions
 {
     public class Div : BinaryExpression
     {
-        public Div(CodeLocation location) : base(location)
+        public Div(Expression left, Expression right, CodeLocation location) : base(location)
         {
+            Left = left;
+            Right = right;
         }
+
 
         public override ExpressionType Type { get; set; }
         public override object? Value { get; set; }

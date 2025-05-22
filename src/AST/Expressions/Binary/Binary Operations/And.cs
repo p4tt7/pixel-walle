@@ -7,11 +7,15 @@ using pixel_walle.src.CodeLocation_;
 using pixel_walle.src.Lexical;
 using pixel_walle.src.Errors;
 
-namespace pixel_walle.src.AST.Expressions.Binary_Operations
+namespace pixel_walle.src.AST.Expressions
 {
     public class And : BinaryExpression
     {
-        public And(CodeLocation location) : base(location) { }
+        public And(Expression left, Expression right, CodeLocation location) : base(location)
+        {
+            Left = left;
+            Right = right;
+        }
 
         public override ExpressionType Type { get; set; }
         public override object? Value { get; set; }
