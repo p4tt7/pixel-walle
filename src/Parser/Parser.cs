@@ -140,7 +140,7 @@ namespace pixel_walle.src.Parser
 
 
 
-        public Function ParseFunctionCall(List<Error> errors)
+        public BuiltInFunction ParseFunctionCall(List<Error> errors)
         {
             Token token = Stream.Advance();
 
@@ -177,11 +177,12 @@ namespace pixel_walle.src.Parser
                 return null;
             }
 
-            FunctionInfo info = FunctionInfo.BuiltIns[functionName];
+            FunctionInfo info = FunctionInfo.Functions[functionName];
             ExpressionType returnType = info.ReturnType;
-            var funcCall = new Function(functionName, arguments, returnType, token.Location);
+            //      var funcCall = new BuiltInFunction(functionName, arguments, returnType, token.Location);
 
-            return funcCall;
+            //       return funcCall;
+            return null;
 
         }
 

@@ -10,11 +10,6 @@ namespace pixel_walle.src.AST.Instructions.Functions
     public static class Function_Library
     {
 
-        public int GetActualX()
-        {
-            
-
-        }
 
 
 

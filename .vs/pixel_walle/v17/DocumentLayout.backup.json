@@ -3,20 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\ast\\instructions\\builtin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\ast\\instructions\\builtin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\ast\\instructions\\functions\\builtin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\ast\\instructions\\functions\\builtin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\ast\\instructions\\functions\\callable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\ast\\instructions\\functions\\callable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\views\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:views\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\ast\\instructions\\functions\\function.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\ast\\instructions\\functions\\function.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\controllers\\analyzer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:controllers\\analyzer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\ast\\instruction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\ast\\instruction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\ast\\instructions\\functions\\function library.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\ast\\instructions\\functions\\function library.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\controllers\\source reader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:controllers\\source reader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -32,27 +40,14 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "BuiltIn.cs",
-              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Instructions\\BuiltIn.cs",
-              "RelativeDocumentMoniker": "src\\AST\\Instructions\\BuiltIn.cs",
-              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Instructions\\BuiltIn.cs",
-              "RelativeToolTip": "src\\AST\\Instructions\\BuiltIn.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Instructions\\Functions\\BuiltIn.cs",
+              "RelativeDocumentMoniker": "src\\AST\\Instructions\\Functions\\BuiltIn.cs",
+              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Instructions\\Functions\\BuiltIn.cs",
+              "RelativeToolTip": "src\\AST\\Instructions\\Functions\\BuiltIn.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-21T19:57:30.692Z",
               "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Instruction.cs",
-              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Instruction.cs",
-              "RelativeDocumentMoniker": "src\\AST\\Instruction.cs",
-              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Instruction.cs",
-              "RelativeToolTip": "src\\AST\\Instruction.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T02:59:20.952Z",
               "EditorCaption": ""
             },
             {
@@ -65,28 +60,66 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Function.cs",
-              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Instructions\\Functions\\Function.cs",
-              "RelativeDocumentMoniker": "src\\AST\\Instructions\\Functions\\Function.cs",
-              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Instructions\\Functions\\Function.cs",
-              "RelativeToolTip": "src\\AST\\Instructions\\Functions\\Function.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "Function Library.cs",
+              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Instructions\\Functions\\Function Library.cs",
+              "RelativeDocumentMoniker": "src\\AST\\Instructions\\Functions\\Function Library.cs",
+              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Instructions\\Functions\\Function Library.cs",
+              "RelativeToolTip": "src\\AST\\Instructions\\Functions\\Function Library.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-21T19:57:29.406Z",
+              "WhenOpened": "2025-05-23T01:08:30.046Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Analyzer.cs",
+              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\controllers\\Analyzer.cs",
+              "RelativeDocumentMoniker": "controllers\\Analyzer.cs",
+              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\controllers\\Analyzer.cs",
+              "RelativeToolTip": "controllers\\Analyzer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T01:05:33.629Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Callable.cs",
-              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Instructions\\Functions\\Callable.cs",
-              "RelativeDocumentMoniker": "src\\AST\\Instructions\\Functions\\Callable.cs",
-              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Instructions\\Functions\\Callable.cs",
-              "RelativeToolTip": "src\\AST\\Instructions\\Functions\\Callable.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAUwBEAAAAAAAAAAAAAAA==",
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\views\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "views\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\views\\MainWindow.xaml.cs",
+              "RelativeToolTip": "views\\MainWindow.xaml.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAAkwFUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-21T04:04:41.967Z",
+              "WhenOpened": "2025-05-23T00:51:32.455Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "MainWindow.xaml",
+              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\MainWindow.xaml",
+              "RelativeToolTip": "MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-23T00:50:27.642Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Source Reader.cs",
+              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\controllers\\Source Reader.cs",
+              "RelativeDocumentMoniker": "controllers\\Source Reader.cs",
+              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\controllers\\Source Reader.cs",
+              "RelativeToolTip": "controllers\\Source Reader.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T00:49:19.951Z",
               "EditorCaption": ""
             }
           ]

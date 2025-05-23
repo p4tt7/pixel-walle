@@ -1,13 +1,17 @@
-﻿using System.Text;
+﻿using pixel_walle.controllers;
+using System.Reflection.PortableExecutable;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using pixel_walle.controllers;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Resources;
 
 namespace pixel_walle
 {
@@ -18,6 +22,8 @@ namespace pixel_walle
     {
         public int Rows { get; private set; }
         public int Columns { get; private set; }
+
+        private SourceReader reader = new SourceReader();
 
         public MainWindow(int rows, int columns)
         {
@@ -70,6 +76,14 @@ namespace pixel_walle
                 PixelGrid.Children.Add(pixel);
             }
         }
+
+        private void RunButton_Click(object sender, RoutedEventArgs e)
+        {
+            string codigoFuente = miTextBox.Text;
+
+            reader.TextCode(codigoFuente);
+        }
+
 
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
