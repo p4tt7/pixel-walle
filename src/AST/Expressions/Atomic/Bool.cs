@@ -11,26 +11,16 @@ namespace pixel_walle.src.AST.Expressions.Atomic
 
         public class Bool : Atom
         {
-            private ExpressionType _type;
-            private object? _value;
+        public bool BoolValue { get; }
 
-            public override ExpressionType Type
-            {
-                get => _type;
-                set => _type = value;
-            }
+        public Bool(CodeLocation location, bool value) : base(location)
+        {
+            BoolValue = value;
+        }
 
-            public override object? Value
-            {
-                get => _value;
-                set => _value = value;
-            }
+        public override ExpressionType Type => ExpressionType.Bool;
+        public override object? Value => BoolValue;
 
-            public Bool(CodeLocation location, bool value) : base(location)
-            {
-                Value = value;
-                Type = ExpressionType.Bool;
-            }
 
             public override bool CheckSemantic(Scope scope, List<Error> errors)
             {

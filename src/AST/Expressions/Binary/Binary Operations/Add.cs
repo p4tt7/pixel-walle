@@ -11,14 +11,16 @@ namespace pixel_walle.src.AST.Expressions
 {
     public class Add : BinaryExpression
     {
+        private object? _value;
+
         public Add(Expression left, Expression right, CodeLocation location) : base(location)
         {
             Left = left;
             Right = right;
         }
 
-        public override ExpressionType Type { get; set; }
-        public override object? Value { get; set; }
+        public override ExpressionType Type => ExpressionType.Number;
+        public override object? Value => _value;
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
@@ -35,7 +37,7 @@ namespace pixel_walle.src.AST.Expressions
             Right.Evaluate();
             Left.Evaluate();
 
-            Value = (int)Right.Value + (int)Left.Value;
+            _value = (int)Right.Value + (int)Left.Value;
             return Value;
         }
     }

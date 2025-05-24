@@ -13,23 +13,15 @@ namespace pixel_walle.src.AST.Expressions
         private ExpressionType _type;
         private object? _value;
 
-        public override ExpressionType Type
-        {
-            get => _type;
-            set => _type = value;
-        }
-
-        public override object? Value
-        {
-            get => _value;
-            set => _value = value;
-        }
+        public int NumberValue { get; }
 
         public Number(CodeLocation location, int value) : base(location)
         {
-            Value = value;
-            Type = ExpressionType.Number;
+            NumberValue = value;
         }
+
+        public override ExpressionType Type => ExpressionType.Number;
+        public override object? Value => NumberValue;
 
         public bool IsInt
         {

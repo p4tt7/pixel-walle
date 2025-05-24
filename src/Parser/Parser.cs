@@ -12,6 +12,7 @@ using pixel_walle.src.AST.Expressions.Atomic;
 using System.Security.RightsManagement;
 using pixel_walle.src.AST.Expressions.Binary_Operations;
 using pixel_walle.src.AST.Instructions.Functions;
+using pixel_walle.src.AST;
 
 
 namespace pixel_walle.src.Parser
@@ -28,6 +29,23 @@ namespace pixel_walle.src.Parser
             Stream = stream;
         }
 
+        public ASTNode? Parse(List<Error> errors)
+        {
+            Token token = Stream.Peek();
+
+            if (IsExpression(token))
+            {
+                return ParseExpression(errors);
+            }
+
+            if (IsInstruction(token)) 
+            { 
+                return ParseInstruction(errors);
+            }
+
+            return null;
+
+        }
 
 
 
@@ -113,7 +131,7 @@ namespace pixel_walle.src.Parser
 
 
 
-        public object ParseStatement(List<Error> errors)
+        public Expression ParseStatement(List<Error> errors)
         {
 
             Token token = Stream.Advance();
@@ -179,9 +197,8 @@ namespace pixel_walle.src.Parser
 
             FunctionInfo info = FunctionInfo.Functions[functionName];
             ExpressionType returnType = info.ReturnType;
-            //      var funcCall = new BuiltInFunction(functionName, arguments, returnType, token.Location);
 
-            //       return funcCall;
+
             return null;
 
         }
@@ -210,7 +227,6 @@ namespace pixel_walle.src.Parser
             return new Assignment(varName, expr, assignToken.Location);
 
         }
-
 
         
 
@@ -332,6 +348,22 @@ namespace pixel_walle.src.Parser
             }
 
             return false;
+        }
+
+        private bool IsExpression(Token token)
+        {
+            return token.Type == TokenType.Number ||
+                   token.Type == TokenType.Text ||
+                   token.Type == TokenType.Bool ||
+                   IsOperator(); 
+        }
+
+        private bool IsInstruction(Token token)
+        {
+            return token.Type == TokenType.Identifier ||
+                   token.Value == TokenValue.Assign || 
+                   token.Value == TokenValue.GoTo ||   
+                   token.Value == TokenValue.OpenRoundBracket;
         }
 
 
