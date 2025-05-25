@@ -3,11 +3,8 @@ using pixel_walle.src.Lexical;
 using pixel_walle.src.AST.Instructions;
 using pixel_walle.src.Errors;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Text.Json;
 using pixel_walle.src.AST.Expressions.Atomic;
 using System.Security.RightsManagement;
 using pixel_walle.src.AST.Expressions.Binary_Operations;
@@ -47,8 +44,34 @@ namespace pixel_walle.src.Parser
 
         }
 
+        public Instruction ParseInstruction(List<Error> errors)
+        {
+            Token token = Stream.Peek();
+
+            if(token.Value == TokenValue.GoTo)
+            {
+                return ParseGoto(errors);
+            }
+
+            if (token.Type == TokenType.Identifier)
+            {
+                return ParseAssignment(errors);
+            }
+
+            if(OperationRegistry.IsBuiltIn(token.Value))
+            {
+                return ParseFunctionCall(errors);
+
+            }
 
 
+
+            errors.Add(new Error(Error.ErrorType.SyntaxError, "Instruction expected", token.Location));
+            Stream.Advance(); 
+            return null;
+
+
+        }
 
 
 
@@ -95,33 +118,94 @@ namespace pixel_walle.src.Parser
             return null;
         }
 
-
-
-
-
-        public Expression ParseBinaryOperation(List<Error> errors)
+        public Expression ParseExpression(List<Error> errors)
         {
-            Expression left = ParseNumber();
+            Expression left = ParseTerm(errors);
 
-            while(IsOperator())
+            while (Stream.Match(TokenValue.Add) || Stream.Match(TokenValue.Sub))
             {
-                Token operatorToken = Stream.Advance();
+                Token op = Stream.Rollback();
 
-                Expression? right = ParseNumber();
+                Expression right = ParseTerm(errors);
 
-                if (right == null)
-                {
-                    errors.Add(new Error(Error.ErrorType.SyntaxError, "Expected right-hand operand", operatorToken.Location));
-                    return null;
-                }
-
-                left = BinaryConstruction(left, operatorToken, right);
-
+                if (op.Value == TokenValue.Add)
+                    left = new Add(left, right, op.Location);
+                else
+                    left = new Sub(left, right, op.Location);
             }
 
             return left;
-
         }
+
+        public Expression ParseTerm(List<Error> errors)
+        {
+            Expression left = ParsePower(errors);
+
+            while (Stream.Match(TokenValue.Mul) || Stream.Match(TokenValue.Div) || Stream.Match(TokenValue.Mod))
+            {
+                Token op = Stream.Rollback();
+                Expression right = ParsePower(errors);
+
+                switch (op.Value)
+                {
+                    case TokenValue.Mul:
+                        left = new Multiplication(left, right, op.Location);
+                        break;
+                    case TokenValue.Div:
+                        left = new Div(left, right, op.Location);
+                        break;
+                    case TokenValue.Mod:
+                        left = new Mod(left, right, op.Location);
+                        break;
+                }
+            }
+
+            return left;
+        }
+
+        public Expression ParsePower(List<Error> errors)
+        {
+            Expression left = ParsePrimary(errors);
+
+            if (Stream.Match(TokenValue.Pow))
+            {
+                Token op = Stream.Rollback();
+                Expression right = ParsePower(errors); 
+
+                return new Pow(left, right, op.Location);
+            }
+
+            return left;
+        }
+
+        public Expression ParsePrimary(List<Error> errors)
+        {
+            Token token = Stream.Peek();
+
+            switch (token.Type)
+            {
+                case TokenType.Number:
+                    return ParseNumber();
+                case TokenType.Text:
+                    return ParseText();
+                case TokenType.Bool:
+                    return ParseBool();
+                case TokenType.OpenRoundBracket:
+                    Stream.Advance(); 
+                    Expression expr = ParseExpression(errors);
+                    if (!Stream.Match(TokenValue.CloseRoundBracket))
+                    {
+                        errors.Add(new Error(Error.ErrorType.SyntaxError, "Expected ')'", Stream.Peek().Location));
+                    }
+                    return expr;
+                default:
+                    errors.Add(new Error(Error.ErrorType.SyntaxError, "Unexpected token", token.Location));
+                    Stream.Advance(); 
+                    return null;
+            }
+        }
+
+
 
 
 
@@ -154,10 +238,6 @@ namespace pixel_walle.src.Parser
         }
 
 
-
-
-
-
         public BuiltInFunction ParseFunctionCall(List<Error> errors)
         {
             Token token = Stream.Advance();
@@ -165,7 +245,7 @@ namespace pixel_walle.src.Parser
             string functionName = token.Value.ToString();
 
 
-            if (token.Value != TokenValue.OpenRoundBracket)
+            if (!Stream.Match(TokenValue.OpenRoundBracket))
             {
                 errors.Add(new Error(Error.ErrorType.SyntaxError, $"Invalid syntax, {TokenValue.OpenRoundBracket} expected", Stream.Advance().Location));
             }
@@ -269,93 +349,11 @@ namespace pixel_walle.src.Parser
         }
 
 
-
-
-
-
-        public Expression ParseExpression(List<Error> errors)
-        {
-            return null;
-        }
-
-
-
-
-
-
-
-
-
-        public Instruction ParseInstruction(List<Error> errors)
-        {
-            return null;
-
-        }
-
-
-
-
-
-
-        private static Expression BinaryConstruction(Expression left, Token operatorToken, Expression right)
-        {
-            switch (operatorToken.Value)
-            {
-                case TokenValue.Add:
-                    return new Add(left, right, operatorToken.Location);
-
-                case TokenValue.Sub:
-                    return new Sub(left,right,operatorToken.Location);
-
-                case TokenValue.Mul:
-                    return new Multiplication(left,right,operatorToken.Location);
-
-                case TokenValue.Div:
-                    return new Div(left, right, operatorToken.Location);
-
-                case TokenValue.Pow:
-                    return new Pow(left, right, operatorToken.Location);
-
-                case TokenValue.Mod:
-                    return new Mod(left, right, operatorToken.Location);
-
-                case TokenValue.GreaterThan:
-                    return new GreaterThan(left,right, operatorToken.Location);
-
-                case TokenValue.LessThan:
-                    return new LessThan(left,right, operatorToken.Location);
-
-                case TokenValue.And:
-                    return new And(left, right, operatorToken.Location);
-
-                case TokenValue.Or:
-                    return new Or(left, right, operatorToken.Location);
-
-
-                default:
-                    return null;
-
-            }
-
-
-        }
-
-        private bool IsOperator()
-        {
-            if (Token.operators.ContainsKey(Stream.Peek().Value.ToString()))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         private bool IsExpression(Token token)
         {
             return token.Type == TokenType.Number ||
                    token.Type == TokenType.Text ||
-                   token.Type == TokenType.Bool ||
-                   IsOperator(); 
+                   token.Type == TokenType.Bool;
         }
 
         private bool IsInstruction(Token token)

@@ -8,6 +8,7 @@
             Text,
             Color,
             Keyword,
+            OpenRoundBracket,
             Identifier,
             Symbol,
             EOF, 

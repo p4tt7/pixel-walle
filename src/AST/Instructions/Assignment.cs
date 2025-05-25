@@ -11,7 +11,7 @@ using pixel_walle.src.Errors;
 
 namespace pixel_walle.src.AST.Instructions
 {
-    public class Assignment : Expression
+    public class Assignment : Instruction
     {
         public Assignment(string variableName, Expression expr, CodeLocation location) : base(location)
         {
@@ -22,8 +22,6 @@ namespace pixel_walle.src.AST.Instructions
         public string VariableName { get; }
         public Expression Expr { get; }
 
-        public override ExpressionType Type => Expr.Type;
-        public override object? Value => Expr.Value;
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
@@ -43,12 +41,6 @@ namespace pixel_walle.src.AST.Instructions
             return true;
         }
 
-        public override object Evaluate()
-        {
-            object? value = Expr.Evaluate();
-            Scope.Current.Define(VariableName, value);
-            return null;
-        }
 
 
         public static bool VariableNameValidator(string name)
@@ -74,7 +66,11 @@ namespace pixel_walle.src.AST.Instructions
 
         }
 
-
-
+        public override object? Evaluate(Scope scope)
+        {
+            object value = Expr.Evaluate();
+            scope.Define(VariableName, value);
+            return value; 
+        }
     }
 }

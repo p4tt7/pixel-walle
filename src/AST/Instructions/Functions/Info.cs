@@ -37,6 +37,11 @@ namespace pixel_walle.src.AST.Instructions
             }
             return null; 
         }
+
+        public static bool IsBuiltIn(string name)
+        {
+            return Functions.ContainsKey(name) || InstructionInfo.BuiltIns.ContainsKey(name);
+        }
     }
 
 
