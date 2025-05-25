@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using pixel_walle.src.Colores;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,13 +9,14 @@ namespace pixel_walle.src.Canvas
 {
     public class Pixel
     {
-        public (int X, int Y) Posicion { get; set; }
-        public string Color { get; set; }
 
-        public Pixel(int x, int y, string color)
+        public Colors Color { get; set; }
+
+        public Pixel(Colors color)
         {
-            Posicion = (x, y);
             Color = color;
         }
+
     }
+
 }

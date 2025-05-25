@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Media;
 using System.Threading.Tasks;
 
 namespace pixel_walle.src.Colores
@@ -29,5 +30,10 @@ namespace pixel_walle.src.Colores
             { "White", new Colors(255, 255, 255) },
 
         };
+
+        public Color ToMediaColor()
+        {
+            return Color.FromRgb((byte)R, (byte)G, (byte)B);
+        }
     }
 }
