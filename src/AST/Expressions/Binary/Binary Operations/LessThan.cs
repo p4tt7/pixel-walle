@@ -11,6 +11,7 @@ namespace pixel_walle.src.AST.Expressions.Binary_Operations
 {
     public class LessThan : BinaryExpression
     {
+        private object? value;
 
         public LessThan(Expression left, Expression right, CodeLocation location) : base(location)
         {
@@ -18,8 +19,8 @@ namespace pixel_walle.src.AST.Expressions.Binary_Operations
             Right = right;
         }
 
-        public override ExpressionType Type { get; set; }
-        public override object? Value { get; set; }
+        public override ExpressionType Type => ExpressionType.Bool;
+        public override object? Value => value;
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
             if (Right.Type != ExpressionType.Number || Left.Type != ExpressionType.Number)
@@ -35,8 +36,8 @@ namespace pixel_walle.src.AST.Expressions.Binary_Operations
             Right.Evaluate();
             Left.Evaluate();
 
-            Value = (int)Right.Value > (int)Left.Value;
-            return Value;
+            value = (int)Right.Value > (int)Left.Value;
+            return value;
         }
 
     }

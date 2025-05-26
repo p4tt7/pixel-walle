@@ -15,7 +15,7 @@ namespace pixel_walle.src.Canvas
 
         public Brush(Colors colorbrush, int brush_thickness)
         {
-            ColorBrush = ;
+            ColorBrush = colorbrush;
             BrushThickness = 0;
         }
     }

@@ -12,14 +12,16 @@ namespace pixel_walle.src.AST.Expressions.Binary_Operations
     public class GreaterThan : BinaryExpression
     {
 
+        private object? value;
+
         public GreaterThan(Expression left, Expression right, CodeLocation location) : base(location)
         {
             Left = left;
             Right = right;
         }
 
-        public override ExpressionType Type { get; set; }
-        public override object? Value { get; set; }
+        public override ExpressionType Type => ExpressionType.Number;
+        public override object? Value => Value;
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
             if (Right.Type != ExpressionType.Number || Left.Type != ExpressionType.Number)
@@ -35,8 +37,8 @@ namespace pixel_walle.src.AST.Expressions.Binary_Operations
             Right.Evaluate();
             Left.Evaluate();
 
-            Value = (int)Right.Value < (int)Left.Value;
-            return Value;
+            value = (int)Right.Value < (int)Left.Value;
+            return value;
         }
 
     }

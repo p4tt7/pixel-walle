@@ -31,9 +31,7 @@
                        Height="527" HorizontalAlignment="Left" VerticalAlignment="Center"
             ></Rectangle>
 
-            <UniformGrid x:Name="PixelGrid"
-                         Canvas.Left="191"
-                         Canvas.Top="9" 
+            <UniformGrid x:Name="PixelGrid" 
                          HorizontalAlignment="Center" 
                          VerticalAlignment="Center"/>
 
@@ -72,7 +70,6 @@
                 Foreground="Black"
                     BorderBrush="Black"
                     BorderThickness="3"
-                    Click="ClearButton_Click"
                 Cursor="Hand"
                 Canvas.Top="555"
                 RenderTransformOrigin="-5.137,1.145" Canvas.Left="225" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -90,9 +87,10 @@
                 Cursor="Hand"
                 RenderTransformOrigin="-5.137,1.145" Canvas.Left="1132" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="9"/>
 
-            <Button Content="TERMINAL"
+            <Button Content="ERRORS"
                 Width="123"
                 Height="43"
+                    Click="ErrorsButton_Click"
                 FontSize="10"
                 FontWeight="Bold"
                 Background="White"
@@ -102,6 +100,7 @@
                 Cursor="Hand"
                 Canvas.Top="555"
                 RenderTransformOrigin="-5.137,1.145" Canvas.Left="90" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            
             <Button Content="RUN!"
                 Width="258"
                 Height="43"

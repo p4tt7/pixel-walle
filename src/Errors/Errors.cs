@@ -12,7 +12,10 @@ namespace pixel_walle.src.Errors
     {
         public CodeLocation Location { get; set; }
 
+
         public ErrorType Type { get; protected set; }
+
+
 
         public Error(ErrorType type, string message, CodeLocation location)
          : base($"[{type}] {message}")
@@ -20,6 +23,15 @@ namespace pixel_walle.src.Errors
             Type = type;
             Location = location;
         }
+
+
+
+
+        public override string ToString()
+        {
+            return $"{Location}: [{Type}] {Message}";
+        }
+
 
 
         public enum ErrorType

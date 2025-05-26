@@ -23,3 +23,5 @@ C:\Users\david\OneDrive\Documents\Universidad\Primer Año\Programacion\Proyectos
 C:\Users\david\OneDrive\Documents\Universidad\Primer Año\Programacion\Proyectos\pixel_walle\obj\Debug\net8.0-windows\App.g.cs
 C:\Users\david\OneDrive\Documents\Universidad\Primer Año\Programacion\Proyectos\pixel_walle\obj\Debug\net8.0-windows\DimensionMenu.baml
 C:\Users\david\OneDrive\Documents\Universidad\Primer Año\Programacion\Proyectos\pixel_walle\obj\Debug\net8.0-windows\MainWindow.baml
+C:\Users\david\OneDrive\Documents\Universidad\Primer Año\Programacion\Proyectos\pixel_walle\obj\Debug\net8.0-windows\ErrorsWindow.g.cs
+C:\Users\david\OneDrive\Documents\Universidad\Primer Año\Programacion\Proyectos\pixel_walle\obj\Debug\net8.0-windows\ErrorsWindow.baml

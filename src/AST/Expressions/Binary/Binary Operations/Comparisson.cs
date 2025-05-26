@@ -14,8 +14,8 @@ namespace pixel_walle.src.AST.Expressions
         {
         }
 
-        public override ExpressionType Type { get; set; }
-        public override object? Value { get; set; }
+        public override ExpressionType Type { get;}
+        public override object? Value { get; }
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {

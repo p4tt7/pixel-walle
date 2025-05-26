@@ -12,15 +12,19 @@ namespace pixel_walle.src.AST.Expressions
     public class Or : BinaryExpression
     {
 
+        private object? value;
+
         public Or(Expression left, Expression right, CodeLocation location) : base(location)
         {
             Left = left;
             Right = right;
         }
 
-        public override ExpressionType Type { get; set; }
-            public override object? Value { get; set; }
-            public override bool CheckSemantic(Scope scope, List<Error> errors)
+
+        public override object? Value => value;
+        public override ExpressionType Type => ExpressionType.Bool;
+
+        public override bool CheckSemantic(Scope scope, List<Error> errors)
             {
                 if (Right.Type != ExpressionType.Bool || Left.Type != ExpressionType.Bool)
                 {
@@ -35,8 +39,8 @@ namespace pixel_walle.src.AST.Expressions
                 Right.Evaluate();
                 Left.Evaluate();
 
-                Value = (bool)Right.Value || (bool)Left.Value;
-                return Value;
+                value = (bool)Right.Value || (bool)Left.Value;
+                return value;
             }
 
     }

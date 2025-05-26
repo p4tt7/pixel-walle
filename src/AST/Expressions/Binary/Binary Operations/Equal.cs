@@ -11,19 +11,23 @@ namespace pixel_walle.src.AST.Expressions.Binary_Operations
 {
     public class Equal : BinaryExpression
     {
+        private object? value;
         public Equal(Expression left, Expression right, CodeLocation location)
             : base(location)
         {
             Left = left;
             Right = right;
-            Type = ExpressionType.Bool;
         }
+
+        public override object? Value => value;
+        public override ExpressionType Type => ExpressionType.Bool;
 
         public override object? Evaluate()
         {
             var leftVal = Left.Evaluate();
             var rightVal = Right.Evaluate();
-            return Equals(leftVal, rightVal);
+            value = Equals(leftVal, rightVal);
+            return value;
         }
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
@@ -40,9 +44,6 @@ namespace pixel_walle.src.AST.Expressions.Binary_Operations
             return leftOk && rightOk;
         }
 
-        public override object? Value { get; set; }
-
-        public override ExpressionType Type { get; set; }
     }
 
 }

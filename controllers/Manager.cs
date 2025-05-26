@@ -14,7 +14,9 @@ namespace pixel_walle.controllers
 {
         public class Manager
         {
+
             public string FileName { get; set; }
+
             private LexicalAnalizer lexer = new LexicalAnalizer();
 
             public string SourceCode { get; private set; }
@@ -27,19 +29,21 @@ namespace pixel_walle.controllers
                 Errors = new List<Error>();
             }
 
-
-
             public void Analyze()
             {
-            List<Token> tokens = lexer.GetTokens(FileName, SourceCode, Errors);
-            TokenStream stream = new TokenStream(tokens);
-            Parser parser = new Parser(stream);
-            List<Error> parseErrors = new List<Error>();
 
-            ASTNode? ast = parser.Parse(parseErrors);
+                List<Token> tokens = lexer.GetTokens(FileName, SourceCode, Errors);
+                TokenStream stream = new TokenStream(tokens);
+                Parser parser = new Parser(stream);
+                List<Error> parseErrors = new List<Error>();
+                ASTNode? ast = parser.Parse(parseErrors);
+
+                Errors.AddRange(parseErrors);
 
 
-            }
         }
+
+        }
+
 }
        
