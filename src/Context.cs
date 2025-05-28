@@ -25,6 +25,7 @@ namespace pixel_walle.src
         public void Spawn(int x, int y)
         {
             Robot = new Robot(x, y);
+
         }
 
         public bool HasRobot => Robot != null;

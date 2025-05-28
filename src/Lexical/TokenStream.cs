@@ -37,15 +37,14 @@ namespace pixel_walle.src.Lexical
 
         public bool Match(TokenType type)
         {
-            return Peek().Type == type;
-
+            var token = Peek();
+            return token != null && token.Type == type;
         }
 
         public bool Match(string value)
         {
-
-            return Peek().Value == value;
-
+            var token = Peek();
+            return token != null && token.Value != null && token.Value == value;
         }
 
         public Token Advance()
