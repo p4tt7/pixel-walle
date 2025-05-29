@@ -7,34 +7,97 @@ using System.Threading.Tasks;
 using pixel_walle.src.Canvas;
 using System.Drawing;
 using pixel_walle.src.AST.Expressions;
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime;
 
 namespace pixel_walle.src.AST.Instructions.Functions
 {
     public class Function_Library
     {
-        public void Spawn(int x, int y, Context context)
+
+        public Dictionary<string, BuiltInFunction> BuiltIns = new()
+        {
+            ["Spawn"] = new BuiltInFunction
+            {
+                Parameters = new() { ExpressionType.Number, ExpressionType.Number },
+                ReturnType = null,
+                Implementation = (args, ctx) =>
+                {
+                    Spawn((int)args[0], (int)args[1], ctx);
+                    return null;
+                }
+            },
+
+            ["Color"] = new BuiltInFunction
+            {
+                Parameters = new() { ExpressionType.Text },
+                ReturnType = null,
+                Implementation = (args, ctx) =>
+                {
+                    Color((string)args[0], ctx);
+                    return null;
+                }
+
+            },
+
+            ["Size"] = new BuiltInFunction
+            {
+                Parameters = new() { ExpressionType.Number },
+                ReturnType = null,
+                Implementation = (args, ctx) =>
+                {
+                    Size((int)args[0], ctx);
+                    return null;
+                }
+
+            },
+
+            ["DrawLine"] = new BuiltInFunction
+            {
+                Parameters = new() { ExpressionType.Number, ExpressionType.Number, ExpressionType.Number },
+                ReturnType = null,
+                Implementation = (args, ctx) =>
+                {
+                    DrawLine((int)args[0], (int)args[1], (int)args[2], ctx);
+                    return null;
+                }
+            },
+
+            ["DrawRectangle"] = new BuiltInFunction
+            {
+                Parameters = new() { ExpressionType.Number, ExpressionType.Number, ExpressionType.Number },
+                ReturnType = null,
+                Implementation = (args, ctx) =>
+                {
+                    DrawRectangle((int)args[0], (int)args[1], (int)args[2], (int)args[3], ctx);
+                    return null;
+                }
+            }
+
+        };
+
+
+        public static void Spawn(int x, int y, Context context)
         {
            context.Spawn(x, y);
         }
 
-        public bool Color(string color, Context context)
+        public static void Color(string color, Context context)
         {
             foreach(var c in Colors.colores)
             {
                 if(Colors.colores.ContainsKey(color))
                 {
                     context.Brush.ColorBrush = Colors.colores[color];
-                    return true;
 
                 }
 
             }   
-            
-            return false;
+
         }
 
 
-        public void Size(int k, Context context)
+        public static void Size(int k, Context context)
         {
 
             context.Brush.BrushThickness = k;
@@ -42,10 +105,8 @@ namespace pixel_walle.src.AST.Instructions.Functions
         }
 
 
-        public bool DrawLine(int dirX, int dirY, int distance, Context context)
+        public static void DrawLine(int dirX, int dirY, int distance, Context context)
         {
-            if (context.Robot == null)
-                return false;
 
             int x = context.Robot.X;
             int y = context.Robot.Y;
@@ -73,11 +134,10 @@ namespace pixel_walle.src.AST.Instructions.Functions
 
             }
 
-            return true;
         }
 
 
-        public bool DrawCircle(int dirX, int dirY, int radius, Context context)
+        public static void DrawCircle(int dirX, int dirY, int radius, Context context)
         {
             (int dx, int dy)[] directions = new (int, int)[]
             {
@@ -91,8 +151,6 @@ namespace pixel_walle.src.AST.Instructions.Functions
             (-1, -1)   
             };
 
-            if (context.Robot == null)
-                return false;
 
             int startX = context.Robot.X;
             int startY = context.Robot.Y;
@@ -124,14 +182,11 @@ namespace pixel_walle.src.AST.Instructions.Functions
             context.Robot.X += dirX * radius;
             context.Robot.Y += dirY * radius;
 
-            return true;
         }
 
 
-        public bool DrawRectangle(int dirX, int dirY, int distance, int width, int height, Context context)
+        public static void  DrawRectangle(int dirX, int dirY, int distance, int width, int height, Context context)
         {
-            if (context.Robot == null)
-                return false;
 
             context.Robot.X += dirX * distance;
             context.Robot.Y += dirY * distance;
@@ -163,33 +218,32 @@ namespace pixel_walle.src.AST.Instructions.Functions
                 }
             }
 
-            return true;
         }
 
 
-        public void Fill()
+        public static void Fill()
         {
 
         }
 
 
-        public int GetActualX(Context context)
+        public static int GetActualX(Context context)
         {
             return context.Robot.X;
             
         }
 
-        public int GetActualY(Context context)
+        public static int GetActualY(Context context)
         {
             return context.Robot.Y;
         }
 
-        public (int x, int y) GetCanvasSize(Context context)
+        public static (int x, int y) GetCanvasSize(Context context)
         {
             return (context.canvas.Width, context.canvas.Height);
         }
 
-        public int GetColorCount(string color, int x1, int y1, int x2, int y2, Context context)
+        public static int GetColorCount(string color, int x1, int y1, int x2, int y2, Context context)
         {
 
             if (!Colors.colores.TryGetValue(color, out Colors targetColor))
@@ -215,7 +269,7 @@ namespace pixel_walle.src.AST.Instructions.Functions
            
         }
 
-        public int IsBrushSize(int size, Context context)
+        public static int IsBrushSize(int size, Context context)
         {
             if(context.Brush.BrushThickness == size)
             {
@@ -226,7 +280,7 @@ namespace pixel_walle.src.AST.Instructions.Functions
         }
 
 
-        public int IsCanvasColor(string color, int vertical, int horizontal, Context context)
+        public static int IsCanvasColor(string color, int vertical, int horizontal, Context context)
         {
             int x = context.Robot.X;
             int y = context.Robot.Y;
@@ -238,7 +292,7 @@ namespace pixel_walle.src.AST.Instructions.Functions
             {
                 return 0;
             }
-
+            
             if (context.canvas.Pixeles.TryGetValue((posx, posy), out Pixel pixel) &&
                 pixel.Color == targetColor)
             {
@@ -250,7 +304,7 @@ namespace pixel_walle.src.AST.Instructions.Functions
 
 
 
-        private void Paint(Pixel pixel, Colors color)
+        private static void Paint(Pixel pixel, Colors color)
         {
             pixel.Color = color;
 

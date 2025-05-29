@@ -9,50 +9,14 @@ using System.Threading.Tasks;
 
 namespace pixel_walle.src.AST.Instructions.Functions
 {
-    public class BuiltInFunction : Instruction
+    public class BuiltInFunction
     {
 
         public string FunctionName { get; }
-        public List<Expression> Parameters { get; }
-
-        protected BuiltInFunction(string name, List<Expression> parameters, CodeLocation location) : base(location)
-        {
-            FunctionName = name;
-            Parameters = parameters;
-
-        }
+        public List<ExpressionType> Parameters { get; set; }
+        public ExpressionType? ReturnType { get; set; }
+        public Func<List<object>, Context, object?> Implementation { get; set; }
 
 
-        public override bool CheckSemantic(Scope scope, List<Error> errors)
-        {
-            bool isInstruction = InstructionInfo.BuiltIns.ContainsKey(FunctionName);
-            bool isFunction = FunctionInfo.Functions.ContainsKey(FunctionName);
-
-            if (!isInstruction && !isFunction)
-            {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "", Location));
-                return false;
-            }
-
-            var RealParemeter = OperationRegistry.GetParameterTypes(FunctionName);
-
-
-            for (int i = 0; i < Parameters.Count && i < RealParemeter.Count; i++)
-            {
-                if (Parameters[i].Type != RealParemeter[i])
-                {
-                    errors.Add(new Error(Error.ErrorType.ParameterTypeMismatch, "", Location));
-                }
-
-            }
-
-            return true;
-
-        }
-
-        public override object? Evaluate(Scope scope)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
