@@ -50,19 +50,23 @@ namespace pixel_walle.src.Parser
 
             if(token.Value == TokenValue.GoTo)
             {
-                return ParseGoto(errors);
+                return ParseGoTo(errors);
             }
 
             if (token.Type == TokenType.Identifier)
             {
+                Token next = Stream.Peek(1);
+
+                if (next.Type == TokenType.Symbol && next.Value == TokenValue.OpenRoundBracket)
+                {
+                    Token identifierToken = Stream.Advance();
+                    return ParseFunctionCall(errors, identifierToken);
+                }
+
                 return ParseAssignment(errors);
             }
 
-            if(OperationRegistry.IsBuiltIn(token.Value))
-            {
-                return ParseFunctionCall(errors);
 
-            }
 
 
 
@@ -182,6 +186,19 @@ namespace pixel_walle.src.Parser
         {
             Token token = Stream.Peek();
 
+            if (token.Value == TokenValue.OpenRoundBracket)
+            {
+                Stream.Advance();
+                Expression expr = ParseExpression(errors);
+
+                if (!Stream.Match(TokenValue.CloseRoundBracket))
+                {
+                    errors.Add(new Error(Error.ErrorType.SyntaxError, "Expected ')'", Stream.Peek().Location));
+                }
+
+                return expr;
+            }
+
             switch (token.Type)
             {
                 case TokenType.Number:
@@ -190,26 +207,12 @@ namespace pixel_walle.src.Parser
                     return ParseText();
                 case TokenType.Bool:
                     return ParseBool();
-                case TokenType.OpenRoundBracket:
-                    Stream.Advance(); 
-                    Expression expr = ParseExpression(errors);
-                    if (!Stream.Match(TokenValue.CloseRoundBracket))
-                    {
-                        errors.Add(new Error(Error.ErrorType.SyntaxError, "Expected ')'", Stream.Peek().Location));
-                    }
-                    return expr;
                 default:
                     errors.Add(new Error(Error.ErrorType.SyntaxError, "Unexpected token", token.Location));
                     Stream.Advance(); 
                     return null;
             }
         }
-
-
-
-
-
-
 
 
 
@@ -238,11 +241,10 @@ namespace pixel_walle.src.Parser
         }
 
 
-        public BuiltInFunction ParseFunctionCall(List<Error> errors)
+        public Function ParseFunctionCall(List<Error> errors, Token identifierToken)
         {
-            Token token = Stream.Advance();
 
-            string functionName = token.Value.ToString();
+            string functionName = identifierToken.Value;
 
 
             if (!Stream.Match(TokenValue.OpenRoundBracket))
@@ -265,7 +267,7 @@ namespace pixel_walle.src.Parser
             }
               
 
-            token = Stream.Advance();
+            Token token = Stream.Advance();
 
             if (token.Value != TokenValue.CloseRoundBracket)
             {
@@ -275,8 +277,8 @@ namespace pixel_walle.src.Parser
                 return null;
             }
 
-            FunctionInfo info = FunctionInfo.Functions[functionName];
-            ExpressionType returnType = info.ReturnType;
+            FunctionInfo info = FunctionLibrary.BuiltIns[functionName];
+            ExpressionType? returnType = info.ReturnType;
 
 
             return null;
@@ -308,45 +310,101 @@ namespace pixel_walle.src.Parser
 
         }
 
+
+
+
+
+
+
+        private GoTo ParseGoTo(List<Error> errors)
+        {
+            Token token = Stream.Advance();
+            
+            if(token.Value != TokenValue.OpenSquareBracket)
+            {
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "'[ expected", token.Location));
+                return null;
+            }
+
+            Instruction label = null;
+            Token tokenLabel = Stream.Advance();
+            if (tokenLabel.Type != TokenType.Identifier)
+            {
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "Label expected", token.Location));
+
+            }
+            
+         
+            var labelNode = new Label(tokenLabel.Value, tokenLabel.Location);
+
+            
+            Token tokenClose = Stream.Advance();
+            if(tokenClose.Value != TokenValue.ClosedSquareBracket)
+            {
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "']' expected", token.Location));
+                return null;
+
+            }
+
+            Token tokenOpenP = Stream.Advance();
+            if (tokenOpenP.Value != TokenValue.OpenRoundBracket)
+            {
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "'(' expected", token.Location));
+                return null;
+
+            }
+
+                  
+            Expression condition = null;
+            Token tokenCondition = Stream.Advance();
+            condition = ParseExpression(errors);
+            if(condition==null)
+            {
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "Condition expected after ','", tokenCondition.Location));
+            }
+
+            Token tokenCloseP = Stream.Advance();
+            if (tokenOpenP.Value != TokenValue.CloseRoundBracket)
+            {
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "')' expected", token.Location));
+                return null;
+            }
+
+            List<Instruction> body = new();
+            if(Stream.Peek().Value == TokenValue.OpenCurlyBraces)
+            {
+                Stream.Advance();
+                while (Stream.Peek().Value != TokenValue.ClosedCurlyBraces && !Stream.End)
+                {
+                    var instruction = ParseInstruction(errors);
+                    if (instruction != null)
+                        body.Add(instruction);
+                }
+
+                if (Stream.Peek().Value != TokenValue.ClosedCurlyBraces)
+                {
+                    errors.Add(new Error(Error.ErrorType.SyntaxError, "'}' expected to close GoTo block", .Location));
+                    return null;
+                }
+
+                Stream.Advance();
+
+            }
+
+            var gotoNode = new GoTo(labelNode, condition, token.Location)
+            {
+                Body = body
+            };
+
+            return gotoNode;
+
+        }
+
         
 
 
 
-        private GoTo ParseGoto(List<Error> errors)
-        {
-            Token gotoToken = Stream.Advance(); 
-            if (gotoToken.Value != TokenValue.GoTo)
-            {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "'GoTo' expected", gotoToken.Location));
-                return null;
-            }
 
-            Token openParen = Stream.Advance();
-            if (openParen.Value != TokenValue.OpenRoundBracket)
-            {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "'(' expected after 'GoTo'", openParen.Location));
-                return null;
-            }
-
-            Token labelToken = Stream.Advance();
-            if (labelToken.Type != TokenType.Identifier)
-            {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "Label name expected", labelToken.Location));
-                return null;
-            }
-
-            Token closeParen = Stream.Advance();
-            if (closeParen.Value != TokenValue.CloseRoundBracket)
-            {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "')' expected after label", closeParen.Location));
-                return null;
-            }
-
-            return new GoTo(labelToken.Value,gotoToken.Location)
-            {
-                Label = labelToken.Value.ToString()
-            };
-        }
 
 
         private bool IsExpression(Token token)

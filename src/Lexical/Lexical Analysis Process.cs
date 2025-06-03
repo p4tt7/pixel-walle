@@ -36,9 +36,11 @@ namespace pixel_walle.src.Lexical
             {
                 stream.SkipWhitespace();
 
+                if (stream.EOF) break;
+
                 string value;
 
-                if (stream.Peek() == '\n')
+                if (stream.Peek() == '\n' || stream.Peek() == '\r')
                 {
                     tokens.Add(new Token(TokenType.Newline, "\\n", stream.Location)); 
                     continue;

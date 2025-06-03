@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace pixel_walle.src.AST.Instructions.Functions
 {
-    public class BuiltInFunction
+    public class FunctionInfo
     {
 
         public string FunctionName { get; }
-        public List<ExpressionType> Parameters { get; set; }
+        public List<ExpressionType>? Parameters { get; set; }
         public ExpressionType? ReturnType { get; set; }
         public Func<List<object>, Context, object?> Implementation { get; set; }
 

@@ -2,6 +2,7 @@
 using pixel_walle.src.AST.Expressions.Atomic;
 using System.Collections.Generic;
 using System.Linq;
+using pixel_walle.src.AST.Instructions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,6 +14,7 @@ namespace pixel_walle.src
         private Dictionary<string, object> variables = new();
 
         public static Scope Current { get; private set; }
+        public Dictionary<string, Label> Labels { get; } = new Dictionary<string, Label>();
 
         public Scope(Scope current = null)
         {

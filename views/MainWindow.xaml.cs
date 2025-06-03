@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Resources;
+using System.IO.Enumeration;
 
 namespace pixel_walle
 {
@@ -25,12 +26,15 @@ namespace pixel_walle
 
         private SourceReader reader = new SourceReader();
         private Error_Manager errorManager = new Error_Manager();
+        public string FileName { get; private set; }
 
-        public MainWindow(int rows, int columns)
+
+        public MainWindow(int rows, int columns, string fileName)
         {
             InitializeComponent();
             Rows = rows;
             Columns = columns;
+            FileName = fileName; 
             InitializePixelGrid();
 
         }
@@ -93,7 +97,7 @@ namespace pixel_walle
         private void RunButton_Click(object sender, RoutedEventArgs e)
         {
             string codigoFuente = miTextBox.Text;
-            string fileName = "ArchivoTemporal.txt";
+            string fileName = FileName;
 
             errorManager.Clear();
 

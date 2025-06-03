@@ -12,12 +12,12 @@ using System.Runtime;
 
 namespace pixel_walle.src.AST.Instructions.Functions
 {
-    public class Function_Library
+    public class FunctionLibrary
     {
 
-        public Dictionary<string, BuiltInFunction> BuiltIns = new()
+        public static Dictionary<string, FunctionInfo> BuiltIns = new()
         {
-            ["Spawn"] = new BuiltInFunction
+            ["Spawn"] = new FunctionInfo
             {
                 Parameters = new() { ExpressionType.Number, ExpressionType.Number },
                 ReturnType = null,
@@ -28,7 +28,7 @@ namespace pixel_walle.src.AST.Instructions.Functions
                 }
             },
 
-            ["Color"] = new BuiltInFunction
+            ["Color"] = new FunctionInfo
             {
                 Parameters = new() { ExpressionType.Text },
                 ReturnType = null,
@@ -37,10 +37,9 @@ namespace pixel_walle.src.AST.Instructions.Functions
                     Color((string)args[0], ctx);
                     return null;
                 }
-
             },
 
-            ["Size"] = new BuiltInFunction
+            ["Size"] = new FunctionInfo
             {
                 Parameters = new() { ExpressionType.Number },
                 ReturnType = null,
@@ -49,10 +48,9 @@ namespace pixel_walle.src.AST.Instructions.Functions
                     Size((int)args[0], ctx);
                     return null;
                 }
-
             },
 
-            ["DrawLine"] = new BuiltInFunction
+            ["DrawLine"] = new FunctionInfo
             {
                 Parameters = new() { ExpressionType.Number, ExpressionType.Number, ExpressionType.Number },
                 ReturnType = null,
@@ -63,18 +61,91 @@ namespace pixel_walle.src.AST.Instructions.Functions
                 }
             },
 
-            ["DrawRectangle"] = new BuiltInFunction
+            ["DrawRectangle"] = new FunctionInfo
+            {
+                Parameters = new() { ExpressionType.Number, ExpressionType.Number, ExpressionType.Number, ExpressionType.Number, ExpressionType.Number },
+                ReturnType = null,
+                Implementation = (args, ctx) =>
+                {
+                    DrawRectangle((int)args[0], (int)args[1], (int)args[2], (int)args[3], (int)args[4], ctx);
+                    return null;
+                }
+            },
+
+            ["DrawCircle"] = new FunctionInfo
             {
                 Parameters = new() { ExpressionType.Number, ExpressionType.Number, ExpressionType.Number },
                 ReturnType = null,
                 Implementation = (args, ctx) =>
                 {
-                    DrawRectangle((int)args[0], (int)args[1], (int)args[2], (int)args[3], ctx);
+                    DrawCircle((int)args[0], (int)args[1], (int)args[2], ctx);
                     return null;
+                }
+            },
+
+            ["GetActualX"] = new FunctionInfo
+            {
+                Parameters = new(),
+                ReturnType = ExpressionType.Number,
+                Implementation = (args, ctx) =>
+                {
+                    return GetActualX(ctx);
+                }
+            },
+
+            ["GetActualY"] = new FunctionInfo
+            {
+                Parameters = new(),
+                ReturnType = ExpressionType.Number,
+                Implementation = (args, ctx) =>
+                {
+                    return GetActualY(ctx);
+                }
+            },
+
+            ["GetCanvasSize"] = new FunctionInfo
+            {
+                Parameters = new(),
+                ReturnType = ExpressionType.Number, 
+                Implementation = (args, ctx) =>
+                {
+                    var (x, y) = GetCanvasSize(ctx);
+                    return new Tuple<int, int>(x, y);
+                }
+            },
+
+            ["GetColorCount"] = new FunctionInfo
+            {
+                Parameters = new() { ExpressionType.Text, ExpressionType.Number, ExpressionType.Number, ExpressionType.Number, ExpressionType.Number },
+                ReturnType = ExpressionType.Number,
+                Implementation = (args, ctx) =>
+                {
+                    return GetColorCount((string)args[0], (int)args[1], (int)args[2], (int)args[3], (int)args[4], ctx);
+                }
+            },
+
+            ["IsBrushSize"] = new FunctionInfo
+            {
+                Parameters = new() { ExpressionType.Number },
+                ReturnType = ExpressionType.Number,
+                Implementation = (args, ctx) =>
+                {
+                    return IsBrushSize((int)args[0], ctx);
+                }
+            },
+
+            ["IsCanvasColor"] = new FunctionInfo
+            {
+                Parameters = new() { ExpressionType.Text, ExpressionType.Number, ExpressionType.Number },
+                ReturnType = ExpressionType.Number,
+                Implementation = (args, ctx) =>
+                {
+                    return IsCanvasColor((string)args[0], (int)args[1], (int)args[2], ctx);
                 }
             }
 
         };
+
 
 
         public static void Spawn(int x, int y, Context context)

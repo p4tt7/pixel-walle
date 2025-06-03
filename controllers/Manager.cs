@@ -25,23 +25,24 @@ namespace pixel_walle.controllers
             public Manager(string fileName, string sourceCode)
             {
                 FileName = fileName;
-                SourceCode = sourceCode;
+                SourceCode = sourceCode;           
                 Errors = new List<Error>();
             }
 
-            public void Analyze()
-            {
+        public void Analyze()
+        {
 
-                List<Token> tokens = lexer.GetTokens(FileName, SourceCode, Errors);
-                TokenStream stream = new TokenStream(tokens);
-                Parser parser = new Parser(stream);
-                List<Error> parseErrors = new List<Error>();
-                ASTNode? ast = parser.Parse(parseErrors);
+            List<Token> tokens = lexer.GetTokens(FileName, SourceCode, Errors);
+            var tokenCount = tokens.Count;
+            TokenStream stream = new TokenStream(tokens);
+            Parser parser = new Parser(stream);
+            List<Error> parseErrors = new List<Error>();
+            ASTNode? ast = parser.Parse(parseErrors);
 
-                Errors.AddRange(parseErrors);
-
-
+            Errors.AddRange(parseErrors);
         }
+
+
 
         }
 

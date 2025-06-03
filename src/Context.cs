@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace pixel_walle.src
 {
@@ -13,10 +14,12 @@ namespace pixel_walle.src
         public Robot? Robot { get; private set; }
         public Brush Brush { get; private set; }
         public Scope CurrentScope { get; set; }
-        public Canva canvas { get; private set; }  
+        public Canva canvas { get; private set; }
+        public Scope Scope { get; }
 
-        public Context()
+        public Context(Scope scope)
         {
+            Scope = scope;
             CurrentScope = new Scope();
             Brush = new Brush(Colors.colores["White"], 0);
         }

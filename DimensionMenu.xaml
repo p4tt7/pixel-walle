@@ -5,26 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:pixel_walle"
         mc:Ignorable="d"
-        Title="DimensionMenu" Height="450" Width="800">
+        Title="DimensionMenu" Height="768" Width="1366">
     <Grid>
+        <StackPanel Margin="40,40,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1105" Height="665">
 
-        <StackPanel Margin="20">
-            <TextBlock Margin="0,10,0,0"><Run Language="en-gb" Text="Rows"/><Run Text=":"/></TextBlock>
-            <TextBox x:Name="RowsBox"/>
+            <TextBlock Margin="0,10,0,5" FontWeight="Bold">Rows:</TextBlock>
+            <TextBox x:Name="RowsBox" Height="25"/>
 
-            <TextBlock Margin="0,10,0,0"><Run Language="en-gb" Text="Columns"/></TextBlock>
-            <TextBox x:Name="ColsBox"/>
+            <TextBlock Margin="0,10,0,5" FontWeight="Bold">Columns:</TextBlock>
+            <TextBox x:Name="ColsBox" Height="25"/>
 
+            <TextBlock Margin="0,10,0,5" FontWeight="Bold">File Name:</TextBlock>
+            <TextBox x:Name="FileNameBox" Height="25"/>
+
+            <Button Content="OK" 
+                    Click="Button_Click"
+                    FontSize="12"
+                    FontWeight="Bold"
+                    Background="Black"
+                    Foreground="White"
+                    Cursor="Hand"
+                    Margin="0,20,0,0"
+                    Width="100"
+                    HorizontalAlignment="Left"/>
         </StackPanel>
-
-        <Button Content="OK" 
-        Click="Button_Click"
-        FontSize="10"
-        FontWeight="Bold"
-       Background="Black"
-        Foreground="White"
-         Cursor="Hand" Margin="528,140,146,240" 
-        />
-
     </Grid>
 </Window>

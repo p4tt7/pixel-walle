@@ -14,7 +14,7 @@ namespace pixel_walle.src.Lexical
         private int position;
 
         public int Position => position;
-        public bool End => position == tokens.Count - 1;
+        public bool End => position >= tokens.Count;
 
 
         public TokenStream(List<Token> tokens)
@@ -26,49 +26,54 @@ namespace pixel_walle.src.Lexical
         public Token Peek(int offset = 0)
         {
             int new_position = position + offset;
-            if(new_position < tokens.Count)
+            if (new_position < tokens.Count)
             {
                 return tokens[new_position];
             }
-
             return null;
-
         }
 
         public bool Match(TokenType type)
         {
             var token = Peek();
-            return token != null && token.Type == type;
+            if (token != null && token.Type == type)
+            {
+                Advance();  
+                return true;
+            }
+            return false;
         }
 
         public bool Match(string value)
         {
             var token = Peek();
-            return token != null && token.Value != null && token.Value == value;
+            if (token != null && token.Value != null && token.Value == value)
+            {
+                Advance();  
+                return true;
+            }
+            return false;
         }
 
         public Token Advance()
         {
-            if (position < tokens.Count)
+            if (!End)
             {
                 return tokens[position++];
             }
-
             return null;
-
         }
 
         public Token Rollback()
         {
-            if(position > tokens.Count)
+            if (position > 0)  
             {
-                return tokens[position--];
+                position--; 
+                return tokens[position];  
             }
-
             return null;
-            
         }
-        
+
 
 
     }

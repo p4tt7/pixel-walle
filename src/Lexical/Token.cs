@@ -10,7 +10,7 @@ using pixel_walle.src.CodeLocation_;
 
 namespace pixel_walle.src.Lexical
 {
-    public partial class Token
+    public class Token
     {
         public string Value { get; private set; }
         public TokenType Type { get; private set; }
@@ -41,6 +41,8 @@ namespace pixel_walle.src.Lexical
             {")", TokenValue.CloseRoundBracket },
             { "}", TokenValue.ClosedCurlyBraces },
             { "{", TokenValue.OpenCurlyBraces },
+            {"[", TokenValue.OpenSquareBracket },
+            {"]", TokenValue.ClosedSquareBracket },
             { "<-", TokenValue.Assign }
         };
 

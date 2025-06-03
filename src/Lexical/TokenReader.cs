@@ -47,10 +47,13 @@ namespace pixel_walle.src.Lexical
 
             char current = code[position++];
 
-            if (current == '\n')
+            if (current == '\n' || current == '\r')
             {
                 line++;
                 lastLineBreakPos = position;
+
+                if (current == '\r' && position < code.Length && code[position] == '\n')
+                    position++;
 
             }
 
@@ -148,6 +151,8 @@ namespace pixel_walle.src.Lexical
             {
                 line++;
                 lastLineBreakPos = position;
+                if (Peek() == '\r' && position + 1 < code.Length && code[position + 1] == '\n')
+                    position++;
             }
             return code[position++];
         }

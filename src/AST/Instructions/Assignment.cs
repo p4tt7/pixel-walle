@@ -7,6 +7,8 @@ using System.Text;
 using pixel_walle.src.AST.Expressions;
 using System.Threading.Tasks;
 using pixel_walle.src.Errors;
+using pixel_walle.src.AST.Instructions.Functions;
+using pixel_walle.src.Lexical;
 
 
 namespace pixel_walle.src.AST.Instructions
@@ -55,6 +57,13 @@ namespace pixel_walle.src.AST.Instructions
                 return false;
             }
 
+            if (FunctionLibrary.BuiltIns.ContainsKey(name))
+            {
+                return false;
+            }
+
+
+
             foreach (char c in name)
             {
                 if (!char.IsLetterOrDigit(c) && c != '_')
@@ -66,10 +75,10 @@ namespace pixel_walle.src.AST.Instructions
 
         }
 
-        public override object? Evaluate(Scope scope)
+        public override object? Evaluate(Context context)
         {
             object value = Expr.Evaluate();
-            scope.Define(VariableName, value);
+            context.Scope.Define(VariableName, value);
             return value; 
         }
     }
