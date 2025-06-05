@@ -9,17 +9,28 @@ namespace pixel_walle.src.Canvas
 {
     public class Canva
     {
-        public Colors Color { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        public Dictionary<(int, int), Pixel> Pixeles { get; private set; }
+        private Pixel[,] pixels;
 
-        public Canva(int witdh, int height, Colors color)
+        public Canva(int width, int height, Colors color)
         {
-            Color = color;
-            Width = witdh;
+            Width = width;
             Height = height;
-            Pixeles = new Dictionary<(int, int), Pixel>();
+
+            pixels = new Pixel[Width, Height];
+
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    pixels[x, y] = new Pixel(x, y, color);
+                }
+            }
         }
+
+
+
+
     }
 }

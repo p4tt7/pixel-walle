@@ -153,6 +153,8 @@ namespace pixel_walle.src.AST.Instructions.Functions
            context.Spawn(x, y);
         }
 
+
+
         public static void Color(string color, Context context)
         {
             foreach(var c in Colors.colores)
@@ -278,7 +280,7 @@ namespace pixel_walle.src.AST.Instructions.Functions
 
                     if (context.canvas.Pixeles.TryGetValue(pos, out var pixel))
                     {
-                        Paint(pixel, context.Brush.ColorBrush);
+                        Paint(pixel, context.Brush.ColorBrush, context);
                     }
                     else
                     {
@@ -373,13 +375,20 @@ namespace pixel_walle.src.AST.Instructions.Functions
             return 0;
         }
 
-
-
-        private static void Paint(Pixel pixel, Colors color)
+        public void Paint(int x, int y, Colors color, Context context)
         {
-            pixel.Color = color;
-
+            if (context.canvas.Pixeles.ContainsKey((x, y)))
+            {
+                context.canvas.Pixeles[(x, y)].Color = color;
+            }
+            else
+            {
+                context.canvas.Pixeles[(x, y)] = new Pixel(color);
+            }
         }
+
+
+
 
 
 
