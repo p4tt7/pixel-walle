@@ -43,11 +43,6 @@ namespace pixel_walle.src
 
 
 
-        public bool Exists(string name)
-        {
-            return variables.ContainsKey(name);
-        }
-
     }
 
 }

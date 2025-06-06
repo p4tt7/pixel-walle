@@ -30,30 +30,7 @@ namespace pixel_walle.src.AST.Instructions
 
         public override object? Evaluate(Context context)
         {
-            Executions = 0;
-
-            while (true)
-            {
-                if (Executions++ > MaxExecutions)
-                    throw new Exception($"GoTo exceeded maximum allowed executions ({MaxExecutions}). Possible infinite loop.");
-
-                foreach (var instruction in Body)
-                    instruction.Evaluate(context);
-
-                var conditionResult = Condition?.Evaluate(context);
-                if (conditionResult is bool result && result)
-                {
-                    if (Label is Label labelInstr)
-                    {
-                        context.Scope.Labels(labelInstr.Name); 
-                        return null;
-                    }
-                    else
-                    {
-                        throw new Exception("GoTo label is not a valid LabelInstruction.");
-                    }
-                }
-            }
+            throw new NotImplementedException();
         }
 
     }

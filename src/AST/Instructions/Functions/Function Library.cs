@@ -178,126 +178,16 @@ namespace pixel_walle.src.AST.Instructions.Functions
         }
 
 
-        public static void DrawLine(int dirX, int dirY, int distance, Context context)
-        {
 
-            int x = context.Robot.X;
-            int y = context.Robot.Y;
-
-            for (int step = 0; step <= distance; step++)
-            {
-                int currentX = x + step * dirX;
-                int currentY = y + step * dirY;
-
-                var pos = (currentX, currentY);
-
-                if (context.canvas.Pixeles.TryGetValue(pos, out var pixel))
-                {
-                    Paint(pixel, context.Brush.ColorBrush);
-                }
-
-                else
-                {
-                    var newPixel = new Pixel(context.Brush.ColorBrush);
-                    context.canvas.Pixeles[pos] = newPixel;
-                }
-
-                context.Robot.X = currentX;
-                context.Robot.Y = currentY;
-
-            }
-
-        }
-
-
-        public static void DrawCircle(int dirX, int dirY, int radius, Context context)
-        {
-            (int dx, int dy)[] directions = new (int, int)[]
-            {
-            ( 0, -1),  
-            ( 1, -1), 
-            ( 1,  0),  
-            ( 1,  1),  
-            ( 0,  1),  
-            (-1,  1),  
-            (-1,  0),  
-            (-1, -1)   
-            };
-
-
-            int startX = context.Robot.X;
-            int startY = context.Robot.Y;
-
-            foreach (var (dx, dy) in directions)
-            {
-                for (int j = 1; j <= radius; j++)
-                {
-                    int currentX = startX + dx * j;
-                    int currentY = startY + dy * j;
-
-                    if (j == radius)
-                    {
-                        var pos = (currentX, currentY);
-
-                        if (context.canvas.Pixeles.TryGetValue(pos, out var pixel))
-                        {
-                            Paint(pixel, context.Brush.ColorBrush);
-                        }
-                        else
-                        {
-                            var newPixel = new Pixel(context.Brush.ColorBrush);
-                            context.canvas.Pixeles[pos] = newPixel;
-                        }
-                    }
-                }
-            }
-
-            context.Robot.X += dirX * radius;
-            context.Robot.Y += dirY * radius;
-
-        }
-
-
-        public static void  DrawRectangle(int dirX, int dirY, int distance, int width, int height, Context context)
-        {
-
-            context.Robot.X += dirX * distance;
-            context.Robot.Y += dirY * distance;
-
-            int centerX = context.Robot.X;
-            int centerY = context.Robot.Y;
-
-            int halfWidth = width / 2;
-            int halfHeight = height / 2;
-
-            for (int dx = -halfWidth; dx <= halfWidth; dx++)
-            {
-                for (int dy = -halfHeight; dy <= halfHeight; dy++)
-                {
-                    int x = centerX + dx;
-                    int y = centerY + dy;
-                    var pos = (x, y);
-
-                    if (context.canvas.Pixeles.TryGetValue(pos, out var pixel))
-                    {
-                        Paint(pixel, context.Brush.ColorBrush, context);
-                    }
-                    else
-                    {
-                        var newPixel = new Pixel(context.Brush.ColorBrush);
-
-                        context.canvas.Pixeles[pos] = newPixel;
-                    }
-                }
-            }
-
-        }
 
 
         public static void Fill()
         {
 
         }
+
+
+
 
 
         public static int GetActualX(Context context)
@@ -319,18 +209,13 @@ namespace pixel_walle.src.AST.Instructions.Functions
         public static int GetColorCount(string color, int x1, int y1, int x2, int y2, Context context)
         {
 
-            if (!Colors.colores.TryGetValue(color, out Colors targetColor))
-            {
-                return 0;
-            }
-
             int color_count = 0;
 
             for(int i = x1; i<=x2; i++)
             {
                 for(int j= y1; j<=y2; j++)
                 {
-                    if(context.canvas.Pixeles.TryGetValue((i,j), out Pixel pixel) && pixel.Color==targetColor)
+                    if (context.canvas.pixels[i,j].Color.ToString() == color)
                     {
                         color_count++;
                     }
@@ -361,13 +246,7 @@ namespace pixel_walle.src.AST.Instructions.Functions
             int posx = x + horizontal;
             int posy = y + vertical;
 
-            if (!Colors.colores.TryGetValue(color, out Colors targetColor))
-            {
-                return 0;
-            }
-            
-            if (context.canvas.Pixeles.TryGetValue((posx, posy), out Pixel pixel) &&
-                pixel.Color == targetColor)
+            if (context.canvas.pixels[posx,posy].Color.ToString() == color)
             {
                 return 1;
             }
@@ -375,20 +254,92 @@ namespace pixel_walle.src.AST.Instructions.Functions
             return 0;
         }
 
-        public void Paint(int x, int y, Colors color, Context context)
+        public static void DrawLine(int dirX, int dirY, int distance, Context context)
         {
-            if (context.canvas.Pixeles.ContainsKey((x, y)))
+            int startX = context.Robot.X;
+            int startY = context.Robot.Y;
+
+            for (int step = 0; step <= distance; step++)
             {
-                context.canvas.Pixeles[(x, y)].Color = color;
+                int currentX = startX + step * dirX;
+                int currentY = startY + step * dirY;
+                DrawPixel(currentX, currentY, context); 
             }
-            else
+
+            UpdateRobotPosition(startX + distance * dirX, startY + distance * dirY, context); 
+        }
+
+        public static void DrawCircle(int dirX, int dirY, int radius, Context context)
+        {
+            (int dx, int dy)[] directions = new (int, int)[]
             {
-                context.canvas.Pixeles[(x, y)] = new Pixel(color);
+        (0, -1), (1, -1), (1, 0), (1, 1),
+        (0, 1), (-1, 1), (-1, 0), (-1, -1)
+            };
+
+            int centerX = context.Robot.X;
+            int centerY = context.Robot.Y;
+
+            foreach (var (dx, dy) in directions)
+            {
+                for (int j = 1; j <= radius; j++)
+                {
+                    if (j == radius) 
+                    {
+                        DrawPixel(centerX + dx * j, centerY + dy * j, context);
+                    }
+                }
+            }
+
+            UpdateRobotPosition(centerX + dirX * radius, centerY + dirY * radius, context);
+        }
+
+
+        public static void DrawRectangle(int dirX, int dirY, int distance, int width, int height, Context context)
+        {
+            int startX = context.Robot.X + dirX * distance;
+            int startY = context.Robot.Y + dirY * distance;
+            UpdateRobotPosition(startX, startY, context);
+
+            int halfWidth = width / 2;
+            int halfHeight = height / 2;
+
+            for (int dx = -halfWidth; dx <= halfWidth; dx++)
+            {
+                for (int dy = -halfHeight; dy <= halfHeight; dy++)
+                {
+                    DrawPixel(startX + dx, startY + dy, context);
+                }
             }
         }
 
 
 
+
+
+
+
+
+
+
+
+
+
+        private static void DrawPixel(int x, int y, Context context)
+        {
+            if (x >= 0 && x < context.canvas.Width && y >= 0 && y < context.canvas.Height)
+            {
+                Pixel pixel = context.canvas.pixels[x, y];
+                pixel.Color = context.Brush.ColorBrush; 
+            }
+
+        }
+
+        private static void UpdateRobotPosition(int x, int y, Context context)
+        {
+            context.Robot.X = x;
+            context.Robot.Y = y;
+        }
 
 
 

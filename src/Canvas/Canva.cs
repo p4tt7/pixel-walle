@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using pixel_walle.src.Colores;
+using System.Windows.Media;
 
 namespace pixel_walle.src.Canvas
 {
@@ -11,9 +11,9 @@ namespace pixel_walle.src.Canvas
     {
         public int Width { get; set; }
         public int Height { get; set; }
-        private Pixel[,] pixels;
+        public Pixel[,] pixels;
 
-        public Canva(int width, int height, Colors color)
+        public Canva(int width, int height, Color color)
         {
             Width = width;
             Height = height;

@@ -8,4 +8,37 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="assets\blue.png" />
+    <None Remove="assets\green.png" />
+    <None Remove="assets\orange.png" />
+    <None Remove="assets\pink.png" />
+    <None Remove="assets\purple.png" />
+    <None Remove="assets\red.png" />
+    <None Remove="assets\yellow.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="assets\pink.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="assets\blue.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\green.png" />
+    <Resource Include="assets\orange.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\purple.png" />
+    <Resource Include="assets\red.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\yellow.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
 </Project>

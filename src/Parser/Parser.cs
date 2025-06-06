@@ -383,7 +383,7 @@ namespace pixel_walle.src.Parser
 
                 if (Stream.Peek().Value != TokenValue.ClosedCurlyBraces)
                 {
-                    errors.Add(new Error(Error.ErrorType.SyntaxError, "'}' expected to close GoTo block", .Location));
+                    errors.Add(new Error(Error.ErrorType.SyntaxError, "'}' expected to close GoTo block", Stream.Peek().Location));
                     return null;
                 }
 

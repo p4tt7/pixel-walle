@@ -77,7 +77,7 @@ namespace pixel_walle {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/pixel_walle;V1.0.0.0;component/dimensionmenu.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/pixel_walle;component/dimensionmenu.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\DimensionMenu.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
