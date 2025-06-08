@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using static pixel_walle.src.Lexical.Token;
 using pixel_walle.src.Errors;
 using System.Windows.Shapes;
-using pixel_walle.src.Colores;
+using System.Windows.Media;
 
 namespace pixel_walle.src.Lexical
 {
@@ -18,12 +18,16 @@ namespace pixel_walle.src.Lexical
         public bool MatchOperator(TokenReader stream, List<Token> tokens)
         {
             foreach (var op in operators.Keys.OrderByDescending(k => k.Length))
+            {
+                var loc = stream.Location;
                 if (stream.Match(op))
                 {
                     tokens.Add(new Token(TokenType.Symbol, operators[op], stream.Location));
                     return true;
                 }
-            return false;
+            }
+                return false;
+            
         }
 
 
@@ -42,9 +46,17 @@ namespace pixel_walle.src.Lexical
 
                 if (stream.Peek() == '\n' || stream.Peek() == '\r')
                 {
-                    tokens.Add(new Token(TokenType.Newline, "\\n", stream.Location)); 
+                    var loc = stream.Location;
+                    char newline = stream.Read();
+
+                    if (newline == '\r' && !stream.EOF && stream.Peek() == '\n')
+                        stream.Read();
+
+                    tokens.Add(new Token(TokenType.Newline, "\\n", loc)); 
                     continue;
                 }
+
+                var locId = stream.Location;
 
                 if (stream.ReadID(out value))
                 {
@@ -59,19 +71,28 @@ namespace pixel_walle.src.Lexical
                         type = TokenType.Identifier;
                     }
 
-                    tokens.Add(new Token(type,value,stream.Location));
+                    tokens.Add(new Token(type,value, locId));
                     continue;
 
                 }
 
-                if(stream.ReadNumber(out value))
+                var locNum = stream.Location;
+
+                if (stream.ReadNumber(out value))
                 {
-                    tokens.Add(new Token(TokenType.Number,value,stream.Location));
+                    tokens.Add(new Token(TokenType.Number,value, locNum));
+                    continue;
+                }
+
+                if (stream.ReadText(out value))
+                {
+                    tokens.Add(new Token(TokenType.Text, value, stream.Location));
                     continue;
                 }
 
 
-                if(MatchOperator(stream, tokens))
+
+                if (MatchOperator(stream, tokens))
                 {
                     continue;
                 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using pixel_walle.src.Colores;
 using System.Threading.Tasks;
 using pixel_walle.src.Canvas;
 using System.Drawing;
@@ -157,11 +156,11 @@ namespace pixel_walle.src.AST.Instructions.Functions
 
         public static void Color(string color, Context context)
         {
-            foreach(var c in Colors.colores)
+            foreach(var c in ColorPalette.Colors)
             {
-                if(Colors.colores.ContainsKey(color))
+                if(ColorPalette.Colors.ContainsKey(color))
                 {
-                    context.Brush.ColorBrush = Colors.colores[color];
+                    context.Brush.ColorBrush = ColorPalette.Colors[color];
 
                 }
 
@@ -315,25 +314,27 @@ namespace pixel_walle.src.AST.Instructions.Functions
 
 
 
-
-
-
-
-
-
-
-
-
-
         private static void DrawPixel(int x, int y, Context context)
         {
-            if (x >= 0 && x < context.canvas.Width && y >= 0 && y < context.canvas.Height)
-            {
-                Pixel pixel = context.canvas.pixels[x, y];
-                pixel.Color = context.Brush.ColorBrush; 
-            }
+            int thickness = context.Brush.BrushThickness;
+            int half = thickness / 2;
 
+            for (int dx = -half; dx <= half; dx++)
+            {
+                for (int dy = -half; dy <= half; dy++)
+                {
+                    int px = x + dx;
+                    int py = y + dy;
+
+                    if (px >= 0 && px < context.canvas.Width && py >= 0 && py < context.canvas.Height)
+                    {
+                        Pixel pixel = context.canvas.pixels[px, py];
+                        pixel.Color = context.Brush.ColorBrush;
+                    }
+                }
+            }
         }
+
 
         private static void UpdateRobotPosition(int x, int y, Context context)
         {

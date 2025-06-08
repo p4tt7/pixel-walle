@@ -10,6 +10,8 @@ using System.Security.RightsManagement;
 using pixel_walle.src.AST.Expressions.Binary_Operations;
 using pixel_walle.src.AST.Instructions.Functions;
 using pixel_walle.src.AST;
+using System.IO;
+using pixel_walle.src.CodeLocation_;
 
 
 namespace pixel_walle.src.Parser
@@ -26,21 +28,35 @@ namespace pixel_walle.src.Parser
             Stream = stream;
         }
 
-        public ASTNode? Parse(List<Error> errors)
+        public PixelWalleProgram Parse(List<Error> errors)
         {
-            Token token = Stream.Peek();
+            List<Instruction> instructions = new();
 
-            if (IsExpression(token))
+            while (!Stream.End)
             {
-                return ParseExpression(errors);
+                Instruction? instr = ParseInstruction(errors);
+
+                if (instr != null)
+                {
+                    instructions.Add(instr);
+                }
+            
+
+                if(instructions.Count == 0)
+                {
+                    var dummyLocation = new CodeLocation
+                    {
+                        File = "program",
+                        Line = 0,
+                        Column = 0
+                    };
+
+
+                    errors.Add(new Error(Error.ErrorType.Undefined, "Oops, no program to analyze here...", dummyLocation));
+                }
             }
 
-            if (IsInstruction(token)) 
-            { 
-                return ParseInstruction(errors);
-            }
-
-            return null;
+            return new PixelWalleProgram(instructions, instructions[1].Location);
 
         }
 
@@ -122,6 +138,10 @@ namespace pixel_walle.src.Parser
             return null;
         }
 
+
+
+
+
         public Expression ParseExpression(List<Error> errors)
         {
             Expression left = ParseTerm(errors);
@@ -186,6 +206,19 @@ namespace pixel_walle.src.Parser
         {
             Token token = Stream.Peek();
 
+            if(Stream.Match(TokenValue.Sub))
+            {
+                Token minusToken = Stream.Rollback();
+                Expression operand = ParsePrimary(errors);
+
+                if(operand==null)
+                {
+                    errors.Add(new Error(Error.ErrorType.SyntaxError, "Expected expression after unary '-'", minusToken.Location));
+                }
+
+                return new Negative(operand, minusToken.Location);
+            }
+
             if (token.Value == TokenValue.OpenRoundBracket)
             {
                 Stream.Advance();
@@ -197,6 +230,22 @@ namespace pixel_walle.src.Parser
                 }
 
                 return expr;
+            }
+
+            else if(token.Type==TokenType.Identifier)
+            {
+                Token identifierToken = Stream.Advance();
+
+                if(Stream.Peek().Value == TokenValue.OpenRoundBracket)
+                {
+          //          return ParseFunctionCallExpression(errors, identifierToken);
+                }
+
+                else
+                {
+                    return new Variable(identifierToken.Value,identifierToken.Location);
+                }
+
             }
 
             switch (token.Type)
@@ -213,6 +262,9 @@ namespace pixel_walle.src.Parser
                     return null;
             }
         }
+
+
+
 
 
 
@@ -243,50 +295,70 @@ namespace pixel_walle.src.Parser
 
         public Function ParseFunctionCall(List<Error> errors, Token identifierToken)
         {
-
             string functionName = identifierToken.Value;
 
+            if (!FunctionLibrary.BuiltIns.TryGetValue(functionName, out FunctionInfo info))
+            {
+                errors.Add(new Error(
+                    Error.ErrorType.SemanticError,
+                    $"Function '{functionName}' is not defined",
+                    identifierToken.Location
+                ));
+                return null; 
+            }
 
             if (!Stream.Match(TokenValue.OpenRoundBracket))
             {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, $"Invalid syntax, {TokenValue.OpenRoundBracket} expected", Stream.Advance().Location));
+                errors.Add(new Error(
+                    Error.ErrorType.SyntaxError,
+                    $"Expected '{TokenValue.OpenRoundBracket}' after function name",
+                    Stream.Advance().Location
+                ));
+                return null;
             }
 
-            
             List<Expression> arguments = new List<Expression>();
-
 
             if (Stream.Peek().Value != TokenValue.CloseRoundBracket)
             {
                 do
                 {
-                    Expression arg = ParseExpression(errors); 
-                    if (arg != null)
-                        arguments.Add(arg);
+                    Expression arg = ParseExpression(errors);
+                    if (arg == null)
+                    {
+                        return null;
+                    }
+                    arguments.Add(arg);
                 } while (Stream.Match(TokenValue.Comma));
             }
-              
 
-            Token token = Stream.Advance();
-
-            if (token.Value != TokenValue.CloseRoundBracket)
+            Token closingToken = Stream.Advance();
+            if (closingToken.Value != TokenValue.CloseRoundBracket)
             {
-                errors.Add(new Error(Error.ErrorType.SyntaxError,
-                    $"Expected '{TokenValue.CloseRoundBracket}'",
-                    token.Location));
+                errors.Add(new Error(
+                    Error.ErrorType.SyntaxError,
+                    $"Expected '{TokenValue.CloseRoundBracket}' after function arguments",
+                    closingToken.Location
+                ));
                 return null;
             }
 
-            FunctionInfo info = FunctionLibrary.BuiltIns[functionName];
-            ExpressionType? returnType = info.ReturnType;
+            if (arguments.Count != info.Parameters.Count)
+            {
+                errors.Add(new Error(
+                    Error.ErrorType.SemanticError,
+                    $"Function '{functionName}' expects {info.Parameters.Count} arguments, but {arguments.Count} were provided",
+                    identifierToken.Location
+                ));
+                return null;
+            }
 
-
-            return null;
-
+            return new Function(
+                functionName,
+                arguments,
+                identifierToken.Location
+            );
         }
-
-
-
 
 
 
@@ -399,12 +471,6 @@ namespace pixel_walle.src.Parser
             return gotoNode;
 
         }
-
-        
-
-
-
-
 
 
         private bool IsExpression(Token token)

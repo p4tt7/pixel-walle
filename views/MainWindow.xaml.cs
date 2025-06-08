@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.IO;
 using pixel_walle.controllers;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -27,15 +28,23 @@ namespace pixel_walle
         private SourceReader reader = new SourceReader();
         private Error_Manager errorManager = new Error_Manager();
         public string FileName { get; private set; }
+        private Manager manager;
 
 
         public MainWindow(int rows, int columns, string fileName)
         {
             InitializeComponent();
+
             Rows = rows;
             Columns = columns;
-            FileName = fileName; 
+            FileName = fileName;
+
             InitializePixelGrid();
+
+            manager = new Manager(fileName, "", Columns, Rows);
+            var renderer = new CanvasRender(PixelGrid, manager.Context);
+            renderer.Render();
+
 
         }
 
@@ -67,19 +76,6 @@ namespace pixel_walle
             PixelGrid.Columns = Columns;
 
             PixelGrid.Children.Clear();
-
-            for (int i = 0; i < Rows * Columns; i++)
-            {
-                var pixel = new Border
-                {
-                    Width = pixelSize,
-                    Height = pixelSize,
-                    Background = Brushes.White,
-                    BorderBrush = Brushes.Black,
-                    BorderThickness = new Thickness(0.3),
-                };
-                PixelGrid.Children.Add(pixel);
-            }
         }
 
         private void ErrorsButton_Click(object sender, RoutedEventArgs e)
@@ -96,12 +92,13 @@ namespace pixel_walle
 
         private void RunButton_Click(object sender, RoutedEventArgs e)
         {
-            string codigoFuente = miTextBox.Text;
             string fileName = FileName;
+            string codigoFuente = miTextBox.Text;
+            
 
             errorManager.Clear();
 
-            Manager manager = new Manager(fileName, codigoFuente);
+            manager = new Manager(fileName, codigoFuente, Columns, Rows);
             manager.Analyze();
 
             if (manager.Errors.Count > 0)
@@ -116,19 +113,52 @@ namespace pixel_walle
             }
             else
             {
+                var renderer = new CanvasRender(PixelGrid, manager.Context);
+                renderer.Render();
+
                 MessageBox.Show("Compilación exitosa.", "Compilado", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
 
 
-
-
         private void ClearButton_Click()
         {
-            
+            miTextBox.Clear();
 
         }
+
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Microsoft.Win32.SaveFileDialog
+            {
+                Filter = "PixelWalle Files (*.pw)|*.pw",
+                Title = "Guardar archivo",
+                DefaultExt = "pw"
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                try
+                {
+                    File.WriteAllText(dialog.FileName, miTextBox.Text);
+                    MessageBox.Show("Archivo guardado exitosamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al guardar el archivo:\n{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+
+        private void RedimensionButton_Click(object sender, RoutedEventArgs e)
+        {
+            PixelGrid.Children.Clear();
+            InitializePixelGrid();
+        }
+
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace pixel_walle.src.AST.Expressions
 {
-    public class Comparisson : BinaryExpression
+    public abstract class Comparison : BinaryExpression
     {
-        public Comparisson(CodeLocation location) : base(location)
+        public Comparison(CodeLocation location) : base(location)
         {
         }
 
@@ -28,9 +28,14 @@ namespace pixel_walle.src.AST.Expressions
             return true;
         }
 
+        protected abstract string OperatorSymbol { get; }
+        protected abstract bool Compare(object left, object right);
+
         public override object? Evaluate()
         {
-            throw new NotImplementedException();
+            var left = Left.Evaluate();
+            var right = Right.Evaluate();
+            return Compare(left, right);
         }
     }
 }

@@ -47,14 +47,18 @@ namespace pixel_walle.src.Lexical
 
             char current = code[position++];
 
-            if (current == '\n' || current == '\r')
+            if (current == '\r')
+            {
+                if (position < code.Length && code[position] == '\n')
+                    position++; 
+
+                line++;
+                lastLineBreakPos = position;
+            }
+            else if (current == '\n')
             {
                 line++;
                 lastLineBreakPos = position;
-
-                if (current == '\r' && position < code.Length && code[position] == '\n')
-                    position++;
-
             }
 
             return current;
@@ -124,10 +128,47 @@ namespace pixel_walle.src.Lexical
         {
             number = "";
 
+            if (!EOF && Peek() == '-')
+            {
+                number += Read();
+                if (EOF || !char.IsDigit(Peek()))
+                {
+                    return false;
+                }
+            }
+
+
             while (!EOF && char.IsDigit(Peek()))
                 number += Read();
 
-            return number.Length > 0;
+            return number.Length > 0 && number != "-";
+        }
+
+        public bool ReadText(out string text)
+        {
+            text = "";
+
+            if(Peek() != '"')
+            {
+                return false;
+            }
+
+            Read();
+
+            while(!EOF && Peek() != '"')
+            {
+                char c = Read();
+
+                if(c == '\n' || c == '\r')
+                {
+                    return false;
+                }
+                text += c;
+            
+            }
+
+            Read();
+            return true;
         }
 
         

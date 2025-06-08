@@ -9,13 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="assets\blue.png" />
-    <None Remove="assets\green.png" />
-    <None Remove="assets\orange.png" />
     <None Remove="assets\pink.png" />
-    <None Remove="assets\purple.png" />
-    <None Remove="assets\red.png" />
-    <None Remove="assets\yellow.png" />
+    <None Remove="assets\transparent.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,18 +20,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="assets\blue.png">
+    <Resource Include="assets\FF0000FF.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="assets\green.png" />
-    <Resource Include="assets\orange.png">
+    <Resource Include="assets\FF00FF00.png" />
+    <Resource Include="assets\FFFFA500.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="assets\purple.png" />
-    <Resource Include="assets\red.png">
+    <Resource Include="assets\FF800080.png" />
+    <Resource Include="assets\FFFF0000.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="assets\yellow.png">
+    <Resource Include="assets\transparent.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="assets\FFFFFF00.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

@@ -38,7 +38,7 @@ namespace pixel_walle.src.AST.Instructions
                 return false;
             }
 
-            scope.Define(VariableName, Expr.Type); 
+            scope.Define(VariableName, null, Expr.Type);
 
             return true;
         }
@@ -77,8 +77,8 @@ namespace pixel_walle.src.AST.Instructions
 
         public override object? Evaluate(Context context)
         {
-            object value = Expr.Evaluate();
-            context.Scope.Define(VariableName, value);
+            object value = Expr.Evaluate(context.Scope);
+            context.Scope.Define(VariableName, value, Expr.Type);
             return value; 
         }
     }

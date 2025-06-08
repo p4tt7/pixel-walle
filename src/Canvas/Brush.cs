@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using pixel_walle.src.Colores;
+using System.Windows.Media;
 
 namespace pixel_walle.src.Canvas
 {
     public class Brush
     {
 
-        public Colors ColorBrush { get; set; }
+        public Color ColorBrush { get; set; }
         public int BrushThickness { get; set; }
 
-        public Brush(Colors colorbrush, int brush_thickness)
+        public Brush(Color colorbrush, int brush_thickness)
         {
             ColorBrush = colorbrush;
             BrushThickness = 0;

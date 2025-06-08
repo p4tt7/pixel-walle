@@ -1,10 +1,10 @@
 ﻿using pixel_walle.src.Canvas;
-using pixel_walle.src.Colores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Media;
 
 namespace pixel_walle.src
 {
@@ -16,11 +16,13 @@ namespace pixel_walle.src
         public Canva canvas { get; private set; }
         public Scope Scope { get; }
 
-        public Context(Scope scope)
+        public Context(Scope scope, int canvasWidth, int canvasHeight)
         {
+           
             Scope = scope;
             CurrentScope = new Scope();
-            Brush = new Brush(Colors.colores["White"], 0);
+            Brush = new Brush(ColorPalette.Colors["White"] , 0);
+            canvas = new Canva(canvasWidth, canvasHeight);
         }
 
 

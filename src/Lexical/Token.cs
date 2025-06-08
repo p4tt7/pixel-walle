@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.Common;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows.Shapes;
 using pixel_walle.src.CodeLocation_;
 
 namespace pixel_walle.src.Lexical
@@ -24,6 +26,12 @@ namespace pixel_walle.src.Lexical
             this.Location = location;
         }
 
+        public override string ToString()
+        {
+            return $"{Type}:{Value}:{Location}";
+        }
+
+
         public readonly static Dictionary<string, string> operators = new Dictionary<string, string>
         {
             { "+", TokenValue.Add },
@@ -37,6 +45,7 @@ namespace pixel_walle.src.Lexical
             { "<=", TokenValue.LessOrEqualThan },
             { ">=", TokenValue.GreaterOrEqualThan },
             {"," , TokenValue.Comma },
+            { "\"", TokenValue.QuoteMark },
             {"(", TokenValue.OpenRoundBracket },  
             {")", TokenValue.CloseRoundBracket },
             { "}", TokenValue.ClosedCurlyBraces },
@@ -68,6 +77,8 @@ namespace pixel_walle.src.Lexical
             {"IsCanvasColor",TokenValue.IsBrushSize},
 
         };
+
+
 
     }
 }

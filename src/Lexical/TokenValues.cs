@@ -27,6 +27,7 @@
         public const string ClosedCurlyBraces = "ClosedCurlyBraces";
         public const string OpenSquareBracket = "OpenSquareBracket";
         public const string ClosedSquareBracket = "ClosedSquareBracket";
+        public const string QuoteMark = "QuoteMark";
 
         public const string Spawn = "Spawn";
         public const string Color = "Color";

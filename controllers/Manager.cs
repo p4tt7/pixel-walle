@@ -8,12 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using pixel_walle.src.AST;
+using pixel_walle.src;
 
 
 namespace pixel_walle.controllers
 {
         public class Manager
         {
+
+             public Context Context { get; private set; }
 
             public string FileName { get; set; }
 
@@ -22,27 +25,30 @@ namespace pixel_walle.controllers
             public string SourceCode { get; private set; }
             public List<Error> Errors { get; private set; }
 
-            public Manager(string fileName, string sourceCode)
+            public Manager(string fileName, string sourceCode, int canvasWidth, int canvasHeight)
             {
                 FileName = fileName;
                 SourceCode = sourceCode;           
                 Errors = new List<Error>();
+                Context = new Context(new Scope(), canvasWidth, canvasHeight);
             }
 
         public void Analyze()
         {
 
             List<Token> tokens = lexer.GetTokens(FileName, SourceCode, Errors);
-            var tokenCount = tokens.Count;
             TokenStream stream = new TokenStream(tokens);
             Parser parser = new Parser(stream);
             List<Error> parseErrors = new List<Error>();
-            ASTNode? ast = parser.Parse(parseErrors);
+            PixelWalleProgram? program = parser.Parse(parseErrors);
+
+            if (program != null && Errors.Count == 0)
+            {
+                program.Evaluate(Context); 
+            }
 
             Errors.AddRange(parseErrors);
         }
-
-
 
         }
 

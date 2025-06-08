@@ -5,95 +5,96 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using pixel_walle.src;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using pixel_walle.src.Canvas;
+using System.Windows.Controls.Primitives;
+using System.Windows;
+using System.IO;
 
 namespace pixel_walle.controllers
 {
     public class CanvasRender
     {
-        private readonly Canvas canvasControl;
+        private readonly UniformGrid grid;
         private readonly Context context;
-        private readonly int pixelSize;
 
-        public CanvasRender(Canvas canvasControl, Context context, int pixelSize = 10)
+        public CanvasRender(UniformGrid grid, Context context)
         {
-            this.canvasControl = canvasControl;
+            this.grid = grid;
             this.context = context;
-            this.pixelSize = pixelSize;
         }
 
         public void Render()
         {
-            canvasControl.Children.Clear();
+            grid.Children.Clear();
+            grid.Rows = context.canvas.Height;
+            grid.Columns = context.canvas.Width;
 
-            for (int x = 0; x < context.canvas.Width; x++)
+            for (int y = 0; y < context.canvas.Height; y++)
             {
-                for (int y = 0; y < context.canvas.Height; y++)
+                for (int x = 0; x < context.canvas.Width; x++)
                 {
-                    Pixel pixel = context.canvas.pixels[x, y];
+                    var pixel = context.canvas.pixels[x, y];
 
-                    var rect = new Rectangle
+                    var rect = new Border
                     {
-                        Width = pixelSize,
-                        Height = pixelSize,
-                        Fill = new SolidColorBrush(pixel.Color_)
+                        Width = grid.Width / grid.Columns,
+                        Height = grid.Height / grid.Rows,
+                        Background = new SolidColorBrush(pixel.Color),
+                        BorderBrush = Brushes.Black,
+                        BorderThickness = new Thickness(0.2)
                     };
 
-                    Canvas.SetLeft(rect, x * pixelSize);
-                    Canvas.SetTop(rect, y * pixelSize);
 
-                    canvasControl.Children.Add(rect);
+                    if (context.HasRobot && context.Robot.X == x && context.Robot.Y == y)
+                    {
+                        var brushColor = context.Brush.ColorBrush.ToString();
+                        var iconSource = GetIcon(brushColor);
+
+                        var image = new Image
+                        {
+                            Source = iconSource,
+                            Stretch = Stretch.Fill
+                        };
+
+                        rect.Child = image;
+                    }
+
+                    grid.Children.Add(rect);
+
                 }
             }
-
-
-            if (context.HasRobot)
-            {
-                var robot = context.Robot;
-                var brushColor = context.Brush.ColorBrush.ToString();
-                var iconSource = GetIcon(brushColor);
-
-                var robotImage = new Image
-                {
-                    Width = pixelSize,
-                    Height = pixelSize,
-                    Source = iconSource
-                };
-
-                Canvas.SetLeft(robotImage, robot.X * pixelSize);
-                Canvas.SetTop(robotImage, robot.Y * pixelSize);
-
-                canvasControl.Children.Add(robotImage);
-
-            }
-
         }
 
 
 
-    public static readonly Dictionary<string, string> IconPaths = new()
-    {
-        ["Red"] = "pack://application:,,,/assets/red.png",
-        ["Blue"] = "pack://application:,,,/assets/blue.png",
-        ["Green"] = "pack://application:,,,/assets/green.png",
-        ["Yellow"] = "pack://application:,,,/assets/yellow.png",
-        ["Orange"] = "pack://application:,,,/assets/orange.png",
-        ["Purple"] = "pack://application:,,,/assets/purple.png",
-        ["Black"] = "pack://application:,,,/assets/black.png",
-        ["White"] = "pack://application:,,,/assets/transparent.png"
-    };
+        public static readonly Dictionary<string, string> IconPaths = new()
+        {
+            ["FFFF0000"] = "assets/red.png",        
+            ["FF0000FF"] = "assets/blue.png",
+            ["FF00FF00"] = "assets/green.png",
+            ["FFFFFF00"] = "assets/yellow.png",
+            ["FFFFA500"] = "assets/orange.png",  
+            ["FF800080"] = "assets/purple.png",
+            ["FF000000"] = "assets/black.png",
+            ["FFFFFFFF"] = "assets/transparent.png" 
+        };
 
         public static ImageSource GetIcon(string color)
         {
-            if (IconPaths.TryGetValue(color, out var path))
-            { 
-                return new BitmapImage(new Uri(path));
+            var hex = color.Replace("#", "").ToUpperInvariant();
+
+            try
+            {
+                var uri = new Uri($"pack://application:,,,/pixel_walle;component/assets/{hex}.png");
+                return new BitmapImage(uri);
             }
-            return new BitmapImage(new Uri("pack://application:,,,/Assets/default.png"));
+            catch
+            {
+                return new BitmapImage(new Uri("pack://application:,,,/pixel_walle;component/assets/transparent.png"));
+            }
         }
     }
 
