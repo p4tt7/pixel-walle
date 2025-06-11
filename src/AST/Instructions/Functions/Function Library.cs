@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using pixel_walle.src.Canvas;
-using System.Drawing;
+using System.Windows.Media;
 using pixel_walle.src.AST.Expressions;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime;
@@ -180,9 +180,49 @@ namespace pixel_walle.src.AST.Instructions.Functions
 
 
 
-        public static void Fill()
+        public static void Fill(Context context)
         {
+            int startX = context.Robot.X;
+            int startY = context.Robot.Y;
 
+            if (startX < 0 || startX >= context.canvas.Width ||
+                startY < 0 || startY >= context.canvas.Height)
+            {
+                return;
+            }
+
+            Color targetColor = context.canvas.pixels[startX, startY].Color;
+
+            Color fillColor = context.Brush.ColorBrush;
+
+            if (targetColor.Equals(fillColor))
+            {
+                return;
+            }
+
+            FloodFillRecursive(context, startX, startY, targetColor, fillColor);
+        }
+
+        private static void FloodFillRecursive(Context context, int x, int y, Color targetColor, Color fillColor)
+        {
+            if (x < 0 || x >= context.canvas.Width || y < 0 || y >= context.canvas.Height)
+            {
+                return;
+            }
+
+            Pixel currentPixel = context.canvas.pixels[x, y];
+
+            if (!currentPixel.Color.Equals(targetColor) || currentPixel.Color.Equals(fillColor))
+            {
+                return;
+            }
+
+            DrawPixel(x, y, context);
+
+            FloodFillRecursive(context, x + 1, y, targetColor, fillColor); // derecha
+            FloodFillRecursive(context, x - 1, y, targetColor, fillColor); // izquierda
+            FloodFillRecursive(context, x, y + 1, targetColor, fillColor); // abajo
+            FloodFillRecursive(context, x, y - 1, targetColor, fillColor); // arriba
         }
 
 
@@ -279,15 +319,12 @@ namespace pixel_walle.src.AST.Instructions.Functions
             int centerX = context.Robot.X;
             int centerY = context.Robot.Y;
 
-            foreach (var (dx, dy) in directions)
+            for (int angle = 0; angle < 360; angle += 10) 
             {
-                for (int j = 1; j <= radius; j++)
-                {
-                    if (j == radius) 
-                    {
-                        DrawPixel(centerX + dx * j, centerY + dy * j, context);
-                    }
-                }
+                double rad = angle * Math.PI / 180.0;
+                int x = centerX + (int)Math.Round(radius * Math.Cos(rad));
+                int y = centerY + (int)Math.Round(radius * Math.Sin(rad));
+                DrawPixel(x, y, context);
             }
 
             UpdateRobotPosition(centerX + dirX * radius, centerY + dirY * radius, context);

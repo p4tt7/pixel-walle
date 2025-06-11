@@ -21,7 +21,6 @@ namespace pixel_walle.src.AST.Expressions
         public Expression Left { get; private set; }
         public Expression Right { get; private set; }
 
-        public override object? Value => value;
         public override ExpressionType Type => ExpressionType.Number;
 
 
@@ -35,9 +34,9 @@ namespace pixel_walle.src.AST.Expressions
             return true;
         }
 
-        public override object? Evaluate()
+        public override object? Evaluate(Scope scope)
         {
-            value = Power((int)Right.Evaluate(), (int)Left.Evaluate());
+            value = Power((int)Right.Evaluate(scope), (int)Left.Evaluate(scope));
             return value;
         }
 

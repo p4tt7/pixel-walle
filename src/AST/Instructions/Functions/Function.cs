@@ -62,7 +62,7 @@ namespace pixel_walle.src.AST.Instructions.Functions
                 throw new Exception($"Function '{FunctionName}' not found at runtime.");
             }
 
-            var args = Arguments.Select(arg => arg.Evaluate()).ToList();
+            var args = Arguments.Select(arg => arg.Evaluate(context.Scope)).ToList();
             return function.Implementation(args, context);
         }
     }

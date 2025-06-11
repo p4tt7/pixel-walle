@@ -25,12 +25,44 @@ namespace pixel_walle.src.AST.Instructions
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
-            throw new NotImplementedException();
+            if(Condition.CheckSemantic(scope, errors) && Condition.Type!=ExpressionType.Bool)
+            {
+                errors.Add(new Error(Error.ErrorType.SemanticError, $"Condition must be boolean.", Condition.Location));
+                return false;
+            }
+
+            if (Label is not Label label)
+            {
+                errors.Add(new Error(Error.ErrorType.SemanticError, $"The destination instruction in GoTo is not a valid label.", Label.Location));
+                return false;
+            }
+
+            if (!scope.Labels.TryGetValue(label.Name, out var resolvedLabel))
+            {
+                errors.Add(new Error(Error.ErrorType.SemanticError, $"Label '{label.Name}' is not defined in the actual scope.", Label.Location));
+                return false;
+            }
+
+            Body = ((Label)resolvedLabel).Body;
+            return true;
+
+
         }
 
         public override object? Evaluate(Context context)
         {
-            throw new NotImplementedException();
+            var cond = Condition.Evaluate(context.Scope);
+            bool b;
+            if (cond is bool temp)
+            {
+                b = temp;
+                if (!b)
+                    return null;
+            }
+                
+            return null;
+           
+
         }
 
     }

@@ -12,9 +12,8 @@ namespace pixel_walle.src.AST.Expressions
         public abstract ExpressionType Type { get; }
 
         public Expression(CodeLocation location) : base(location) { }
-        public abstract object? Value { get; }
 
-        public abstract object? Evaluate();
+        public abstract object? Evaluate(Scope scope);
     }
 
 

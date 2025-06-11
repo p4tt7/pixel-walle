@@ -12,7 +12,6 @@ namespace pixel_walle.src.AST.Expressions
         {
         public string TextValue { get; }
         public override ExpressionType Type => ExpressionType.Text;
-        public override object? Value => TextValue;
 
 
         public Text(CodeLocation location, string value) : base(location)
@@ -22,7 +21,7 @@ namespace pixel_walle.src.AST.Expressions
 
             public override bool CheckSemantic(Scope scope, List<Error> errors)
             {
-                if (string.IsNullOrEmpty(Value?.ToString()))
+                if (string.IsNullOrEmpty(TextValue?.ToString()))
                 {
                     errors.Add(new Error(Error.ErrorType.SemanticError, "Los textos no pueden estar vacíos.", Location));
                     return false;
@@ -31,9 +30,9 @@ namespace pixel_walle.src.AST.Expressions
                 return true;
             }
 
-            public override object? Evaluate()
+            public override object? Evaluate(Scope scope)
             {
-                return Value;
+                return TextValue;
             }
         }
 

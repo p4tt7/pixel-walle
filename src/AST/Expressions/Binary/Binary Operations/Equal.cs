@@ -19,13 +19,12 @@ namespace pixel_walle.src.AST.Expressions.Binary_Operations
             Right = right;
         }
 
-        public override object? Value => value;
         public override ExpressionType Type => ExpressionType.Bool;
 
-        public override object? Evaluate()
+        public override object? Evaluate(Scope scope)
         {
-            var leftVal = Left.Evaluate();
-            var rightVal = Right.Evaluate();
+            var leftVal = Left.Evaluate(scope);
+            var rightVal = Right.Evaluate(scope);
             value = Equals(leftVal, rightVal);
             return value;
         }

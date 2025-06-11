@@ -19,8 +19,6 @@ namespace pixel_walle.src.AST.Expressions
 
         public override ExpressionType Type => Operand.Type;
 
-        public override object? Value => Evaluate();
-
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
             var ok = Operand.CheckSemantic(scope, errors);
@@ -38,10 +36,10 @@ namespace pixel_walle.src.AST.Expressions
             return true;
         }
 
-        public override object? Evaluate()
+        public override object? Evaluate(Scope scope)
         {
-            var val = Operand.Value;
-            return -(int)val;
+            var val = Operand.Evaluate(scope);
+            return -(int)val!;
         }
     }
 }

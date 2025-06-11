@@ -13,7 +13,7 @@ namespace pixel_walle.src.AST.Expressions
         private ExpressionType _type;
         private object? _value;
 
-        public int NumberValue { get; }
+        public int? NumberValue { get; }
 
         public Number(CodeLocation location, int value) : base(location)
         {
@@ -21,20 +21,19 @@ namespace pixel_walle.src.AST.Expressions
         }
 
         public override ExpressionType Type => ExpressionType.Number;
-        public override object? Value => NumberValue;
 
         public bool IsInt
         {
             get
             {
-                if (Value == null) return false;
-                return int.TryParse(Value.ToString(), out _);
+                if (NumberValue == null) return false;
+                return int.TryParse(NumberValue.ToString(), out _);
             }
         }
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
-            if (Value is int intValue && intValue <= 0)
+            if (NumberValue is int intValue && intValue <= 0)
             {
                 errors.Add(new Error(Error.ErrorType.SemanticError, "Los números deben ser mayores que cero.", Location));
                 return false;
@@ -43,9 +42,9 @@ namespace pixel_walle.src.AST.Expressions
             return true;
         }
 
-        public override object? Evaluate()
+        public override object? Evaluate(Scope scope)
         {
-            return Value;
+            return NumberValue;
         }
     }
 

@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Resources;
 using System.IO.Enumeration;
+using System.Text.Json;
 
 namespace pixel_walle
 {
@@ -122,33 +123,51 @@ namespace pixel_walle
 
 
 
-        private void ClearButton_Click()
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
             miTextBox.Clear();
-
+             
         }
 
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+
+
             var dialog = new Microsoft.Win32.SaveFileDialog
             {
+                FileName = FileName,
                 Filter = "PixelWalle Files (*.pw)|*.pw",
-                Title = "Guardar archivo",
-                DefaultExt = "pw"
+                Title = "Save file",
+                DefaultExt = "pw",
+                AddExtension = true
             };
 
             if (dialog.ShowDialog() == true)
             {
                 try
                 {
-                    File.WriteAllText(dialog.FileName, miTextBox.Text);
-                    MessageBox.Show("Archivo guardado exitosamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                    var project = new PixelWalleProject
+                    {
+                        CodeText = miTextBox.Text,
+                        CanvasWidth = Rows,
+                        CanvasHeight = Columns 
+                    };
+
+                    var json = JsonSerializer.Serialize(project);
+                    File.WriteAllText(dialog.FileName, json);
+
+                    MessageBox.Show("Project saved successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
                 }
+
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error al guardar el archivo:\n{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Error while saving the project:\n{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+
+
+
             }
         }
 

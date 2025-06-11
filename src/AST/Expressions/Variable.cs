@@ -20,8 +20,6 @@ namespace pixel_walle.src.AST.Expressions
 
         public override ExpressionType Type => resolvedType.Value;
 
-        public override object? Value => Evaluate();
-
         public Variable(string name, CodeLocation location) : base(location)
         {
             this.Name = name;

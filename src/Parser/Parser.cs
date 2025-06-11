@@ -56,7 +56,7 @@ namespace pixel_walle.src.Parser
                 }
             }
 
-            return new PixelWalleProgram(instructions, instructions[1].Location);
+            return new PixelWalleProgram(instructions, instructions[0].Location);
 
         }
 
@@ -236,15 +236,8 @@ namespace pixel_walle.src.Parser
             {
                 Token identifierToken = Stream.Advance();
 
-                if(Stream.Peek().Value == TokenValue.OpenRoundBracket)
-                {
-          //          return ParseFunctionCallExpression(errors, identifierToken);
-                }
-
-                else
-                {
-                    return new Variable(identifierToken.Value,identifierToken.Location);
-                }
+                return new Variable(identifierToken.Value,identifierToken.Location);
+                
 
             }
 

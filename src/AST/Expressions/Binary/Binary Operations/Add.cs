@@ -20,7 +20,6 @@ namespace pixel_walle.src.AST.Expressions
         }
 
         public override ExpressionType Type => ExpressionType.Number;
-        public override object? Value => _value;
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
@@ -32,13 +31,11 @@ namespace pixel_walle.src.AST.Expressions
             return true;
         }
 
-        public override object? Evaluate()
+        public override object? Evaluate(Scope scope)
         {
-            Right.Evaluate();
-            Left.Evaluate();
-
-            _value = (int)Right.Value + (int)Left.Value;
-            return Value;
+           
+            _value = (int)Right.Evaluate(scope) + (int)Left.Evaluate(scope);
+            return _value;
         }
     }
 }

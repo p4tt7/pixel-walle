@@ -42,7 +42,7 @@ namespace pixel_walle
         private void Load_Project(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Pixel Walle Project (*.pwe)|*.pwe";
+            openFileDialog.Filter = "Pixel Walle Project (*.pw)|*.pw";
             openFileDialog.Title = "Cargar Proyecto";
 
             if (openFileDialog.ShowDialog() == true)

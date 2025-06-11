@@ -19,7 +19,6 @@ namespace pixel_walle.src.AST.Expressions.Atomic
         }
 
         public override ExpressionType Type => ExpressionType.Bool;
-        public override object? Value => BoolValue;
 
 
             public override bool CheckSemantic(Scope scope, List<Error> errors)
@@ -27,9 +26,9 @@ namespace pixel_walle.src.AST.Expressions.Atomic
                 return true;
             }
 
-            public override object? Evaluate()
+            public override object? Evaluate(Scope scope)
             {
-                return Value;
+                return BoolValue;
             }
         }
 

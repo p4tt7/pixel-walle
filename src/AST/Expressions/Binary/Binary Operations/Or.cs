@@ -20,8 +20,6 @@ namespace pixel_walle.src.AST.Expressions
             Right = right;
         }
 
-
-        public override object? Value => value;
         public override ExpressionType Type => ExpressionType.Bool;
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
@@ -34,12 +32,12 @@ namespace pixel_walle.src.AST.Expressions
                 return true;
             }
 
-            public override object? Evaluate()
+            public override object? Evaluate(Scope scope)
             {
-                Right.Evaluate();
-                Left.Evaluate();
+                Right.Evaluate(scope);
+                Left.Evaluate(scope);
 
-                value = (bool)Right.Value || (bool)Left.Value;
+                value = (bool)Right.Evaluate(scope) || (bool)Left.Evaluate(scope);
                 return value;
             }
 

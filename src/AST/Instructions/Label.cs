@@ -12,6 +12,8 @@ namespace pixel_walle.src.AST.Instructions
     public class Label : Instruction
     {
         public string Name { get; set; }
+
+        public List<Instruction> Body { get; set; } = new();
         public Label(string name, CodeLocation location) : base(location)
         {
             Name = name;
@@ -38,6 +40,11 @@ namespace pixel_walle.src.AST.Instructions
 
         public override object? Evaluate(Context context)
         {
+            foreach (var instr in Body)
+            {
+                instr.Evaluate(context);
+            }
+
             return null;
         }
     }

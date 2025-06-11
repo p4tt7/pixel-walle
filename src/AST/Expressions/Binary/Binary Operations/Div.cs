@@ -22,7 +22,6 @@ namespace pixel_walle.src.AST.Expressions
         public Expression Left { get; }
         public Expression Right { get; }
 
-        public override object? Value => value;
 
         public override ExpressionType Type => ExpressionType.Bool;
 
@@ -35,7 +34,7 @@ namespace pixel_walle.src.AST.Expressions
                 return false;
             }
 
-            if((int)Right.Value == 0)
+            if((int)Right.Evaluate(scope) == 0)
             {
                 errors.Add(new Error(Error.ErrorType.SemanticError, $"Division by 0 is not allowed", Location));
                 return false;
@@ -44,12 +43,10 @@ namespace pixel_walle.src.AST.Expressions
             return true;
         }
 
-        public override object? Evaluate()
-        {
-            Right.Evaluate();
-            Left.Evaluate();
+        public override object? Evaluate(Scope scope)
+        {          
 
-            value = (int)Right.Evaluate() / (int)Left.Evaluate();
+            value = (int)Left.Evaluate(scope) / (int)Right.Evaluate(scope);
             return value;
         }
     }

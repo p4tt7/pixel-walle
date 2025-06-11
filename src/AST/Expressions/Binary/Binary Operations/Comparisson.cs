@@ -15,7 +15,6 @@ namespace pixel_walle.src.AST.Expressions
         }
 
         public override ExpressionType Type { get;}
-        public override object? Value { get; }
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
@@ -31,10 +30,10 @@ namespace pixel_walle.src.AST.Expressions
         protected abstract string OperatorSymbol { get; }
         protected abstract bool Compare(object left, object right);
 
-        public override object? Evaluate()
+        public override object? Evaluate(Scope scope)
         {
-            var left = Left.Evaluate();
-            var right = Right.Evaluate();
+            var left = Left.Evaluate(scope);
+            var right = Right.Evaluate(scope);
             return Compare(left, right);
         }
     }
