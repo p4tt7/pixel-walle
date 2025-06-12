@@ -3,10 +3,6 @@
   "WorkspaceRootPath": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\parser\\parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\parser\\parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\controllers\\manager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:controllers\\manager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -15,12 +11,8 @@
       "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\lexical\\tokenstream.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\ast\\expressions\\binary\\binary operations\\add.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\ast\\expressions\\binary\\binary operations\\add.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\ast\\expressions\\atomic\\number.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\ast\\expressions\\atomic\\number.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\parser\\parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\parser\\parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 176,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,67 +34,41 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "TokenStream.cs",
-              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\Lexical\\TokenStream.cs",
-              "RelativeDocumentMoniker": "src\\Lexical\\TokenStream.cs",
-              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\Lexical\\TokenStream.cs",
-              "RelativeToolTip": "src\\Lexical\\TokenStream.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T18:12:54.279Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Manager.cs",
               "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\controllers\\Manager.cs",
               "RelativeDocumentMoniker": "controllers\\Manager.cs",
               "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\controllers\\Manager.cs",
               "RelativeToolTip": "controllers\\Manager.cs",
-              "ViewState": "AgIAABwAAAAAAAAAAAAcwCoAAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAIAxwDEAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T18:09:35.367Z",
+              "WhenOpened": "2025-06-12T21:53:15.933Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Number.cs",
-              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Expressions\\Atomic\\Number.cs",
-              "RelativeDocumentMoniker": "src\\AST\\Expressions\\Atomic\\Number.cs",
-              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Expressions\\Atomic\\Number.cs",
-              "RelativeToolTip": "src\\AST\\Expressions\\Atomic\\Number.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAA7wBsAAAAeAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "TokenStream.cs",
+              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\Lexical\\TokenStream.cs",
+              "RelativeDocumentMoniker": "src\\Lexical\\TokenStream.cs",
+              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\Lexical\\TokenStream.cs",
+              "RelativeToolTip": "src\\Lexical\\TokenStream.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAA5wDMAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T17:40:46.03Z",
+              "WhenOpened": "2025-06-12T21:52:53.012Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Add.cs",
-              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Expressions\\Binary\\Binary Operations\\Add.cs",
-              "RelativeDocumentMoniker": "src\\AST\\Expressions\\Binary\\Binary Operations\\Add.cs",
-              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Expressions\\Binary\\Binary Operations\\Add.cs",
-              "RelativeToolTip": "src\\AST\\Expressions\\Binary\\Binary Operations\\Add.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAEwCYAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T17:26:18.349Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Parser.cs",
               "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\Parser\\Parser.cs",
               "RelativeDocumentMoniker": "src\\Parser\\Parser.cs",
-              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\Parser\\Parser.cs*",
-              "RelativeToolTip": "src\\Parser\\Parser.cs*",
-              "ViewState": "AgIAANkAAAAAAAAAAAAAAN4AAAAcAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\Parser\\Parser.cs",
+              "RelativeToolTip": "src\\Parser\\Parser.cs",
+              "ViewState": "AgIAAHUBAAAAAAAAAAAEwIcBAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T01:27:08.508Z",
+              "WhenOpened": "2025-06-12T21:42:11.024Z",
               "EditorCaption": ""
             }
           ]

@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:pixel_walle"
         mc:Ignorable="d"
         Title="MainWindow" 
-        Height="768" 
-        Width="1366" 
+        Height="540" 
+        Width="960" 
         Background="White"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize">
@@ -20,15 +20,15 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Canvas Margin="10,0,0,123" 
+        <Canvas Margin="10,0,0,56" 
                 HorizontalAlignment="Left" 
-                Width="1254">
+                Width="913">
 
-            <Rectangle Canvas.Left="480"
-                Canvas.Top="77" 
+            <Rectangle Canvas.Left="430"
+                Canvas.Top="54" 
                 Fill="LightGray"
-                       Width="653"
-                       Height="527" HorizontalAlignment="Left" VerticalAlignment="Center"
+                       Width="402"
+                       Height="400" HorizontalAlignment="Center" VerticalAlignment="Center"
             ></Rectangle>
 
             <UniformGrid x:Name="PixelGrid" 
@@ -36,9 +36,9 @@
                          VerticalAlignment="Center"/>
 
             <TextBox  x:Name="miTextBox"
-                     Width="258" 
-                     Height="390" 
-                     Canvas.Top="94" 
+                     Width="230" 
+                     Height="323" 
+                     Canvas.Top="54" 
                      Text="Code here..." 
                      TextWrapping="Wrap"
                      VerticalScrollBarVisibility="Auto"
@@ -48,22 +48,23 @@
                      BorderThickness="3"
                      Padding="10,10,0,0"
                      Foreground="Black" 
-                     HorizontalAlignment="Left" 
+                     HorizontalAlignment="Center" 
                      AcceptsReturn="True" 
-                     VerticalAlignment="Center" TextChanged="TextBox_TextChanged" Canvas.Left="90"/>
-            <Rectangle 
-                Width="258"
-                Height="34"
+                     VerticalAlignment="Top" TextChanged="TextBox_TextChanged" Canvas.Left="82"/>
+
+            <Rectangle x:Name="MyRectangle"
+                Width="230"
+                Height="26"
                 Fill="Black" 
-                Canvas.Top="63" 
+                Canvas.Top="28" 
                 HorizontalAlignment="Center" 
-                VerticalAlignment="Top" Canvas.Left="90"
+                VerticalAlignment="Top" Canvas.Left="82"
              />
 
 
             <Button Content="CLEAR"
-                Width="123"
-                Height="43"
+                Width="110"
+                Height="30"
                 FontSize="10"
                 FontWeight="Bold"
                 Background="White"
@@ -72,26 +73,26 @@
                     BorderBrush="Black"
                     BorderThickness="3"
                 Cursor="Hand"
-                Canvas.Top="555"
-                RenderTransformOrigin="-5.137,1.145" Canvas.Left="225" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                Canvas.Top="424"
+                RenderTransformOrigin="-5.137,1.145" Canvas.Left="202" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
 
             <Button Content="SAVE"
-                Width="100"
-                Height="43"
-                FontSize="10"
+                Width="85"
+                Height="23"
+                FontSize="9"
                 FontWeight="Bold"
                 Click="SaveButton_Click"
                 Background="White"
                 Foreground="Black"
                 BorderBrush="Black"
-                BorderThickness="3"
+                BorderThickness="2"
                 Cursor="Hand"
-                RenderTransformOrigin="-5.137,1.145" Canvas.Left="1132" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="9"/>
+                RenderTransformOrigin="-5.137,1.145" Canvas.Left="530" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="28"/>
 
             <Button Content="ERRORS"
-                Width="123"
-                Height="43"
+                Width="110"
+                Height="30"
                 Click="ErrorsButton_Click"
                 FontSize="10"
                 FontWeight="Bold"
@@ -100,12 +101,12 @@
                 BorderBrush="Black"
                 BorderThickness="3"
                 Cursor="Hand"
-                Canvas.Top="555"
-                RenderTransformOrigin="-5.137,1.145" Canvas.Left="90" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            
+                Canvas.Top="424"
+                RenderTransformOrigin="-5.137,1.145" Canvas.Left="82" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
             <Button Content="RUN!"
-                Width="258"
-                Height="43"
+                Width="230"
+                Height="37"
                 FontSize="20"
                 FontWeight="Bold"
                 Click="RunButton_Click"
@@ -114,23 +115,23 @@
                 BorderBrush="Black"
                 BorderThickness="3"
                 Cursor="Hand"
-                Canvas.Top="497"
-                RenderTransformOrigin="-5.137,1.145" Canvas.Left="90" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                Canvas.Top="380"
+                RenderTransformOrigin="-5.137,1.145" Canvas.Left="82" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
             <Button Content="REDIMENSION"
-                Width="99"
-                Height="43"
-                FontSize="10"
+                Width="85"
+                Height="23"
+                FontSize="9"
                 FontWeight="Bold"
                 Background="White"
                 Foreground="Black"
                 BorderBrush="Black"
-                BorderThickness="3"
+                BorderThickness="2"
                 Click="RedimensionButton_Click"
                 Cursor="Hand"
-                Canvas.Top="9"
-                RenderTransformOrigin="-5.137,1.145" Canvas.Left="1034" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                Canvas.Top="28"
+                RenderTransformOrigin="-5.137,1.145" Canvas.Left="631" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         </Canvas>
     </Grid>
 </Window>

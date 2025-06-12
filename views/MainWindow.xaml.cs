@@ -51,10 +51,11 @@ namespace pixel_walle
 
         private void InitializePixelGrid()
         {
-            const double maxWidth = 653;
-            const double maxHeight = 527;
-            const double rectLeft = 480;
-            const double rectTop = 77;
+            const double maxWidth = 402;   
+            const double maxHeight = 400;  
+            const double rectLeft = 430;  
+            const double rectTop = 54;     
+
 
             double cellWidth = maxWidth / Columns;
             double cellHeight = maxHeight / Rows;
