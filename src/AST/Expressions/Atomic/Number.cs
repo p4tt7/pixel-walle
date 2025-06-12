@@ -10,12 +10,10 @@ namespace pixel_walle.src.AST.Expressions
 {
     public class Number : Atom
     {
-        private ExpressionType _type;
-        private object? _value;
 
-        public int? NumberValue { get; }
+        public int? NumberValue { get; private set; }
 
-        public Number(CodeLocation location, int value) : base(location)
+        public Number(int value, CodeLocation location) : base(location)
         {
             NumberValue = value;
         }

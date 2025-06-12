@@ -49,7 +49,6 @@ namespace pixel_walle.src.Lexical
             var token = Peek();
             if (token != null && token.Value != null && token.Value == value)
             {
-                Advance();  
                 return true;
             }
             return false;

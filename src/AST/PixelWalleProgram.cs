@@ -20,9 +20,51 @@ namespace pixel_walle.src.AST
 
         public object? Evaluate(Context context)
         {
-            foreach (var instr in Instructions)
+
+            Dictionary<string, int> LabelPositions = new Dictionary<string, int>();
+
+            for (int i = 0; i < Instructions.Count; i++)
             {
-                instr.Evaluate(context); 
+                if (Instructions[i] is Label label)
+                {
+                    LabelPositions[label.Name] = i;
+                }
+            }
+
+            int index = 0;
+            int maxIterations = 10000;
+            int iterations = 0;
+
+            while (index < Instructions.Count)
+            {
+                if (++iterations > maxIterations)
+                {
+                    throw new Exception("Infinite loop detected in main program.");
+                }
+
+                Instruction instruction = Instructions[index];
+                object? result = instruction.Evaluate(context);
+
+                if (instruction is GoTo && result is string labelName)
+                {
+                    if (LabelPositions.TryGetValue(labelName, out int newIndex))
+                    {
+                        index = newIndex;
+                        continue;
+                    }
+
+                    else
+                    {
+                        throw new Exception($"Label '{labelName}' not found.");
+                    }
+
+
+                }
+
+                else
+                {
+                    index++;
+                }
             }
 
             return null;
