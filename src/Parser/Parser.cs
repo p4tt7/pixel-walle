@@ -79,7 +79,7 @@ namespace pixel_walle.src.Parser
 
 
 
-            errors.Add(new Error(Error.ErrorType.SyntaxError, $"Expected an instruction (assignment, function call, or 'GoTo'), but found '{token.Value}'", token.Location));
+            errors.Add(new Error(Error.ErrorType.SyntaxError, $"Expected an instruction, but found '{token.Value}'", token.Location));
 
             while (true)
             {
@@ -419,9 +419,9 @@ namespace pixel_walle.src.Parser
                 return null;
             }
 
-            if (!Assignment.VariableNameValidator(token.Value.ToString()))
+            if (!Assignment.VariableNameValidator(token.Value.ToString(), token.Location, errors))
             {
-                errors.Add(new Error(Error.ErrorType.AssignmentError, $"Invalid variable name", Stream.Advance().Location));
+                return null;
             }
 
             Token assignToken = Stream.Advance();

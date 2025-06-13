@@ -46,6 +46,12 @@ namespace pixel_walle.src.AST.Expressions
                 return false;
             }
 
+            if (FunctionLibrary.BuiltIns.ContainsKey(Name))
+            {
+                errors.Add(new Error(Error.ErrorType.SemanticError, $"Cannot assign to {Name} — name is reserved for a built-in function.", Location));
+
+            }
+
             resolvedType = scope.GetType(Name);
             return true;
         }

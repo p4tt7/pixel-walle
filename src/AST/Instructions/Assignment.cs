@@ -27,9 +27,8 @@ namespace pixel_walle.src.AST.Instructions
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
-            if (!VariableNameValidator(VariableName))
+            if (!VariableNameValidator(VariableName, Location, errors))
             {
-                errors.Add(new Error(Error.ErrorType.SemanticError, $"Nombre de variable inválido: '{VariableName}'", Location));
                 return false;
             }
 
@@ -39,41 +38,44 @@ namespace pixel_walle.src.AST.Instructions
             }
 
             scope.Define(VariableName, null, Expr.Type);
-
             return true;
         }
 
 
 
-        public static bool VariableNameValidator(string name)
+
+        public static bool VariableNameValidator(string name, CodeLocation location, List<Error> errors)
         {
-            if (name == null)
+            if (string.IsNullOrEmpty(name))
             {
+                errors.Add(new Error(Error.ErrorType.SemanticError, $"Variable name is null or empty.", location));
                 return false;
             }
 
             if (Char.IsDigit(name[0]))
             {
+                errors.Add(new Error(Error.ErrorType.SemanticError, $"Variable name cannot start with a digit: '{name}'.", location));
                 return false;
             }
 
             if (FunctionLibrary.BuiltIns.ContainsKey(name))
             {
+                errors.Add(new Error(Error.ErrorType.SemanticError, $"Variable name '{name}' conflicts with built-in function.", location));
                 return false;
             }
-
-
 
             foreach (char c in name)
             {
                 if (!char.IsLetterOrDigit(c) && c != '_')
                 {
+                    errors.Add(new Error(Error.ErrorType.SemanticError, $"Variable name '{name}' contains invalid character: '{c}'.", location));
                     return false;
                 }
             }
-            return true;
 
+            return true;
         }
+
 
         public override object? Evaluate(Context context, List<Error> errors)
         {

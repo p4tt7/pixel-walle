@@ -56,14 +56,15 @@ namespace pixel_walle.src.AST.Instructions.Functions
 
         public override object? Evaluate(Context context, List<Error> errors)
         {
-
             if (!FunctionLibrary.BuiltIns.TryGetValue(FunctionName, out var function))
             {
-                throw new Exception($"Function '{FunctionName}' not found at runtime.");
+                errors.Add(new Error(Error.ErrorType.Undefined, $"Function '{FunctionName}' not found at runtime.", Location));
+                return null;
             }
 
             var args = Arguments.Select(arg => arg.Evaluate(context.Scope, errors)).ToList();
             return function.Implementation(args, context);
         }
+
     }
 }

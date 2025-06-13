@@ -39,17 +39,16 @@ namespace pixel_walle.controllers
             List<Token> tokens = lexer.GetTokens(FileName, SourceCode, Errors);
             TokenStream stream = new TokenStream(tokens);
             Parser parser = new Parser(stream);
-            List<Error> parseErrors = new List<Error>();
-
-            PixelWalleProgram? program = parser.Parse(parseErrors);
+            List<Error> compilingErrors = new List<Error>();
+            PixelWalleProgram? program = parser.Parse(compilingErrors);
+            Errors.AddRange(compilingErrors);
 
             if (program != null && Errors.Count == 0)
             {
                 List<Error> runtimeErrors = new List<Error>();
-                program.Evaluate(Context, runtimeErrors); 
+                program.Evaluate(Context, runtimeErrors);
+                Errors.AddRange(runtimeErrors); 
             }
-
-            Errors.AddRange(parseErrors);
         }
 
         }
