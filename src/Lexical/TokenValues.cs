@@ -17,6 +17,7 @@
         public const string GreaterOrEqualThan = "GreaterOrEqualThan";
         public const string Pow = "Pow";
         public const string Mod = "Mod";
+        public const string Equal = "Equal";
 
         public const string GoTo = "GoTo";
 

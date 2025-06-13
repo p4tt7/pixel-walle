@@ -34,9 +34,9 @@ namespace pixel_walle.src.AST.Expressions
             return true;
         }
 
-        public override object? Evaluate(Scope scope)
+        public override object? Evaluate(Scope scope, List<Error> errors)
         {
-            value = Power((int)Right.Evaluate(scope), (int)Left.Evaluate(scope));
+            value = Power((int)Right.Evaluate(scope, errors), (int)Left.Evaluate(scope, errors));
             return value;
         }
 

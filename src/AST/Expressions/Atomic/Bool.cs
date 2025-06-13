@@ -26,7 +26,7 @@ namespace pixel_walle.src.AST.Expressions.Atomic
                 return true;
             }
 
-            public override object? Evaluate(Scope scope)
+            public override object? Evaluate(Scope scope, List<Error> errors)
             {
                 return BoolValue;
             }

@@ -34,7 +34,7 @@ namespace pixel_walle.src.AST.Expressions
                 return false;
             }
 
-            if((int)Right.Evaluate(scope) == 0)
+            if((int)Right.Evaluate(scope, errors) == 0)
             {
                 errors.Add(new Error(Error.ErrorType.SemanticError, $"Division by 0 is not allowed", Location));
                 return false;
@@ -43,10 +43,10 @@ namespace pixel_walle.src.AST.Expressions
             return true;
         }
 
-        public override object? Evaluate(Scope scope)
+        public override object? Evaluate(Scope scope, List<Error> errors)
         {          
 
-            value = (int)Left.Evaluate(scope) / (int)Right.Evaluate(scope);
+            value = (int)Left.Evaluate(scope, errors) / (int)Right.Evaluate(scope, errors);
             return value;
         }
     }

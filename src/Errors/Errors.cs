@@ -18,7 +18,7 @@ namespace pixel_walle.src.Errors
 
 
         public Error(ErrorType type, string message, CodeLocation location)
-         : base($"[{type}] {message}")
+         : base(message)
         {
             Type = type;
             Location = location;
@@ -29,7 +29,7 @@ namespace pixel_walle.src.Errors
 
         public override string ToString()
         {
-            return $"{Location}: [{Type}] {Message}";
+            return Message;
         }
 
 

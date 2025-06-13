@@ -18,7 +18,7 @@ namespace pixel_walle.src.AST
             Instructions = instructions;
         }
 
-        public object? Evaluate(Context context)
+        public object? Evaluate(Context context, List<Error> errors)
         {
 
             Dictionary<string, int> LabelPositions = new Dictionary<string, int>();
@@ -43,7 +43,7 @@ namespace pixel_walle.src.AST
                 }
 
                 Instruction instruction = Instructions[index];
-                object? result = instruction.Evaluate(context);
+                object? result = instruction.Evaluate(context, errors);
 
                 if (instruction is GoTo && result is string labelName)
                 {

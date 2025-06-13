@@ -12,6 +12,8 @@ using pixel_walle.src.AST.Instructions.Functions;
 using pixel_walle.src.AST;
 using System.IO;
 using pixel_walle.src.CodeLocation_;
+using pixel_walle.src.AST.Expressions.Binary.Binary_Operations;
+using pixel_walle.src.AST.Expressions.Binary;
 
 
 namespace pixel_walle.src.Parser
@@ -32,7 +34,7 @@ namespace pixel_walle.src.Parser
         {
             List<Instruction> instructions = new();
 
-            while (!Stream.End)
+            while (Stream.Peek().Type != TokenType.EOF)
             {
                 Instruction? instr = ParseInstruction(errors);
 
@@ -40,23 +42,10 @@ namespace pixel_walle.src.Parser
                 {
                     instructions.Add(instr);
                 }
-            
-
-                if(instructions.Count == 0)
-                {
-                    var dummyLocation = new CodeLocation
-                    {
-                        File = "program",
-                        Line = 0,
-                        Column = 0
-                    };
-
-
-                    errors.Add(new Error(Error.ErrorType.Undefined, "Oops, no program to analyze here...", dummyLocation));
-                }
             }
 
-            return new PixelWalleProgram(instructions, instructions[0].Location);
+       
+            return new PixelWalleProgram(instructions, instructions.Count > 0 ? instructions[0].Location : new CodeLocation { File = "program", Line = 0, Column = 0 });
 
         }
 
@@ -79,15 +68,33 @@ namespace pixel_walle.src.Parser
                     return ParseFunctionCall(errors, identifierToken);
                 }
 
-                return ParseAssignment(errors);
+                if (next.Type == TokenType.Symbol && next.Value == TokenValue.Assign)
+                {
+                    return ParseAssignment(errors);
+                }
+
+                return ParseLabel(errors);
+
             }
 
 
 
+            errors.Add(new Error(Error.ErrorType.SyntaxError, $"Expected an instruction (assignment, function call, or 'GoTo'), but found '{token.Value}'", token.Location));
 
+            while (true)
+            {
+                Token next = Stream.Peek();
 
-            errors.Add(new Error(Error.ErrorType.SyntaxError, "Instruction expected", token.Location));
-            Stream.Advance(); 
+                if (next.Type == TokenType.EOF ||
+                    next.Type == TokenType.Identifier ||
+                    next.Value == TokenValue.GoTo)
+                {
+                    break;
+                }
+
+                Stream.Advance();
+            }
+
             return null;
 
 
@@ -142,62 +149,145 @@ namespace pixel_walle.src.Parser
 
 
 
+
+
+
         public Expression ParseExpression(List<Error> errors)
         {
-            Expression left = ParseTerm(errors);
+            return ParseOr(errors);
+        }
 
-            while (!Stream.End)
+
+
+
+        private Expression ParseOr(List<Error> errors)
+        {
+            Expression left = ParseAnd(errors);
+            if (left == null) return null;
+
+            while (Stream.Peek().Value == TokenValue.Or)
             {
-                Token op = Stream.Peek();
-                if (op.Value != TokenValue.Add && op.Value != TokenValue.Sub)
-                    break; 
+                Token op = Stream.Advance();
+                Expression right = ParseAnd(errors);
+                if (right == null) return left;
 
-                Stream.Advance();
-
-                if (Stream.End)
-                {
-                    errors.Add(new Error(Error.ErrorType.SyntaxError, "Expected expression after operator", op.Location));
-                    return left;
-                }
-
-                Expression right = ParseTerm(errors);
-
-                if (right == null)
-                    return left;
-
-                if (op.Value == TokenValue.Add)
-                    left = new Add(left, right, op.Location);
-                else
-                    left = new Sub(left, right, op.Location);
+                left = new Or(left, right, op.Location);
             }
-
 
             return left;
         }
 
+
+
+
+        private Expression ParseAnd(List<Error> errors)
+        {
+            Expression left = ParseComparison(errors);
+            if (left == null) return null;
+
+            while (Stream.Peek().Value == TokenValue.And)
+            {
+                Token op = Stream.Advance();
+                Expression right = ParseComparison(errors);
+                if (right == null) return left;
+
+                left = new And(left, right, op.Location);
+            }
+
+            return left;
+        }
+
+
+
+
+        private Expression ParseComparison(List<Error> errors)
+        {
+            Expression left = ParseAdditive(errors);
+            if (left == null) return null;
+
+            while (true)
+            {
+                Token op = Stream.Peek();
+                Expression right;
+
+                switch (op.Value)
+                {
+                    case TokenValue.LessThan:
+                        Stream.Advance();
+                        right = ParseAdditive(errors);
+                        if (right == null) return left;
+                        left = new LessThan(left, right, op.Location);
+                        break;
+                    case TokenValue.GreaterThan:
+                        Stream.Advance();
+                        right = ParseAdditive(errors);
+                        if (right == null) return left;
+                        left = new GreaterThan(left, right, op.Location);
+                        break;
+                    case TokenValue.Equal:
+                        Stream.Advance();
+                        right = ParseAdditive(errors);
+                        if (right == null) return left;
+                        left = new Equal(left, right, op.Location);
+                        break;
+                    case TokenValue.LessOrEqualThan:
+                        Stream.Advance();
+                        right = ParseAdditive(errors);
+                        if (right == null) return left;
+                        left = new LessThanOrEqual(left, right, op.Location);
+                        break;
+                    case TokenValue.GreaterOrEqualThan:
+                        Stream.Advance();
+                        right = ParseAdditive(errors);
+                        if (right == null) return left;
+                        left = new GreaterThanOrEqual(left, right, op.Location);
+                        break;
+                    default:
+                        return left;
+                }
+            }
+        }
+
+        private Expression ParseAdditive(List<Error> errors)
+        {
+            Expression left = ParseTerm(errors);
+            if (left == null) return null;
+
+            while (true)
+            {
+                Token op = Stream.Peek();
+                if (op.Type == TokenType.EOF ||
+                   (op.Value != TokenValue.Add && op.Value != TokenValue.Sub))
+                    break;
+
+                Stream.Advance();
+                Expression right = ParseTerm(errors);
+
+                left = op.Value == TokenValue.Add
+                    ? new Add(left, right, op.Location)
+                    : new Sub(left, right, op.Location);
+            }
+
+            return left;
+        }
+
+
         public Expression ParseTerm(List<Error> errors)
         {
             Expression left = ParsePower(errors);
+            if (left == null) return null;
 
-            while (!Stream.End)
+            while (true)
             {
                 Token op = Stream.Peek();
-                if (op.Value != TokenValue.Mul && op.Value != TokenValue.Div && op.Value != TokenValue.Mod)
-                    break; 
+
+                if (op.Type == TokenType.EOF ||
+                   (op.Value != TokenValue.Mul && op.Value != TokenValue.Div && op.Value != TokenValue.Mod))
+                    break;
 
                 Stream.Advance();
-
-                if (Stream.End)
-                {
-                    errors.Add(new Error(Error.ErrorType.SyntaxError, "Expected expression after operator", op.Location));
-                    return left;
-                }
-
                 Expression right = ParsePower(errors);
-
-                if (right == null)
-                    return left;
-
+                if (right == null) return left;
 
                 switch (op.Value)
                 {
@@ -216,57 +306,44 @@ namespace pixel_walle.src.Parser
             return left;
         }
 
+
+
         public Expression ParsePower(List<Error> errors)
         {
             Expression left = ParsePrimary(errors);
+            if (left == null) return null;
 
-            if (!Stream.End)
+            Token op = Stream.Peek();
+            if (op.Value == TokenValue.Pow)
             {
-
-                Token op = Stream.Peek();
-                if (op.Value == TokenValue.Pow)
+                Stream.Advance();
+                Expression right = ParsePower(errors);
+                if (right == null)
                 {
-                    Stream.Advance();
-
-                    if (Stream.End)
-                    {
-                        errors.Add(new Error(Error.ErrorType.SyntaxError, "Expected expression after '**'", op.Location));
-                        return left;
-                    }
-
-                    Expression right = ParsePower(errors);
-
-                    if (right == null)
-                        return left;
-
-                    return new Pow(left, right, op.Location);
+                    errors.Add(new Error(Error.ErrorType.SyntaxError, "Expected expression after '**'", op.Location));
+                    return left;
                 }
+                return new Pow(left, right, op.Location);
             }
-
 
             return left;
         }
 
+
+
         public Expression ParsePrimary(List<Error> errors)
         {
-            if (Stream.End)
-            {
-                var dummyLocation = new CodeLocation
-                {
-                    File = "program",
-                    Line = 0,
-                    Column = 0
-                };
+            Token token = Stream.Peek();
 
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "Unexpected end of expression", dummyLocation));
+            if (token.Type == TokenType.EOF)
+            {
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "Unexpected end of expression", token.Location));
                 return null;
             }
 
-            Token token = Stream.Peek();
-
             if (token.Value == TokenValue.Sub)
             {
-                Stream.Advance(); 
+                Stream.Advance();
                 Expression operand = ParsePrimary(errors);
 
                 if (operand == null)
@@ -289,19 +366,16 @@ namespace pixel_walle.src.Parser
                 }
                 else
                 {
-                    Stream.Advance(); 
+                    Stream.Advance();
                 }
 
                 return expr;
             }
 
-            else if(token.Type==TokenType.Identifier)
+            if (token.Type == TokenType.Identifier)
             {
                 Token identifierToken = Stream.Advance();
-
-                return new Variable(identifierToken.Value,identifierToken.Location);
-                
-
+                return new Variable(identifierToken.Value, identifierToken.Location);
             }
 
             switch (token.Type)
@@ -314,10 +388,18 @@ namespace pixel_walle.src.Parser
                     return ParseBool();
                 default:
                     errors.Add(new Error(Error.ErrorType.SyntaxError, "Unexpected token", token.Location));
-                    Stream.Advance(); 
+                    Stream.Advance();
                     return null;
             }
         }
+
+
+
+
+
+
+
+
 
 
 
@@ -331,6 +413,12 @@ namespace pixel_walle.src.Parser
 
             Token token = Stream.Advance();
 
+            if (token.Type == TokenType.EOF)
+            {
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "Unexpected end of input in assignment", token.Location));
+                return null;
+            }
+
             if (!Assignment.VariableNameValidator(token.Value.ToString()))
             {
                 errors.Add(new Error(Error.ErrorType.AssignmentError, $"Invalid variable name", Stream.Advance().Location));
@@ -338,10 +426,10 @@ namespace pixel_walle.src.Parser
 
             Token assignToken = Stream.Advance();
 
-            if (assignToken.Value != TokenValue.Assign)
+            if (assignToken.Type == TokenType.EOF || assignToken.Value != TokenValue.Assign)
             {
-                errors.Add(new Error(Error.ErrorType.AssignmentError, $"Invalid assignation symbol, {TokenValue.Assign} expected", Stream.Advance().Location));
-
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "'<-' expected", assignToken.Location));
+                return null;
             }
 
             return ParseExpression(errors);
@@ -363,6 +451,13 @@ namespace pixel_walle.src.Parser
                 return null; 
             }
 
+            if (Stream.Peek().Type == TokenType.EOF)
+            {
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "Unexpected end of input after function name", identifierToken.Location));
+                return null;
+            }
+
+
             if (!Stream.Match(TokenValue.OpenRoundBracket))
             {
                 errors.Add(new Error(
@@ -382,13 +477,27 @@ namespace pixel_walle.src.Parser
                     Expression arg = ParseExpression(errors);
                     if (arg == null)
                     {
+                        errors.Add(new Error(Error.ErrorType.SyntaxError, "Argument expected", Stream.Peek().Location));
                         return null;
                     }
+
                     arguments.Add(arg);
                 } while (Stream.Match(TokenValue.Comma));
             }
 
             Token closingToken = Stream.Advance();
+
+            if (closingToken.Type == TokenType.EOF || closingToken.Value != TokenValue.CloseRoundBracket)
+            {
+                errors.Add(new Error(
+                    Error.ErrorType.SyntaxError,
+                    $"Expected '{TokenValue.CloseRoundBracket}' after function arguments",
+                    closingToken.Location
+                ));
+                return null;
+            }
+
+
             if (closingToken.Value != TokenValue.CloseRoundBracket)
             {
                 errors.Add(new Error(
@@ -427,13 +536,25 @@ namespace pixel_walle.src.Parser
 
             Token assignToken = Stream.Advance();
 
+            if (assignToken.Type == TokenType.EOF || assignToken.Value != TokenValue.Assign)
+            {
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "'<-' expected", assignToken.Location));
+                return null;
+            }
+
             if (assignToken.Value != TokenValue.Assign)
             {
                 errors.Add(new Error(Error.ErrorType.SyntaxError, "'<-' expected", assignToken.Location));
             }
 
             Expression expr = ParseExpression(errors);
-            
+
+            if (expr == null)
+            {
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "Expression expected after '<-'", assignToken.Location));
+                return null;
+            }
+
             return new Assignment(varName, expr, assignToken.Location);
 
         }
@@ -443,76 +564,85 @@ namespace pixel_walle.src.Parser
 
         private GoTo? ParseGoTo(List<Error> errors)
         {
-            Token token = Stream.Advance();
+            Token goToToken = Stream.Advance();
 
-            if (token.Value != TokenValue.OpenSquareBracket)
+ 
+            Token openBracket = Stream.Peek();
+            if (openBracket.Value != TokenValue.OpenSquareBracket)
             {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "'[' expected", token.Location));
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "'[' expected", openBracket.Location));
                 return null;
             }
+            Stream.Advance();
 
-            Token tokenLabel = Stream.Advance();
-            if (tokenLabel.Type != TokenType.Identifier)
+
+            Token labelToken = Stream.Peek();
+            if (labelToken.Type != TokenType.Identifier)
             {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "Label name expected", tokenLabel.Location));
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "Label name expected", labelToken.Location));
                 return null;
             }
+            string labelName = labelToken.Value;
+            Stream.Advance();
 
-            string labelName = tokenLabel.Value;
 
-            Token tokenClose = Stream.Advance();
-            if (tokenClose.Value != TokenValue.ClosedSquareBracket)
+            Token closeBracket = Stream.Peek();
+            if (closeBracket.Value != TokenValue.ClosedSquareBracket)
             {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "']' expected", tokenClose.Location));
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "']' expected", closeBracket.Location));
                 return null;
             }
+            Stream.Advance();
 
-            Token tokenOpenP = Stream.Advance();
-            if (tokenOpenP.Value != TokenValue.OpenRoundBracket)
+
+            Token openParen = Stream.Peek();
+            if (openParen.Value != TokenValue.OpenRoundBracket)
             {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "'(' expected", tokenOpenP.Location));
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "'(' expected", openParen.Location));
                 return null;
             }
+            Stream.Advance();
+
 
             Expression? condition = ParseExpression(errors);
             if (condition == null)
             {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "Condition expected inside parentheses", tokenOpenP.Location));
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "Condition expected inside parentheses", openParen.Location));
                 return null;
             }
 
-            Token tokenCloseP = Stream.Advance();
-            if (tokenCloseP.Value != TokenValue.CloseRoundBracket)
+
+            Token closeParen = Stream.Peek();
+            if (closeParen.Value != TokenValue.CloseRoundBracket)
             {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "')' expected", tokenCloseP.Location));
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "')' expected", closeParen.Location));
+                return null;
+            }
+            Stream.Advance();
+
+            return new GoTo(labelName, condition, goToToken.Location);
+        }
+
+
+
+
+
+
+
+        private Label? ParseLabel(List<Error> errors)
+        {
+            Token labelToken = Stream.Advance();
+
+
+            if (labelToken.Type != TokenType.Identifier)
+            {
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "Expected label name (identifier)", labelToken.Location));
                 return null;
             }
 
-            return new GoTo(labelName, condition, token.Location);
+            return new Label(labelToken.Value, labelToken.Location);
         }
 
-
-
-
-
-
-
-
-
-        private bool IsExpression(Token token)
-        {
-            return token.Type == TokenType.Number ||
-                   token.Type == TokenType.Text ||
-                   token.Type == TokenType.Bool;
-        }
-
-        private bool IsInstruction(Token token)
-        {
-            return token.Type == TokenType.Identifier ||
-                   token.Value == TokenValue.Assign || 
-                   token.Value == TokenValue.GoTo ||   
-                   token.Value == TokenValue.OpenRoundBracket;
-        }
 
 
     }

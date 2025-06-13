@@ -26,9 +26,16 @@ namespace pixel_walle.src.AST.Expressions
 
         }
 
-        public override object? Evaluate(Scope scope)
+        public override object? Evaluate(Scope scope, List<Error> errors)
         {
-            return scope.GetVariable(Name);
+            if(scope.GetVariable(Name, out object? variable))
+            {
+                return variable;
+            }
+
+            errors.Add(new Error(Error.ErrorType.Undefined, $"{Name} is not defined in the current context", Location));
+            return null;
+
         }
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)

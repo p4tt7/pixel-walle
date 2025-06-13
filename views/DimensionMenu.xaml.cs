@@ -36,8 +36,9 @@ namespace pixel_walle
 
             if (!IsValidFileName(fileName))
             {
-                MessageBox.Show("Nombre inválido. Debe comenzar con una letra y solo puede contener letras, números y guión bajo (_).",
-                                "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Invalid file name. It must start with a letter and contain only letters, digits, or underscores (_).",
+                   "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Warning);
+
                 return;
             }
 
@@ -53,7 +54,8 @@ namespace pixel_walle
             }
             else
             {
-                MessageBox.Show("Por favor ingresa dimensiones válidas.");
+                MessageBox.Show("Please enter valid numeric values for the canvas dimensions.",
+                    "Invalid Dimensions", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
         }

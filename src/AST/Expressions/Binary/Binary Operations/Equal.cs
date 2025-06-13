@@ -21,10 +21,10 @@ namespace pixel_walle.src.AST.Expressions.Binary_Operations
 
         public override ExpressionType Type => ExpressionType.Bool;
 
-        public override object? Evaluate(Scope scope)
+        public override object? Evaluate(Scope scope, List<Error> errors)
         {
-            var leftVal = Left.Evaluate(scope);
-            var rightVal = Right.Evaluate(scope);
+            var leftVal = Left.Evaluate(scope, errors);
+            var rightVal = Right.Evaluate(scope, errors);
             value = Equals(leftVal, rightVal);
             return value;
         }

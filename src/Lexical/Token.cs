@@ -44,6 +44,7 @@ namespace pixel_walle.src.Lexical
             { ">", TokenValue.GreaterThan },
             { "<=", TokenValue.LessOrEqualThan },
             { ">=", TokenValue.GreaterOrEqualThan },
+            { "==", TokenValue.Equal },
             {"," , TokenValue.Comma },
             { "\"", TokenValue.QuoteMark },
             {"(", TokenValue.OpenRoundBracket },  

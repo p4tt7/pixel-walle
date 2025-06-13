@@ -40,11 +40,13 @@ namespace pixel_walle.controllers
             TokenStream stream = new TokenStream(tokens);
             Parser parser = new Parser(stream);
             List<Error> parseErrors = new List<Error>();
+
             PixelWalleProgram? program = parser.Parse(parseErrors);
 
             if (program != null && Errors.Count == 0)
             {
-                program.Evaluate(Context); 
+                List<Error> runtimeErrors = new List<Error>();
+                program.Evaluate(Context, runtimeErrors); 
             }
 
             Errors.AddRange(parseErrors);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using pixel_walle.src.CodeLocation_;
+using pixel_walle.src.Errors;
 
 namespace pixel_walle.src.AST.Expressions
 {
@@ -13,7 +14,7 @@ namespace pixel_walle.src.AST.Expressions
 
         public Expression(CodeLocation location) : base(location) { }
 
-        public abstract object? Evaluate(Scope scope);
+        public abstract object? Evaluate(Scope scope, List<Error> errors);
     }
 
 

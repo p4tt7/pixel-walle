@@ -75,9 +75,9 @@ namespace pixel_walle.src.AST.Instructions
 
         }
 
-        public override object? Evaluate(Context context)
+        public override object? Evaluate(Context context, List<Error> errors)
         {
-            object value = Expr.Evaluate(context.Scope);
+            object value = Expr.Evaluate(context.Scope, errors);
             context.Scope.Define(VariableName, value, Expr.Type);
             return value; 
         }

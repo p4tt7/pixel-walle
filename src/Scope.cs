@@ -39,14 +39,16 @@ namespace pixel_walle.src
 
 
 
-        public object? GetVariable(string name)
+        public bool GetVariable(string name, out object? variable)
         {
             if (variables.ContainsKey(name))
             {
-                return variables[name];
+                variable = variables[name];
+                return true;
             }
 
-            throw new Exception($"Variable '{name}' no definida.");
+            variable = null;
+            return false;
         }
 
         public bool Exists(string name)

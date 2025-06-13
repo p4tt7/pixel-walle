@@ -1,4 +1,5 @@
-﻿using System;
+﻿using pixel_walle.src.CodeLocation_;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,11 +27,11 @@ namespace pixel_walle.src.Lexical
         public Token Peek(int offset = 0)
         {
             int new_position = position + offset;
-            if (new_position < tokens.Count)
+            if (new_position < 0 || new_position >= tokens.Count)
             {
-                return tokens[new_position];
+                return new Token(TokenType.EOF, "", new CodeLocation { File = "EOF", Line = -1, Column = -1 });
             }
-            return null;
+            return tokens[new_position];
         }
 
         public bool Match(TokenType type)
@@ -57,11 +58,9 @@ namespace pixel_walle.src.Lexical
 
         public Token Advance()
         {
-            if (!End)
-            {
-                return tokens[position++];
-            }
-            return null;
+            Token current = Peek(); 
+            position++;
+            return current;
         }
 
         public Token Rollback()

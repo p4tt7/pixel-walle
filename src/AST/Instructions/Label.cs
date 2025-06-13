@@ -38,11 +38,11 @@ namespace pixel_walle.src.AST.Instructions
 
         }
 
-        public override object? Evaluate(Context context)
+        public override object? Evaluate(Context context, List<Error> errors)
         {
             foreach (var instr in Body)
             {
-                instr.Evaluate(context);
+                instr.Evaluate(context, errors);
             }
 
             return null;
