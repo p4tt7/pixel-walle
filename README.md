@@ -3,6 +3,7 @@
 Pixel Wall-E es una aplicación interactiva diseñada para crear arte pixelado mediante los comandos brindados por su lenguaje de programación. Invita a explorar la libertad creativa a través de un robot, el cual al controlarlo es capaz de dibujar sobre un canvas cuadriculado.
 
 
+
 ## TECNOLOGÍAS UTILIZADAS
 
 WPF (Windows Presentation Foundation): Para desarrollar una interfaz gráfica intuitiva y responsive. Dentro de la misma:
@@ -12,8 +13,8 @@ WPF (Windows Presentation Foundation): Para desarrollar una interfaz gráfica in
 
 
 JSON: Para la serialización y almacenamiento de archivos de código, facilitando la portabilidad y el intercambio de proyectos. Este brinda:
--Capacidad para guardar y cargar programas en archivos con extensión .pw.
--Exportación e importación de proyectos para compartir o continuar trabajos posteriores.
+- Capacidad para guardar y cargar programas en archivos con extensión .pw.
+- Exportación e importación de proyectos para compartir o continuar trabajos posteriores.
 
 ## INSTALACIÓN
 
