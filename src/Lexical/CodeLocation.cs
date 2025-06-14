@@ -9,10 +9,7 @@
 
         public override string ToString()
         {
-            int line = Line + 1;
-            int column = Column + 1;
-
-            return $"{File}, línea {line}, col {column}";
+            return $"{File}, línea {Line}, col {Column}";
         }
 
 

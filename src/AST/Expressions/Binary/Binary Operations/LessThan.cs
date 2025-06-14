@@ -20,6 +20,12 @@ namespace pixel_walle.src.AST.Expressions.Binary
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
+            bool leftValid = Left.CheckSemantic(scope, errors);
+            bool rightValid = Right.CheckSemantic(scope, errors);
+
+            if (!leftValid || !rightValid)
+                return false;
+
             if (Left.Type != ExpressionType.Number || Right.Type != ExpressionType.Number)
             {
                 errors.Add(new Error(Error.ErrorType.SemanticError, $"Operator '<' can't be applied to operands of type {Left.Type} and {Right.Type}", Location));

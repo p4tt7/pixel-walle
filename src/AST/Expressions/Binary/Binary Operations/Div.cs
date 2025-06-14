@@ -28,26 +28,39 @@ namespace pixel_walle.src.AST.Expressions
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
-            if (Right.Type != ExpressionType.Number || Left.Type != ExpressionType.Number)
+
+            if (!Left.CheckSemantic(scope, errors) || !Right.CheckSemantic(scope, errors))
+                return false;
+
+            if (Left.Type != ExpressionType.Number || Right.Type != ExpressionType.Number)
             {
-                errors.Add(new Error(Error.ErrorType.SemanticError, $"Operator '/' can't be applied to operands of type {Right.Type} and {Left.Type}", Location));
+                errors.Add(new Error(Error.ErrorType.SemanticError,
+                    $"Operator '/' can't be applied to operands of type {Left.Type} and {Right.Type}",
+                    Location));
                 return false;
             }
 
-            if((int)Right.Evaluate(scope, errors) == 0)
-            {
-                errors.Add(new Error(Error.ErrorType.SemanticError, $"Division by 0 is not allowed", Location));
-                return false;
-            }
-
-            return true;
+            return true; 
         }
 
         public override object? Evaluate(Scope scope, List<Error> errors)
-        {          
+        {
 
-            value = (int)Left.Evaluate(scope, errors) / (int)Right.Evaluate(scope, errors);
-            return value;
+            var leftVal = Left.Evaluate(scope, errors);
+            var rightVal = Right.Evaluate(scope, errors);
+
+            if (leftVal == null || rightVal == null)
+                return null;
+
+            if ((int)rightVal == 0)
+            {
+                errors.Add(new Error(Error.ErrorType.DivisionByZeroError,
+                    "Division by zero",
+                    Location));
+                return null;
+            }
+
+            return (int)leftVal / (int)rightVal;
         }
     }
 }

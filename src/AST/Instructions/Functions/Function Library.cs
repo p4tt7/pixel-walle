@@ -149,6 +149,7 @@ namespace pixel_walle.src.AST.Instructions.Functions
 
         public static void Spawn(int x, int y, Context context)
         {
+            if(!context.HasRobot)
            context.Spawn(x, y);
         }
 

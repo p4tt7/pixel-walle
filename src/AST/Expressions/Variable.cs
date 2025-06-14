@@ -42,13 +42,15 @@ namespace pixel_walle.src.AST.Expressions
         {
             if (!scope.Exists(Name)) 
             {
-                errors.Add(new Error(Error.ErrorType.SemanticError, $"Variable '{Name}' not defined", Location));
+                errors.Add(new Error(Error.ErrorType.UndeclaredVariableError, $"Variable '{Name}' not defined", Location));
+                resolvedType = null;
                 return false;
             }
 
             if (FunctionLibrary.BuiltIns.ContainsKey(Name))
             {
-                errors.Add(new Error(Error.ErrorType.SemanticError, $"Cannot assign to {Name} — name is reserved for a built-in function.", Location));
+                errors.Add(new Error(Error.ErrorType.SyntaxError, $"Cannot assign to {Name} — name is reserved for a built-in function.", Location));
+                return false;
 
             }
 

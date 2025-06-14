@@ -1,5 +1,6 @@
 ﻿using pixel_walle.controllers;
 using System.Reflection.PortableExecutable;
+using pixel_walle.src.Errors;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,6 +16,7 @@ using System.Windows.Shapes;
 using System.Resources;
 using System.IO.Enumeration;
 using System.Text.Json;
+using pixel_walle.src.AST;
 
 namespace pixel_walle
 {
@@ -101,25 +103,61 @@ namespace pixel_walle
             errorManager.Clear();
 
             manager = new Manager(fileName, codigoFuente, Columns, Rows);
-            manager.Analyze();
+            bool compiled = manager.Compile(out PixelWalleProgram? program);
 
-            if (manager.Errors.Count > 0)
+            var renderer = new CanvasRender(PixelGrid, manager.Context);
+            renderer.Render();
+
+            if (!compiled)
             {
-
                 foreach (var err in manager.Errors)
-                {
-                    errorManager.Add(err); 
-                }
+                    errorManager.Add(err);
 
-                MessageBox.Show($"No se pudo compilar. Hay {manager.Errors.Count} errores.", "Errores", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(
+                    $"Compilation failed with {manager.Errors.Count} error(s).",
+                    "Compilation Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+                return;
             }
-            else
+
+            List<Error> runtimeErrors = new List<Error>();
+
+            while (!program.IsFinished && runtimeErrors.Count == 0)
             {
-                var renderer = new CanvasRender(PixelGrid, manager.Context);
+                bool success = program.ExecuteNextInstruction(manager.Context, runtimeErrors);
                 renderer.Render();
 
-                MessageBox.Show("Compilación exitosa.", "Compilado", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (!success || runtimeErrors.Count>0)
+                    break;
             }
+
+            if(runtimeErrors.Count > 0)
+            {
+                foreach (var err in runtimeErrors)
+                    errorManager.Add(err);
+
+                MessageBox.Show(
+                    $"Execution stopped due to {runtimeErrors.Count} runtime error(s).",
+                    "Runtime Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+            }
+
+            else
+            {
+                MessageBox.Show(
+                    "Program executed successfully.",
+                    "Execution Finished",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information
+                );
+            }
+
+
+
         }
 
 
@@ -175,9 +213,27 @@ namespace pixel_walle
 
         private void RedimensionButton_Click(object sender, RoutedEventArgs e)
         {
-            PixelGrid.Children.Clear();
-            InitializePixelGrid();
+            var resizeDialog = new ResizeDialog(Rows,Columns);
+            if (resizeDialog.ShowDialog() == true)
+            {
+                int newRows = resizeDialog.Rows;
+                int newCols = resizeDialog.Columns;
+
+                this.manager = new Manager(FileName, miTextBox.Text, newCols, newRows);
+
+                InitializePixelGrid();
+                var renderer = new CanvasRender(PixelGrid, manager.Context);
+                renderer.Render();
+
+            }
         }
+
+
+
+
+
+
+
 
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)

@@ -31,12 +31,6 @@ namespace pixel_walle.src.AST.Expressions
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
-            if (NumberValue is int intValue && intValue <= 0)
-            {
-                errors.Add(new Error(Error.ErrorType.SemanticError, "Los números deben ser mayores que cero.", Location));
-                return false;
-            }
-
             return true;
         }
 

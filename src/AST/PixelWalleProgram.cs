@@ -12,62 +12,50 @@ namespace pixel_walle.src.AST
     public class PixelWalleProgram : ASTNode
     {
         public List<Instruction> Instructions { get; }
+        private int currentIndex = 0;
+        private Dictionary<string, int> LabelPositions = new();
 
         public PixelWalleProgram(List<Instruction> instructions, CodeLocation location) : base(location)
         {
             Instructions = instructions;
-        }
-
-        public object? Evaluate(Context context, List<Error> errors)
-        {
-
-            Dictionary<string, int> LabelPositions = new Dictionary<string, int>();
 
             for (int i = 0; i < Instructions.Count; i++)
             {
                 if (Instructions[i] is Label label)
-                {
                     LabelPositions[label.Name] = i;
-                }
             }
+        }
 
-            int index = 0;
-            int maxIterations = 10000;
-            int iterations = 0;
+        public bool IsFinished => currentIndex >= Instructions.Count;
 
-            while (index < Instructions.Count)
+        public bool ExecuteNextInstruction(Context context, List<Error> errors)
+        {
+
+            if (currentIndex >= Instructions.Count)
+                return false;
+
+            Instruction current = Instructions[currentIndex];
+            object? result = current.Evaluate(context, errors);
+
+            if (errors.Count > 0)
+                return false;
+
+            if (current is GoTo && result is string labelName)
             {
-                if (++iterations > maxIterations)
+                if (LabelPositions.TryGetValue(labelName, out int jumpTo))
                 {
-                    throw new Exception("Infinite loop detected in main program.");
+                    currentIndex = jumpTo;
+                    return true;
                 }
-
-                Instruction instruction = Instructions[index];
-                object? result = instruction.Evaluate(context, errors);
-
-                if (instruction is GoTo && result is string labelName)
-                {
-                    if (LabelPositions.TryGetValue(labelName, out int newIndex))
-                    {
-                        index = newIndex;
-                        continue;
-                    }
-
-                    else
-                    {
-                        throw new Exception($"Label '{labelName}' not found.");
-                    }
-
-
-                }
-
                 else
                 {
-                    index++;
+                    errors.Add(new Error(Error.ErrorType.Undefined, $"Label '{labelName}' is not defined in the current scope.", current.Location));
+                    return false;
                 }
             }
 
-            return null;
+            currentIndex++;
+            return true;
         }
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)

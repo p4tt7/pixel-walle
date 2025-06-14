@@ -26,6 +26,12 @@ namespace pixel_walle.src.AST.Expressions
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
+            bool leftValid = Left.CheckSemantic(scope, errors);
+            bool rightValid = Right.CheckSemantic(scope, errors);
+
+            if (!leftValid || !rightValid)
+                return false;
+
             if (Right.Type != ExpressionType.Number || Left.Type != ExpressionType.Number)
             {
                 errors.Add(new Error(Error.ErrorType.SemanticError, $"Operator '**' can't be applied to operands of type {Right.Type} and {Left.Type}", Location));

@@ -33,25 +33,32 @@ namespace pixel_walle.controllers
                 Context = new Context(new Scope(), canvasWidth, canvasHeight);
             }
 
-        public void Analyze()
+        public bool Compile(out PixelWalleProgram? program)
         {
-
             List<Token> tokens = lexer.GetTokens(FileName, SourceCode, Errors);
             TokenStream stream = new TokenStream(tokens);
+
             Parser parser = new Parser(stream);
             List<Error> compilingErrors = new List<Error>();
-            PixelWalleProgram? program = parser.Parse(compilingErrors);
+            program = parser.Parse(compilingErrors);
             Errors.AddRange(compilingErrors);
 
-            if (program != null && Errors.Count == 0)
+            if (program != null)
             {
-                List<Error> runtimeErrors = new List<Error>();
-                program.Evaluate(Context, runtimeErrors);
-                Errors.AddRange(runtimeErrors); 
+                List<Error> semanticErrors = new List<Error>();
+                if (!program.CheckSemantic(Context.Scope, semanticErrors))
+                    Errors.AddRange(semanticErrors);
+
+                if (Errors.Count == 0)
+                {
+                    return true;
+                }
             }
+
+            return false;
         }
 
-        }
+    }
 
 }
        

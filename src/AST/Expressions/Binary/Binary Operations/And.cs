@@ -24,7 +24,13 @@ namespace pixel_walle.src.AST.Expressions
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
-            if(Right.Type != ExpressionType.Bool || Left.Type != ExpressionType.Bool)
+            bool leftValid = Left.CheckSemantic(scope, errors);
+            bool rightValid = Right.CheckSemantic(scope, errors);
+
+            if (!leftValid || !rightValid)
+                return false;
+
+            if (Right.Type != ExpressionType.Bool || Left.Type != ExpressionType.Bool)
             {
                 errors.Add(new Error(Error.ErrorType.SemanticError, $"Operator '&&' can't be applied to operands of type {Right.Type} and {Left.Type}", Location));
                 return false;

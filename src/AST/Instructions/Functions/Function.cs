@@ -39,7 +39,18 @@ namespace pixel_walle.src.AST.Instructions.Functions
                 return false;
             }
 
-            for(int i = 0; i<Arguments.Count;i++)
+            bool allArgsValid = true;
+            for (int i = 0; i < Arguments.Count; i++)
+            {
+                if (!Arguments[i].CheckSemantic(scope, errors))
+                {
+                    allArgsValid = false;                  
+                }
+            }
+
+            if (!allArgsValid) return false;
+
+            for (int i = 0; i<Arguments.Count;i++)
             {
                 if (Arguments[i].Type != function.Parameters[i])
                 {
