@@ -28,45 +28,73 @@ namespace pixel_walle.controllers
 
         public void Render()
         {
-            grid.Children.Clear();
             grid.Rows = context.canvas.Height;
             grid.Columns = context.canvas.Width;
+
+            if (grid.Children.Count == 0)
+            {
+
+                grid.Children.Clear();
+                for (int y = 0; y < context.canvas.Height; y++)
+                {
+                    for (int x = 0; x < context.canvas.Width; x++)
+                    {
+                        var pixel = context.canvas.pixels[x, y];
+                        var rect = new Border
+                        {
+                            Width = grid.Width / grid.Columns,
+                            Height = grid.Height / grid.Rows,
+                            Background = new SolidColorBrush(pixel.Color),
+                            BorderBrush = Brushes.Black,
+                            BorderThickness = new Thickness(0.2)
+                        };
+
+                        grid.Children.Add(rect);
+                    }
+                }
+            }
 
             for (int y = 0; y < context.canvas.Height; y++)
             {
                 for (int x = 0; x < context.canvas.Width; x++)
                 {
-                    var pixel = context.canvas.pixels[x, y];
+                    if (!context.canvas.changes[x, y])
+                        continue;
 
-                    var rect = new Border
+                    var index = y * context.canvas.Width + x;
+                    if (index >= grid.Children.Count)
+                        continue;
+
+                    var rect = grid.Children[index] as Border;
+                    if (rect != null)
                     {
-                        Width = grid.Width / grid.Columns,
-                        Height = grid.Height / grid.Rows,
-                        Background = new SolidColorBrush(pixel.Color),
-                        BorderBrush = Brushes.Black,
-                        BorderThickness = new Thickness(0.2)
-                    };
+                        rect.Background = new SolidColorBrush(context.canvas.pixels[x, y].Color);
 
-
-                    if (context.HasRobot && context.Robot.X == x && context.Robot.Y == y)
-                    {
-                        var brushColor = context.Brush.ColorBrush.ToString();
-                        var iconSource = GetIcon(brushColor);
-
-                        var image = new Image
+                        if (context.HasRobot && context.Robot.X == x && context.Robot.Y == y)
                         {
-                            Source = iconSource,
-                            Stretch = Stretch.Fill
-                        };
+                            var brushColor = context.Brush.ColorBrush.ToString();
+                            var iconSource = GetIcon(brushColor);
 
-                        rect.Child = image;
+                            var image = new Image
+                            {
+                                Source = iconSource,
+                                Stretch = Stretch.Fill
+                            };
+
+                            rect.Child = image;
+                        }
+                        else
+                        {
+                            rect.Child = null;
+                        }
                     }
 
-                    grid.Children.Add(rect);
-
+                    context.canvas.changes[x, y] = false; 
                 }
             }
         }
+
+        
 
 
 

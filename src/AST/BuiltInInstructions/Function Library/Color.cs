@@ -16,18 +16,17 @@ namespace pixel_walle.src.AST.Instructions
         {
             var color = (string)arguments[0];
 
-            foreach (var c in ColorPalette.Colors)
+            if (ColorPalette.Colors.TryGetValue(color, out var brushColor))
             {
-                if (ColorPalette.Colors.ContainsKey(color))
-                {
-                    context.Brush.ColorBrush = ColorPalette.Colors[color];
-
-                }
-                else
-                {
-                    errors.Add(new Error(Error.ErrorType.Undefined, $"Color {color} is not defined", location));
-                }
-
+                context.Brush.ColorBrush = brushColor; 
+            }
+            else
+            {
+                errors.Add(new Error(
+                    Error.ErrorType.Undefined,
+                    $"Color '{color}' is not defined.",
+                    location
+                ));
             }
         }
     }

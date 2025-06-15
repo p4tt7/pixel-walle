@@ -27,6 +27,7 @@ namespace pixel_walle.src.AST.Instructions
                     if (px >= 0 && px < context.canvas.Width && py >= 0 && py < context.canvas.Height)
                     {
                         context.canvas.pixels[px, py].Color = context.Brush.ColorBrush;
+                        context.canvas.changes[x, y] = true;
                     }
                 }
             }

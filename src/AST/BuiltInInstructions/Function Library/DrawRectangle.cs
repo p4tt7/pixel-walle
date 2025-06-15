@@ -20,6 +20,16 @@ namespace pixel_walle.src.AST.Instructions
             var width = (int)arguments[3];
             var height = (int)arguments[4];
 
+            if (Math.Abs(dirX) > 1 || Math.Abs(dirY) > 1)
+            {
+                errors.Add(new Error(
+                    Error.ErrorType.SemanticError,
+                    $"Invalid direction ({dirX}, {dirY}). Directions must be -1, 0, or 1.",
+                    location));
+                return;
+            }
+
+
             if (distance <= 0)
             {
                   errors.Add(new Error(Error.ErrorType.SemanticError,

@@ -98,7 +98,18 @@ namespace pixel_walle
         {
             string fileName = FileName;
             string codigoFuente = miTextBox.Text;
-            
+
+            if (string.IsNullOrWhiteSpace(codigoFuente))
+            {
+                MessageBox.Show(
+                    "Oops, there's no code to analyze here...",
+                    "Empty code",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+                return;
+            }
+
 
             errorManager.Clear();
 

@@ -12,6 +12,7 @@ namespace pixel_walle.src.Canvas
         public int Width { get; set; }
         public int Height { get; set; }
         public Pixel[,] pixels;
+        public bool[,] changes;
 
         public Canva(int width, int height)
         {
@@ -19,12 +20,14 @@ namespace pixel_walle.src.Canvas
             Height = height;
 
             pixels = new Pixel[Width, Height];
+            changes = new bool[Width, Height];
 
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
                     pixels[x, y] = new Pixel(x, y, ColorPalette.Colors["White"]);
+                    changes[x, y] = false;
                 }
             }
         }

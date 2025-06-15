@@ -16,12 +16,24 @@ namespace pixel_walle.src.AST.Instructions
         {
             var k = (int)arguments[0];
 
-            if(k<=0)
+            if (k <= 0)
             {
-                errors.Add(new Error(Error.ErrorType.SemanticError, "Brush thickess cannot be 0 or a negative number", location));
+                errors.Add(new Error(
+                    Error.ErrorType.SemanticError,
+                    "Brush thickness must be a positive odd number (received " + k + ").",
+                    location
+                ));
+                return;
             }
 
-            context.Brush.BrushThickness = k;
+            int adjustedThickness = k;
+            if (k % 2 == 0)
+            {
+                adjustedThickness = k - 1; 
+               
+            }
+
+            context.Brush.BrushThickness = adjustedThickness; 
         }
     }
 }

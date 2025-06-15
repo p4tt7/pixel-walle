@@ -18,40 +18,39 @@ namespace pixel_walle.src.AST.Instructions
             var dirY = (int)arguments[1];
             var radius = (int)arguments[2];
 
-            if (context.Robot == null)
+            if (Math.Abs(dirX) > 1 || Math.Abs(dirY) > 1)
             {
-                errors.Add(new Error(Error.ErrorType.Undefined,
-                "Cannot draw circle: Robot is not defined in the current context.",
-                location));
+                errors.Add(new Error(
+                    Error.ErrorType.SemanticError,
+                    $"Invalid direction ({dirX}, {dirY}). Directions must be -1, 0, or 1.",
+                    location));
                 return;
             }
 
+            if (context.Robot == null)
+            {
+                errors.Add(new Error(Error.ErrorType.Undefined,
+                    "Cannot draw circle: Robot is not defined in the current context.",
+                    location));
+                return;
+            }
 
             if (radius <= 0)
             {
                 errors.Add(new Error(Error.ErrorType.SemanticError,
-                "Radius must be a positive integer.", location));
+                    "Radius must be a positive integer.", location));
                 return;
             }
 
+            int centerX = context.Robot.X + dirX * radius;
+            int centerY = context.Robot.Y + dirY * radius;
 
-            (int dx, int dy)[] directions = new (int, int)[]
-            {
-                (0, -1), (1, -1), (1, 0), (1, 1),
-                (0, 1), (-1, 1), (-1, 0), (-1, -1)
-            };
-
-            int centerX = context.Robot.X;
-            int centerY = context.Robot.Y;
-
-            int newX = centerX + dirX * radius;
-            int newY = centerY + dirY * radius;
-
-            if (newX < 0 || newX >= context.canvas.Width || newY < 0 || newY >= context.canvas.Height)
+            if (centerX < 0 || centerX >= context.canvas.Width ||
+                centerY < 0 || centerY >= context.canvas.Height)
             {
                 errors.Add(new Error(Error.ErrorType.OutOfRange,
-                "The new robot position after movement is outside the canvas.",
-                location));
+                    $"Circle center ({centerX}, {centerY}) is outside the canvas.",
+                    location));
                 return;
             }
 
@@ -60,10 +59,14 @@ namespace pixel_walle.src.AST.Instructions
                 double rad = angle * Math.PI / 180.0;
                 int x = centerX + (int)Math.Round(radius * Math.Cos(rad));
                 int y = centerY + (int)Math.Round(radius * Math.Sin(rad));
-                CanvasUtils.DrawPixel(x, y, context);
+
+                if (x >= 0 && x < context.canvas.Width && y >= 0 && y < context.canvas.Height)
+                {
+                    CanvasUtils.DrawPixel(x, y, context);
+                }
             }
 
-            CanvasUtils.UpdateRobotPosition(centerX + dirX, centerY + dirY, context);
+            CanvasUtils.UpdateRobotPosition(centerX, centerY, context);
         }
     }
 }
