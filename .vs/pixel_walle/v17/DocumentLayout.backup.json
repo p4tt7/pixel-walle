@@ -3,16 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\parser\\parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\parser\\parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\views\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:views\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\ast\\builtininstructions\\function library\\drawcircle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\ast\\builtininstructions\\function library\\drawcircle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\controllers\\manager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:controllers\\manager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\ast\\instructions\\functions\\functioninstruction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\ast\\instructions\\functions\\functioninstruction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\ast\\pixelwalleprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\ast\\pixelwalleprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\ast\\builtininstructions\\function library\\drawrectangle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\ast\\builtininstructions\\function library\\drawrectangle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\ast\\builtininstructions\\function library\\spawn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\ast\\builtininstructions\\function library\\spawn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\ast\\builtininstructions\\function library\\teleport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\ast\\builtininstructions\\function library\\teleport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\ast\\builtininstructions\\function library\\functionlibrary.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -26,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 176,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,51 +50,93 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\views\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "views\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\views\\MainWindow.xaml.cs",
+              "RelativeToolTip": "views\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAH8AAAAAAAAAAAAiwHIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-15T06:43:44.713Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Manager.cs",
+              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\controllers\\Manager.cs",
+              "RelativeDocumentMoniker": "controllers\\Manager.cs",
+              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\controllers\\Manager.cs",
+              "RelativeToolTip": "controllers\\Manager.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-15T06:43:29.181Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PixelWalleProgram.cs",
+              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\PixelWalleProgram.cs",
+              "RelativeDocumentMoniker": "src\\AST\\PixelWalleProgram.cs",
+              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\PixelWalleProgram.cs",
+              "RelativeToolTip": "src\\AST\\PixelWalleProgram.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-15T06:42:40.639Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "DrawRectangle.cs",
+              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\BuiltInInstructions\\Function Library\\DrawRectangle.cs",
+              "RelativeDocumentMoniker": "src\\AST\\BuiltInInstructions\\Function Library\\DrawRectangle.cs",
+              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\BuiltInInstructions\\Function Library\\DrawRectangle.cs",
+              "RelativeToolTip": "src\\AST\\BuiltInInstructions\\Function Library\\DrawRectangle.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAQwCgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-15T05:48:02.928Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Spawn.cs",
+              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\BuiltInInstructions\\Function Library\\Spawn.cs",
+              "RelativeDocumentMoniker": "src\\AST\\BuiltInInstructions\\Function Library\\Spawn.cs",
+              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\BuiltInInstructions\\Function Library\\Spawn.cs",
+              "RelativeToolTip": "src\\AST\\BuiltInInstructions\\Function Library\\Spawn.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-15T05:47:55.901Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Teleport.cs",
+              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\BuiltInInstructions\\Function Library\\Teleport.cs",
+              "RelativeDocumentMoniker": "src\\AST\\BuiltInInstructions\\Function Library\\Teleport.cs",
+              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\BuiltInInstructions\\Function Library\\Teleport.cs",
+              "RelativeToolTip": "src\\AST\\BuiltInInstructions\\Function Library\\Teleport.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-15T05:46:31.682Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "FunctionLibrary.cs",
               "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\BuiltInInstructions\\Function Library\\FunctionLibrary.cs",
               "RelativeDocumentMoniker": "src\\AST\\BuiltInInstructions\\Function Library\\FunctionLibrary.cs",
               "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\BuiltInInstructions\\Function Library\\FunctionLibrary.cs",
               "RelativeToolTip": "src\\AST\\BuiltInInstructions\\Function Library\\FunctionLibrary.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADoAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAACcAAAAAAAAAAAAvwEIAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T02:49:14.127Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "FunctionInstruction.cs",
-              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Instructions\\Functions\\FunctionInstruction.cs",
-              "RelativeDocumentMoniker": "src\\AST\\Instructions\\Functions\\FunctionInstruction.cs",
-              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\Instructions\\Functions\\FunctionInstruction.cs",
-              "RelativeToolTip": "src\\AST\\Instructions\\Functions\\FunctionInstruction.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T02:48:59.62Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "DrawCircle.cs",
-              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\BuiltInInstructions\\Function Library\\DrawCircle.cs",
-              "RelativeDocumentMoniker": "src\\AST\\BuiltInInstructions\\Function Library\\DrawCircle.cs",
-              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\BuiltInInstructions\\Function Library\\DrawCircle.cs",
-              "RelativeToolTip": "src\\AST\\BuiltInInstructions\\Function Library\\DrawCircle.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAAYwEEAAABKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T02:28:58.379Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Parser.cs",
-              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\Parser\\Parser.cs",
-              "RelativeDocumentMoniker": "src\\Parser\\Parser.cs",
-              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\Parser\\Parser.cs",
-              "RelativeToolTip": "src\\Parser\\Parser.cs",
-              "ViewState": "AgIAADkCAAAAAAAAAAAQwCQBAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T01:40:24.647Z",
+              "WhenOpened": "2025-06-15T05:45:06.391Z",
               "EditorCaption": ""
             }
           ]

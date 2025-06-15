@@ -102,7 +102,7 @@ namespace pixel_walle
 
             errorManager.Clear();
 
-            manager = new Manager(fileName, codigoFuente, Columns, Rows);
+            manager = new Manager(fileName, codigoFuente, this.Columns, this.Rows);
             bool compiled = manager.Compile(out PixelWalleProgram? program);
 
             var renderer = new CanvasRender(PixelGrid, manager.Context);
@@ -213,18 +213,16 @@ namespace pixel_walle
 
         private void RedimensionButton_Click(object sender, RoutedEventArgs e)
         {
-            var resizeDialog = new ResizeDialog(Rows,Columns);
+            var resizeDialog = new ResizeDialog(Rows, Columns);
             if (resizeDialog.ShowDialog() == true)
             {
-                int newRows = resizeDialog.Rows;
-                int newCols = resizeDialog.Columns;
+                this.Rows = resizeDialog.Rows;
+                this.Columns = resizeDialog.Columns;
 
-                this.manager = new Manager(FileName, miTextBox.Text, newCols, newRows);
-
+                this.manager = new Manager(FileName, miTextBox.Text, this.Columns, this.Rows);
                 InitializePixelGrid();
                 var renderer = new CanvasRender(PixelGrid, manager.Context);
                 renderer.Render();
-
             }
         }
 

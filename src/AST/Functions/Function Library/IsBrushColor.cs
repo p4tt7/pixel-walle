@@ -14,9 +14,21 @@ namespace pixel_walle.src.AST.Expressions
         public object? Execute(List<object?> arguments, Context context, List<Error> errors, CodeLocation location)
         {
 
-            var color = (string)arguments[0];
+            var colorName = (string)arguments[0];
 
-            if (context.Brush.ColorBrush.ToString() == color)
+            if (!ColorPalette.Colors.TryGetValue(colorName, out var expectedColor))
+            {
+                errors.Add(new Error(
+                Error.ErrorType.SemanticError,
+                $"Color '{colorName}' is not defined.",
+                location
+                ));
+                return null;
+            }
+
+            var currentColor = context.Brush.ColorBrush;
+
+            if (currentColor.Equals(expectedColor))
             {
                 return 1;
             }

@@ -28,12 +28,6 @@ namespace pixel_walle.src.AST.Instructions
                 return false;
             }
 
-            if (!scope.Labels.TryGetValue(LabelName, out var label))
-            {
-                errors.Add(new Error(Error.ErrorType.SemanticError, $"Label '{LabelName}' is not defined in the actual scope.", Location));
-                return false;
-            }
-
             return true;
 
 

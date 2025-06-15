@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using pixel_walle.src.AST.BuiltInInstructions.Function_Library;
 
 namespace pixel_walle.src.AST.Instructions
 {
@@ -35,7 +36,7 @@ namespace pixel_walle.src.AST.Instructions
             {
                 Parameters = new() { ExpressionType.Number, ExpressionType.Number, ExpressionType.Number },
                 Implementation = new DrawLine()
-                
+
             },
 
             ["DrawRectangle"] = new FunctionInfo
@@ -48,12 +49,19 @@ namespace pixel_walle.src.AST.Instructions
             {
                 Parameters = new() { ExpressionType.Number, ExpressionType.Number, ExpressionType.Number },
                 Implementation = new DrawCircle()
-               
+
             },
             ["Fill"] = new FunctionInfo
             {
                 Parameters = new(),
                 Implementation = new Fill()
+            },
+
+            ["Teleport"] = new FunctionInfo
+            {
+                Parameters = new List<ExpressionType> { ExpressionType.Number, ExpressionType.Number },
+                Implementation = new Teleport()
+
             }
 
         };

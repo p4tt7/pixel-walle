@@ -36,7 +36,7 @@
                          VerticalAlignment="Center"/>
 
             <TextBox  x:Name="miTextBox"
-                     Width="230" 
+                     Width="306" 
                      Height="323" 
                      Canvas.Top="54" 
                      Text="Code here..." 
@@ -48,22 +48,22 @@
                      BorderThickness="3"
                      Padding="10,10,0,0"
                      Foreground="Black" 
-                     HorizontalAlignment="Center" 
+                     HorizontalAlignment="Left" 
                      AcceptsReturn="True" 
-                     VerticalAlignment="Top" TextChanged="TextBox_TextChanged" Canvas.Left="82"/>
+                     VerticalAlignment="Center" TextChanged="TextBox_TextChanged" Canvas.Left="37"/>
 
             <Rectangle x:Name="MyRectangle"
-                Width="230"
+                Width="306"
                 Height="26"
                 Fill="Black" 
                 Canvas.Top="28" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Top" Canvas.Left="82"
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Center" Canvas.Left="37"
              />
 
 
             <Button Content="CLEAR"
-                Width="110"
+                Width="140"
                 Height="30"
                 FontSize="10"
                 FontWeight="Bold"
@@ -74,7 +74,7 @@
                     BorderThickness="3"
                 Cursor="Hand"
                 Canvas.Top="424"
-                RenderTransformOrigin="-5.137,1.145" Canvas.Left="202" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                RenderTransformOrigin="-5.137,1.145" Canvas.Left="203" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
 
             <Button Content="SAVE"
@@ -91,7 +91,7 @@
                 RenderTransformOrigin="-5.137,1.145" Canvas.Left="530" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="28"/>
 
             <Button Content="ERRORS"
-                Width="110"
+                Width="140"
                 Height="30"
                 Click="ErrorsButton_Click"
                 FontSize="10"
@@ -102,10 +102,10 @@
                 BorderThickness="3"
                 Cursor="Hand"
                 Canvas.Top="424"
-                RenderTransformOrigin="-5.137,1.145" Canvas.Left="82" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                RenderTransformOrigin="-5.137,1.145" Canvas.Left="37" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
             <Button Content="RUN!"
-                Width="230"
+                Width="306"
                 Height="37"
                 FontSize="20"
                 FontWeight="Bold"
@@ -116,7 +116,7 @@
                 BorderThickness="3"
                 Cursor="Hand"
                 Canvas.Top="380"
-                RenderTransformOrigin="-5.137,1.145" Canvas.Left="82" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                RenderTransformOrigin="-5.137,1.145" Canvas.Left="37" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
 
             <Button Content="REDIMENSION"
