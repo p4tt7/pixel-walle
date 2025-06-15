@@ -60,13 +60,28 @@ namespace pixel_walle.src.AST
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
-            foreach(var instruction in Instructions)
+
+            if (Instructions.Count == 0)
+            {
+                errors.Add(new Error(Error.ErrorType.SemanticError, "The program must contain at least one instruction.", Location));
+                return false;
+            }
+
+            if (Instructions[0] is not FunctionInstruction spawnInstruction || spawnInstruction.FunctionName != "Spawn")
+            {
+                errors.Add(new Error(Error.ErrorType.SemanticError, "The first instruction must be a Spawn(x, y)", Instructions[0].Location));
+                return false;
+            }
+
+            foreach (var instruction in Instructions)
             {
                 if(!instruction.CheckSemantic(scope, errors))
                 {
                     return false;
                 }
             }
+
+            
 
             return true;
         }

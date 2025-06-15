@@ -25,8 +25,9 @@ namespace pixel_walle.src.AST.Expressions
             {
                 if (string.IsNullOrEmpty(TextValue?.ToString()))
                 {
-                    errors.Add(new Error(Error.ErrorType.SemanticError, "Los textos no pueden estar vacíos.", Location));
-                    return false;
+                errors.Add(new Error(Error.ErrorType.SemanticError, "String literals must not be empty.", Location));
+
+                return false;
                 }
 
                 return true;

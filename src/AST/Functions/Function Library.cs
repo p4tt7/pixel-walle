@@ -33,6 +33,13 @@ namespace pixel_walle.src.AST.Expressions
                 Implementation = new IsCanvasColor()
             },
 
+            ["GetCanvasSize"] = new FunctionExpressionInfo
+            {
+                Parameters = new(),
+                ReturnType = ExpressionType.Text,
+                Implementation = new GetCanvasSize()
+            },
+
             ["IsBrushColor"] = new FunctionExpressionInfo
             {
                 Parameters = new() { ExpressionType.Text },

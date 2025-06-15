@@ -42,7 +42,7 @@ namespace pixel_walle.controllers
         {
             if (errors.Count == 0)
             {
-                MessageBox.Show("No hay errores para mostrar.", "Sin errores", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("No errors to show.", "No errors", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 

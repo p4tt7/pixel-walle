@@ -12,7 +12,14 @@ namespace pixel_walle.src.AST.Expressions
     {
         public object? Execute(List<object?> arguments, Context context, List<Error> errors, CodeLocation location)
         {
-            throw new NotImplementedException();
+            int width = context.canvas.Width;
+            int height = context.canvas.Height;
+
+            if (width == height)
+                return width.ToString();
+            else
+                return $"{width}x{height}"; 
         }
     }
+
 }

@@ -30,7 +30,8 @@ namespace pixel_walle.src.AST.Expressions
 
             if (Operand.Type != ExpressionType.Number)
             {
-                errors.Add(new Error(Error.ErrorType.SemanticError, $"El operador unario '-' no se puede aplicar a un operando de tipo '{Operand.Type}'.", Location));
+                errors.Add(new Error(Error.ErrorType.SemanticError, $"The unary operator '-' is not applicable to an operand of type '{Operand.Type}'.", Location));
+
                 return false;
             }
 

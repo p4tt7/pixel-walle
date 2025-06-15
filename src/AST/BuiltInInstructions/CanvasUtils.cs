@@ -15,6 +15,9 @@ namespace pixel_walle.src.AST.Instructions
             if (thickness <= 0)
                 return;
 
+            if (context.Brush.ColorBrush == ColorPalette.Colors["Transparent"])
+                return;
+
             int half = thickness / 2;
 
             for (int dx = -half; dx <= half; dx++)
