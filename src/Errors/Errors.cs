@@ -40,6 +40,7 @@ namespace pixel_walle.src.Errors
             TypeError,         
             SemanticError,
             Undefined,
+            OutOfRange,
             ParameterTypeMismatch,
             UndeclaredVariableError,        
             DivisionByZeroError,            

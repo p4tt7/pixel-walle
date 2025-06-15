@@ -10,13 +10,13 @@ namespace pixel_walle.src.AST.Expressions.Binary
 {
     public class LessThan : BinaryExpression
     {
+        public override ExpressionType Type { get; protected set; }
         public LessThan(Expression left, Expression right, CodeLocation location) : base(location)
         {
             Left = left;
             Right = right;
+            Type = ExpressionType.Bool;
         }
-
-        public override ExpressionType Type => ExpressionType.Bool;
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
@@ -34,9 +34,9 @@ namespace pixel_walle.src.AST.Expressions.Binary
             return true;
         }
 
-        public override object? Evaluate(Scope scope, List<Error> errors)
+        public override object? Evaluate(Context context, List<Error> errors)
         {
-            return (int)Left.Evaluate(scope, errors) < (int)Right.Evaluate(scope, errors);
+            return (int)Left.Evaluate(context, errors) < (int)Right.Evaluate(context, errors);
         }
     }
 

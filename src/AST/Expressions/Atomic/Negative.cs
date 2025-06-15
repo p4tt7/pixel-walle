@@ -10,14 +10,15 @@ namespace pixel_walle.src.AST.Expressions
 {
     class Negative : Expression
     {
+        public override ExpressionType Type { get; protected set; }
         public Expression Operand { get; }
 
         public Negative(Expression operand, CodeLocation location) : base(location)
         {
             Operand = operand;
+            Type = ExpressionType.Number;
         }
 
-        public override ExpressionType Type => Operand.Type;
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
@@ -36,9 +37,9 @@ namespace pixel_walle.src.AST.Expressions
             return true;
         }
 
-        public override object? Evaluate(Scope scope, List<Error> errors)
+        public override object? Evaluate(Context context, List<Error> errors)
         {
-            var val = Operand.Evaluate(scope, errors);
+            var val = Operand.Evaluate(context, errors);
             return -(int)val!;
         }
     }

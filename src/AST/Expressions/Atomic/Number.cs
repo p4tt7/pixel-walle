@@ -10,15 +10,15 @@ namespace pixel_walle.src.AST.Expressions
 {
     public class Number : Atom
     {
-
+        public override ExpressionType Type { get; protected set; }
         public int? NumberValue { get; private set; }
 
         public Number(int value, CodeLocation location) : base(location)
         {
             NumberValue = value;
+            Type = ExpressionType.Number;
         }
 
-        public override ExpressionType Type => ExpressionType.Number;
 
         public bool IsInt
         {
@@ -34,7 +34,7 @@ namespace pixel_walle.src.AST.Expressions
             return true;
         }
 
-        public override object? Evaluate(Scope scope, List<Error> errors)
+        public override object? Evaluate(Context context, List<Error> errors)
         {
             return NumberValue;
         }

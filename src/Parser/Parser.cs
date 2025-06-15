@@ -49,11 +49,12 @@ namespace pixel_walle.src.Parser
 
         }
 
+
         public Instruction ParseInstruction(List<Error> errors)
         {
             Token token = Stream.Peek();
 
-            if(token.Value == TokenValue.GoTo)
+            if (token.Value == TokenValue.GoTo)
             {
                 return ParseGoTo(errors);
             }
@@ -65,8 +66,14 @@ namespace pixel_walle.src.Parser
                 if (next.Type == TokenType.Symbol && next.Value == TokenValue.OpenRoundBracket)
                 {
                     Token identifierToken = Stream.Advance();
-                    return ParseFunctionCall(errors, identifierToken);
+                    FunctionExpression? functionExpr = ParseFunctionExpression(errors, identifierToken);
+
+                    if (functionExpr == null)
+                        return null;
+
+                    return new FunctionInstruction(functionExpr.FunctionName, functionExpr.Arguments, identifierToken.Location);
                 }
+
 
                 if (next.Type == TokenType.Symbol && next.Value == TokenValue.Assign)
                 {
@@ -74,10 +81,7 @@ namespace pixel_walle.src.Parser
                 }
 
                 return ParseLabel(errors);
-
             }
-
-
 
             errors.Add(new Error(Error.ErrorType.SyntaxError, $"Expected an instruction, but found '{token.Value}'", token.Location));
 
@@ -96,9 +100,8 @@ namespace pixel_walle.src.Parser
             }
 
             return null;
-
-
         }
+
 
 
 
@@ -375,8 +378,16 @@ namespace pixel_walle.src.Parser
             if (token.Type == TokenType.Identifier)
             {
                 Token identifierToken = Stream.Advance();
+
+                if (Stream.Peek().Value == TokenValue.OpenRoundBracket)
+                {
+                    return ParseFunctionExpression(errors, identifierToken);
+                }
+
                 return new Variable(identifierToken.Value, identifierToken.Location);
             }
+
+
 
             switch (token.Type)
             {
@@ -437,34 +448,14 @@ namespace pixel_walle.src.Parser
         }
 
 
-        public Function ParseFunctionCall(List<Error> errors, Token identifierToken)
+
+        public FunctionInstruction ParseFunctionInstruction(List<Error> errors, Token identifierToken)
         {
             string functionName = identifierToken.Value;
 
-            if (!FunctionLibrary.BuiltIns.TryGetValue(functionName, out FunctionInfo info))
-            {
-                errors.Add(new Error(
-                    Error.ErrorType.SemanticError,
-                    $"Function '{functionName}' is not defined",
-                    identifierToken.Location
-                ));
-                return null; 
-            }
-
-            if (Stream.Peek().Type == TokenType.EOF)
-            {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "Unexpected end of input after function name", identifierToken.Location));
-                return null;
-            }
-
-
             if (!Stream.Match(TokenValue.OpenRoundBracket))
             {
-                errors.Add(new Error(
-                    Error.ErrorType.SyntaxError,
-                    $"Expected '{TokenValue.OpenRoundBracket}' after function name",
-                    Stream.Advance().Location
-                ));
+                errors.Add(new Error(Error.ErrorType.SyntaxError, $"Expected '(' after function name", Stream.Peek().Location));
                 return null;
             }
 
@@ -489,41 +480,58 @@ namespace pixel_walle.src.Parser
 
             if (closingToken.Type == TokenType.EOF || closingToken.Value != TokenValue.CloseRoundBracket)
             {
-                errors.Add(new Error(
-                    Error.ErrorType.SyntaxError,
-                    $"Expected '{TokenValue.CloseRoundBracket}' after function arguments",
-                    closingToken.Location
-                ));
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "Expected ')' after function arguments", closingToken.Location));
                 return null;
             }
 
-
-            if (closingToken.Value != TokenValue.CloseRoundBracket)
-            {
-                errors.Add(new Error(
-                    Error.ErrorType.SyntaxError,
-                    $"Expected '{TokenValue.CloseRoundBracket}' after function arguments",
-                    closingToken.Location
-                ));
-                return null;
-            }
-
-            if (arguments.Count != info.Parameters.Count)
-            {
-                errors.Add(new Error(
-                    Error.ErrorType.SemanticError,
-                    $"Function '{functionName}' expects {info.Parameters.Count} arguments, but {arguments.Count} were provided",
-                    identifierToken.Location
-                ));
-                return null;
-            }
-
-            return new Function(
-                functionName,
-                arguments,
-                identifierToken.Location
-            );
+            return new FunctionInstruction(functionName, arguments, identifierToken.Location);
         }
+
+
+
+
+        public FunctionExpression ParseFunctionExpression(List<Error> errors, Token identifierToken)
+        {
+            string functionName = identifierToken.Value;
+
+            if (!Stream.Match(TokenValue.OpenRoundBracket))
+            {
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "Expected '(' after function name", Stream.Peek().Location));
+                return null;
+            }
+
+            List<Expression> arguments = new();
+
+            if (Stream.Peek().Value != TokenValue.CloseRoundBracket)
+            {
+                do
+                {
+                    Expression arg = ParseExpression(errors);
+                    if (arg == null)
+                    {
+                        errors.Add(new Error(Error.ErrorType.SyntaxError, "Argument expected", Stream.Peek().Location));
+                        return null;
+                    }
+
+                    arguments.Add(arg);
+                } while (Stream.Match(TokenValue.Comma));
+            }
+
+            Token closingToken = Stream.Advance();
+
+            if (closingToken.Type == TokenType.EOF || closingToken.Value != TokenValue.CloseRoundBracket)
+            {
+                errors.Add(new Error(Error.ErrorType.SyntaxError, "Expected ')' after function arguments", closingToken.Location));
+                return null;
+            }
+
+            return new FunctionExpression(functionName, arguments, identifierToken.Location);
+        }
+
+
+
+
+
 
 
 

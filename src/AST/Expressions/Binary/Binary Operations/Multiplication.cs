@@ -13,13 +13,13 @@ namespace pixel_walle.src.AST.Expressions
     public class Multiplication : BinaryExpression
     {
         private object? value;
+        public override ExpressionType Type { get; protected set; }
         public Multiplication(Expression left, Expression right, CodeLocation location) : base(location)
         {
             Left = left;
             Right = right;
+            Type = ExpressionType.Number;
         }
-
-        public override ExpressionType Type => ExpressionType.Number;
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
@@ -37,9 +37,9 @@ namespace pixel_walle.src.AST.Expressions
             return true;
         }
 
-        public override object? Evaluate(Scope scope, List<Error> errors)
+        public override object? Evaluate(Context context, List<Error> errors)
         {
-            value = (int)Right.Evaluate(scope, errors) * (int)Left.Evaluate(scope, errors);
+            value = (int)Right.Evaluate(context, errors) * (int)Left.Evaluate(context, errors);
             return value;
         }
     }

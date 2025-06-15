@@ -10,11 +10,11 @@ namespace pixel_walle.src.AST.Expressions
 {
     public abstract class Expression : ASTNode
     {
-        public abstract ExpressionType Type { get; }
+        public abstract ExpressionType Type { get; protected set; }
 
         public Expression(CodeLocation location) : base(location) { }
 
-        public abstract object? Evaluate(Scope scope, List<Error> errors);
+        public abstract object? Evaluate(Context context, List<Error> errors);
     }
 
 

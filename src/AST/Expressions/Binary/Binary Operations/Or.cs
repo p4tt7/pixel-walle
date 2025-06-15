@@ -13,14 +13,14 @@ namespace pixel_walle.src.AST.Expressions
     {
 
         private object? value;
-
+        public override ExpressionType Type { get; protected set; }
         public Or(Expression left, Expression right, CodeLocation location) : base(location)
         {
             Left = left;
             Right = right;
+            Type = ExpressionType.Bool;
         }
 
-        public override ExpressionType Type => ExpressionType.Bool;
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
@@ -38,10 +38,10 @@ namespace pixel_walle.src.AST.Expressions
                 return true;
             }
 
-            public override object? Evaluate(Scope scope, List<Error> errors)
+            public override object? Evaluate(Context context, List<Error> errors)
             {
 
-                value = (bool)Right.Evaluate(scope, errors) || (bool)Left.Evaluate(scope, errors);
+                value = (bool)Right.Evaluate(context, errors) || (bool)Left.Evaluate(context, errors);
                 return value;
             }
 

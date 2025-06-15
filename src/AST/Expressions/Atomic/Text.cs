@@ -10,14 +10,16 @@ namespace pixel_walle.src.AST.Expressions
 {
         public class Text : Atom
         {
+        public override ExpressionType Type { get; protected set; }
         public string TextValue { get; }
-        public override ExpressionType Type => ExpressionType.Text;
 
 
         public Text(CodeLocation location, string value) : base(location)
-            {
+        {
             TextValue = value;
-            }
+            Type = ExpressionType.Text;
+
+        }
 
             public override bool CheckSemantic(Scope scope, List<Error> errors)
             {
@@ -30,7 +32,7 @@ namespace pixel_walle.src.AST.Expressions
                 return true;
             }
 
-            public override object? Evaluate(Scope scope, List<Error> errors)
+            public override object? Evaluate(Context context, List<Error> errors)
             {
                 return TextValue;
             }

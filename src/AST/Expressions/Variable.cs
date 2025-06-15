@@ -9,16 +9,15 @@ using System.Threading.Tasks;
 using pixel_walle.src.Errors;
 using pixel_walle.src.AST.Instructions.Functions;
 using pixel_walle.src.Lexical;
+using pixel_walle.src.AST.Instructions;
 
 
 namespace pixel_walle.src.AST.Expressions
 {
     public class Variable : Expression
     {
+        public override ExpressionType Type { get; protected set; }
         public string Name { get; }
-        private ExpressionType? resolvedType;
-
-        public override ExpressionType Type => resolvedType.Value;
 
         public Variable(string name, CodeLocation location) : base(location)
         {
@@ -26,9 +25,9 @@ namespace pixel_walle.src.AST.Expressions
 
         }
 
-        public override object? Evaluate(Scope scope, List<Error> errors)
+        public override object? Evaluate(Context context, List<Error> errors)
         {
-            if(scope.GetVariable(Name, out object? variable))
+            if(context.Scope.GetVariable(Name, out object? variable))
             {
                 return variable;
             }
@@ -43,18 +42,17 @@ namespace pixel_walle.src.AST.Expressions
             if (!scope.Exists(Name)) 
             {
                 errors.Add(new Error(Error.ErrorType.UndeclaredVariableError, $"Variable '{Name}' not defined", Location));
-                resolvedType = null;
                 return false;
             }
 
-            if (FunctionLibrary.BuiltIns.ContainsKey(Name))
+            if (FunctionExpressionLibrary.BuiltInsExpressions.ContainsKey(Name) || FunctionLibrary.BuiltIns.ContainsKey(Name))
             {
                 errors.Add(new Error(Error.ErrorType.SyntaxError, $"Cannot assign to {Name} — name is reserved for a built-in function.", Location));
                 return false;
 
             }
 
-            resolvedType = scope.GetType(Name);
+            Type = scope.GetType(Name);
             return true;
         }
     }

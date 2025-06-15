@@ -10,10 +10,12 @@ namespace pixel_walle.src.AST.Expressions
 {
     public class Div : BinaryExpression
     {
+        public override ExpressionType Type { get; protected set; }
         public Div(Expression left, Expression right, CodeLocation location) : base(location)
         {
             Left = left;
             Right = right;
+            Type = ExpressionType.Number;
         }
 
 
@@ -22,8 +24,6 @@ namespace pixel_walle.src.AST.Expressions
         public Expression Left { get; }
         public Expression Right { get; }
 
-
-        public override ExpressionType Type => ExpressionType.Bool;
 
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
@@ -43,11 +43,11 @@ namespace pixel_walle.src.AST.Expressions
             return true; 
         }
 
-        public override object? Evaluate(Scope scope, List<Error> errors)
+        public override object? Evaluate(Context context, List<Error> errors)
         {
 
-            var leftVal = Left.Evaluate(scope, errors);
-            var rightVal = Right.Evaluate(scope, errors);
+            var leftVal = Left.Evaluate(context, errors);
+            var rightVal = Right.Evaluate(context, errors);
 
             if (leftVal == null || rightVal == null)
                 return null;

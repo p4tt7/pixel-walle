@@ -11,17 +11,17 @@ namespace pixel_walle.src.AST.Expressions
     public class Pow : BinaryExpression
     {
         private object? value;
+        public override ExpressionType Type { get; protected set; }
 
         public Pow(Expression left, Expression right, CodeLocation location) : base(location)
         {
             Left = left;
             Right = right;
+            Type = ExpressionType.Number;
         }
 
         public Expression Left { get; private set; }
         public Expression Right { get; private set; }
-
-        public override ExpressionType Type => ExpressionType.Number;
 
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
@@ -40,9 +40,9 @@ namespace pixel_walle.src.AST.Expressions
             return true;
         }
 
-        public override object? Evaluate(Scope scope, List<Error> errors)
+        public override object? Evaluate(Context context, List<Error> errors)
         {
-            value = Power((int)Right.Evaluate(scope, errors), (int)Left.Evaluate(scope, errors));
+            value = Power((int)Right.Evaluate(context, errors), (int)Left.Evaluate(context, errors));
             return value;
         }
 

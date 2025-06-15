@@ -11,14 +11,13 @@ namespace pixel_walle.src.AST.Expressions
     public class Mod : BinaryExpression
     {
         private object? value;
-
+        public override ExpressionType Type { get; protected set; }
         public Mod(Expression left, Expression right, CodeLocation location) : base(location)
         {
             Left = left;
             Right = right;
+            Type = ExpressionType.Number;
         }
-
-        public override ExpressionType Type => ExpressionType.Number;
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
@@ -34,19 +33,20 @@ namespace pixel_walle.src.AST.Expressions
                 return false;
             }
 
-            if ((int)Right.Evaluate(scope, errors) == 0)
+            return true;
+        }
+
+        public override object? Evaluate(Context context, List<Error> errors)
+        {
+
+            if ((int)Right.Evaluate(context, errors) == 0)
             {
                 errors.Add(new Error(Error.ErrorType.SemanticError, $"Division by 0 is not allowed", Location));
                 return false;
             }
 
-            return true;
-        }
-
-        public override object? Evaluate(Scope scope, List<Error> errors)
-        {
-            int a = (int)Left.Evaluate(scope, errors);
-            int b = (int)Right.Evaluate(scope, errors);
+            int a = (int)Left.Evaluate(context, errors);
+            int b = (int)Right.Evaluate(context, errors);
             int q = a / b;
 
             value = a - b * q;

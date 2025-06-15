@@ -12,19 +12,19 @@ namespace pixel_walle.src.AST.Expressions.Binary_Operations
     public class Equal : BinaryExpression
     {
         private object? value;
+        public override ExpressionType Type { get; protected set; }
         public Equal(Expression left, Expression right, CodeLocation location)
             : base(location)
         {
             Left = left;
             Right = right;
+            Type = ExpressionType.Bool;
         }
 
-        public override ExpressionType Type => ExpressionType.Bool;
-
-        public override object? Evaluate(Scope scope, List<Error> errors)
+        public override object? Evaluate(Context context, List<Error> errors)
         {
-            var leftVal = Left.Evaluate(scope, errors);
-            var rightVal = Right.Evaluate(scope, errors);
+            var leftVal = Left.Evaluate(context, errors);
+            var rightVal = Right.Evaluate(context, errors);
             value = Equals(leftVal, rightVal);
             return value;
         }

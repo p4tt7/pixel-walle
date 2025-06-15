@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 using pixel_walle.src.Errors;
 using System.Xml.Linq;
 
-namespace pixel_walle.src.AST.Instructions.Functions
+namespace pixel_walle.src.AST.Instructions
 {
-    public class Function : Instruction
+    public class FunctionInstruction : Instruction
     {
         public string FunctionName { get; set; }
         public List<Expression> Arguments { get; set; } = new();
 
-        public Function(string name, List<Expression> arguments, CodeLocation location)
+        public FunctionInstruction(string name, List<Expression> arguments, CodeLocation location)
             : base(location)
         {
             FunctionName = name;
@@ -69,12 +69,20 @@ namespace pixel_walle.src.AST.Instructions.Functions
         {
             if (!FunctionLibrary.BuiltIns.TryGetValue(FunctionName, out var function))
             {
-                errors.Add(new Error(Error.ErrorType.Undefined, $"Function '{FunctionName}' not found at runtime.", Location));
+                errors.Add(new Error(Error.ErrorType.Undefined, $"Function '{FunctionName}' not defined.", Location));
                 return null;
             }
 
-            var args = Arguments.Select(arg => arg.Evaluate(context.Scope, errors)).ToList();
-            return function.Implementation(args, context);
+            var evaluatedArgs = new List<object?>();
+            foreach (var arg in Arguments)
+            {
+                var value = arg.Evaluate(context, errors);
+                evaluatedArgs.Add(value);
+            }
+
+            function.Implementation.Execute(evaluatedArgs, context, errors, Location);
+
+            return null; 
         }
 
     }
