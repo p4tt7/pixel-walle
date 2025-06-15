@@ -42,8 +42,6 @@ namespace pixel_walle.src.AST.Instructions
         {
             context.Robot.X = x;
             context.Robot.Y = y;
-            context.canvas.changes[x, y] = true;
-            context.canvas.changes[x, y] = true;
         }
 
     }

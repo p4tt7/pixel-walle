@@ -27,7 +27,6 @@ namespace pixel_walle.src.AST.Instructions
             if (!context.HasRobot)
             {
                 context.Spawn(x, y);
-                context.canvas.changes[x,y] = true;
             }
             else
             {

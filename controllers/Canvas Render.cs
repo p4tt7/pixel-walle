@@ -33,70 +33,89 @@ namespace pixel_walle.controllers
 
             if (grid.Children.Count == 0)
             {
-
-                grid.Children.Clear();
-                for (int y = 0; y < context.canvas.Height; y++)
-                {
-                    for (int x = 0; x < context.canvas.Width; x++)
-                    {
-                        var pixel = context.canvas.pixels[x, y];
-                        var rect = new Border
-                        {
-                            Width = grid.Width / grid.Columns,
-                            Height = grid.Height / grid.Rows,
-                            Background = new SolidColorBrush(pixel.Color),
-                            BorderBrush = Brushes.Black,
-                            BorderThickness = new Thickness(0.2)
-                        };
-
-                        grid.Children.Add(rect);
-                    }
-                }
+                InitializeGrid();
             }
 
+            UpdateModifiedPixels();
+
+            RenderRobot();
+        }
+
+
+        private void InitializeGrid()
+        {
+            grid.Children.Clear();
             for (int y = 0; y < context.canvas.Height; y++)
             {
                 for (int x = 0; x < context.canvas.Width; x++)
                 {
-                    if (!context.canvas.changes[x, y])
-                        continue;
+                    var rect = new Border
+                    {
+                        Width = grid.Width / grid.Columns,
+                        Height = grid.Height / grid.Rows,
+                        Background = new SolidColorBrush(context.canvas.pixels[x, y].Color),
+                        BorderBrush = Brushes.Black,
+                        BorderThickness = new Thickness(0.2)
+                    };
+                    grid.Children.Add(rect);
+                }
+            }
+        }
+
+        private void UpdateModifiedPixels()
+        {
+            for (int y = 0; y < context.canvas.Height; y++)
+            {
+                for (int x = 0; x < context.canvas.Width; x++)
+                {
+                    if (!context.canvas.changes[x, y]) continue;
 
                     var index = y * context.canvas.Width + x;
-                    if (index >= grid.Children.Count)
-                        continue;
+                    if (index >= grid.Children.Count) continue;
 
                     var rect = grid.Children[index] as Border;
                     if (rect != null)
                     {
                         rect.Background = new SolidColorBrush(context.canvas.pixels[x, y].Color);
-
-                        if (context.HasRobot && context.Robot.X == x && context.Robot.Y == y)
-                        {
-                            var brushColor = context.Brush.ColorBrush.ToString();
-                            var iconSource = GetIcon(brushColor);
-
-                            var image = new Image
-                            {
-                                Source = iconSource,
-                                Stretch = Stretch.Fill
-                            };
-
-                            rect.Child = image;
-                        }
-                        else
-                        {
-                            rect.Child = null;
-                        }
+                        context.canvas.changes[x, y] = false;
                     }
-
-                    context.canvas.changes[x, y] = false; 
                 }
             }
         }
 
-        
+        private void RenderRobot()
+        {
+            if (!context.HasRobot) return;
 
+            ClearPreviousRobotPosition();
 
+            var robotIndex = context.Robot.Y * context.canvas.Width + context.Robot.X;
+            if (robotIndex < grid.Children.Count)
+            {
+                var rect = grid.Children[robotIndex] as Border;
+                if (rect != null)
+                {
+                    var brushColor = context.Brush.ColorBrush.ToString();
+                    var iconSource = GetIcon(brushColor);
+                    rect.Child = new Image
+                    {
+                        Source = iconSource,
+                        Stretch = Stretch.Fill
+                    };
+                }
+            }
+        }
+
+        private void ClearPreviousRobotPosition()
+        {
+            foreach (var child in grid.Children)
+            {
+                if (child is Border border)
+                {
+                    border.Child = null;
+                }
+            }
+        }
 
         public static readonly Dictionary<string, string> IconPaths = new()
         {
