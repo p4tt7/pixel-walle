@@ -1,20 +1,25 @@
 ![PIXEL WALL-E](https://github.com/user-attachments/assets/a4f84b33-bafd-4905-8309-a6ce487c32c2)
 
-Pixel Wall-E es una aplicación interactiva diseñada para crear arte pixelado mediante los comandos brindados por su lenguaje de programación. Invita a explorar la libertad creativa a través de un robot, el cual al controlarlo es capaz de dibujar sobre un canvas cuadriculado.
+Pixel Wall-E es una aplicación interactiva diseñada para crear arte pixelado mediante los comandos brindados por su lenguaje de programación. Invita a explorar la libertad creativa a través de un robot, el cual al controlarlo es capaz de dibujar sobre un canvas cuadriculado. La aplicación cuenta con una interfaz intuitiva y visualmente clara, donde los usuarios pueden escribir su código, ejecutarlo paso a paso y observar cómo un pequeño robot ejecuta las órdenes.
+
+
 
 ## INSTALACIÓN
+
 
 ### REQUISITOS PREVIOS
 - [.NET 6 SDK o superior](https://dotnet.microsoft.com/en-us/download) 
 - [Visual Studio 2022 o superior](https://visualstudio.microsoft.com/)
 
 1. Clonar o descargar el repositorio
-   - OPCION A: Clonar con Git:
-   git clone https://github.com/p4tt7/pixel-walle.git
 
-   - OPCION B: Descargar ZIP y extraer el contenido en una carpeta local
+    - ```git clone https://github.com/p4tt7/sky-maze.git```
 
-2. 
+2. Abrir el proyecto en Visual Studio y compilar (build) la solución.
+
+3. Luego, ir a la carpeta bin\Debug\net8.0-windows y ejecutar el archivo .exe para iniciar la aplicación.
+
+
 
 
 ## INTERFAZ GRÁFICA
@@ -65,7 +70,7 @@ El canvas se renderiza **solo si el código es sintáctica y semánticamente cor
 ---
 
 #### Botones  
-Distribuidos de forma armoniosa por la interfaz, permiten acceder rápidamente a funcionalidades clave:
+Distribuidos por toda la ventana, permiten acceder rápidamente a funcionalidades clave:
 
 - **Run!**: Es el botón principal. Llama al intérprete y comienza el análisis del código fuente.  
 - **Clear**: Borra completamente el contenido del editor de texto.  
@@ -87,9 +92,14 @@ JSON: Para la serialización y almacenamiento de archivos de código, facilitand
 - Capacidad para guardar y cargar programas en archivos con extensión .pw.
 - Exportación e importación de proyectos para compartir o continuar trabajos posteriores.
 
+
+
 ## FLUJO DEL PROGRAMA
 
 ![flow](https://github.com/user-attachments/assets/f9892b2e-8e56-42e9-af2f-d899822ee619)
+
+Primero, en la inicialización, se crea un Manager que recibe el nombre del archivo, el código fuente y las dimensiones del canvas, y a su vez inicializa un contexto con un ámbito de variables y configuración del canvas, un analizador léxico (LexicalAnalizer) y una lista de errores. Luego, durante la compilación, el código fuente pasa por un análisis léxico que lo divide en tokens, seguido de un análisis sintáctico que convierte esos tokens en un Árbol de Sintaxis Abstracta (AST) mediante un Parser, y finalmente un análisis semántico que verifica la validez lógica del programa, como variables declaradas y tipos correctos. Si se detectan errores en cualquiera de estas fases, se muestran al usuario y el proceso se detiene. En la fase de ejecución, si la compilación fue exitosa, el programa PixelWalle se ejecuta instrucción por instrucción, donde cada instrucción puede modificar el estado del contexto, incluyendo variables y la posición en el canvas, mientras que el renderizador CanvasRender actualiza la interfaz gráfica tras cada instrucción. Si ocurren errores en tiempo de ejecución, como divisiones por cero o etiquetas no definidas, estos se muestran y la ejecución se detiene. Finalmente, si no hay errores, se muestra un mensaje de éxito y el resultado final se refleja en el canvas.
+
 
 
 
