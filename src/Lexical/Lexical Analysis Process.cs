@@ -42,6 +42,19 @@ namespace pixel_walle.src.Lexical
 
                 if (stream.EOF) break;
 
+                if (stream.IsNewLine())
+                {
+                    var loc = stream.Location;
+                    char first = stream.Read(); 
+
+                    if (first == '\r' && !stream.EOF && stream.Peek() == '\n')
+                    {
+                        stream.Read(); 
+                    }
+                    tokens.Add(new Token(TokenType.Newline, "\\n", loc));
+                    continue;
+                }
+
                 string value;
 
                 if (stream.Peek() == '\n' || stream.Peek() == '\r')
@@ -115,6 +128,14 @@ namespace pixel_walle.src.Lexical
       
 
     }
+
+
+
+
+
+
+
+
 
    
 }

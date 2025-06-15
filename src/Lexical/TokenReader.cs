@@ -111,10 +111,9 @@ namespace pixel_walle.src.Lexical
 
         public void SkipWhitespace()
         {
-            while (!EOF && char.IsWhiteSpace(Peek()) && Peek() != '\n')
-                Read();
+            while (!EOF && char.IsWhiteSpace(Peek()) && Peek() != '\n' && Peek() != '\r')
+                Read();  
         }
-
 
         public bool ReadID(out string id)
         {
@@ -122,6 +121,17 @@ namespace pixel_walle.src.Lexical
             while (!EOF && ValidIDCharacter(Peek(), id.Length == 0))
                 id += Read();
             return id.Length > 0;
+        }
+
+        public bool IsNewLine()
+        {
+            if (EOF) return false;
+
+            char c = code[position];
+            if (c == '\n') return true;
+            if (c == '\r' && position + 1 < code.Length && code[position + 1] == '\n') return true;
+
+            return false;
         }
 
         public bool ReadNumber(out string number)

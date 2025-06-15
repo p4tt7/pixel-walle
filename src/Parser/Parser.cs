@@ -21,7 +21,7 @@ namespace pixel_walle.src.Parser
     public class Parser
     {
 
-        public TokenStream Stream { get; private set; } 
+        public TokenStream Stream { get; private set; }
 
 
 
@@ -36,6 +36,11 @@ namespace pixel_walle.src.Parser
 
             while (Stream.Peek().Type != TokenType.EOF)
             {
+                SkipInsignificantNewlines();
+
+                if (Stream.Peek().Type == TokenType.EOF)
+                    break;
+
                 Instruction? instr = ParseInstruction(errors);
 
                 if (instr != null)
@@ -44,11 +49,10 @@ namespace pixel_walle.src.Parser
                 }
             }
 
-       
+
             return new PixelWalleProgram(instructions, instructions.Count > 0 ? instructions[0].Location : new CodeLocation { File = "program", Line = 0, Column = 0 });
 
         }
-
 
         public Instruction ParseInstruction(List<Error> errors)
         {
@@ -56,7 +60,10 @@ namespace pixel_walle.src.Parser
 
             if (token.Value == TokenValue.GoTo)
             {
-                return ParseGoTo(errors);
+                Instruction? instr = ParseGoTo(errors);
+                if (instr != null)
+                    ExpectNewlineAfterInstruction(errors); 
+                return instr;
             }
 
             if (token.Type == TokenType.Identifier)
@@ -71,16 +78,23 @@ namespace pixel_walle.src.Parser
                     if (functionExpr == null)
                         return null;
 
-                    return new FunctionInstruction(functionExpr.FunctionName, functionExpr.Arguments, identifierToken.Location);
+                    var instr = new FunctionInstruction(functionExpr.FunctionName, functionExpr.Arguments, identifierToken.Location);
+                    ExpectNewlineAfterInstruction(errors); 
+                    return instr;
                 }
-
 
                 if (next.Type == TokenType.Symbol && next.Value == TokenValue.Assign)
                 {
-                    return ParseAssignment(errors);
+                    Instruction? instr = ParseAssignment(errors);
+                    if (instr != null)
+                        ExpectNewlineAfterInstruction(errors); 
+                    return instr;
                 }
 
-                return ParseLabel(errors);
+                Instruction? labelInstr = ParseLabel(errors);
+                if (labelInstr != null)
+                    ExpectNewlineAfterInstruction(errors); 
+                return labelInstr;
             }
 
             errors.Add(new Error(Error.ErrorType.SyntaxError, $"Expected an instruction, but found '{token.Value}'", token.Location));
@@ -105,6 +119,7 @@ namespace pixel_walle.src.Parser
 
 
 
+
         public Expression? ParseNumber()
         {
             Token token = Stream.Advance();
@@ -116,7 +131,7 @@ namespace pixel_walle.src.Parser
 
             return new Number(number, token.Location);
 
-             
+
         }
 
         public Expression? ParseText()
@@ -125,10 +140,10 @@ namespace pixel_walle.src.Parser
 
             if (token.Type == TokenType.Text)
             {
-                Stream.Advance(); 
+                Stream.Advance();
                 return new Text(token.Location, token.Value);
             }
-             
+
             return null;
         }
 
@@ -463,7 +478,7 @@ namespace pixel_walle.src.Parser
 
             if (Stream.Peek().Value != TokenValue.CloseRoundBracket)
             {
-                do
+                while (true)
                 {
                     Expression arg = ParseExpression(errors);
                     if (arg == null)
@@ -473,8 +488,32 @@ namespace pixel_walle.src.Parser
                     }
 
                     arguments.Add(arg);
-                } while (Stream.Match(TokenValue.Comma));
+
+                    Token next = Stream.Peek();
+
+                    if (next.Value == TokenValue.Comma)
+                    {
+                        Stream.Advance();
+                        continue;
+                    }
+                    else if (next.Value == TokenValue.CloseRoundBracket)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        errors.Add(new Error(Error.ErrorType.SyntaxError, $"Expected ',' or ')' between arguments", next.Location));
+
+                        while (Stream.Peek().Type != TokenType.EOF && Stream.Peek().Value != TokenValue.CloseRoundBracket)
+                        {
+                            Stream.Advance();
+                        }
+
+                        break;
+                    }
+                }
             }
+
 
             Token closingToken = Stream.Advance();
 
@@ -483,6 +522,7 @@ namespace pixel_walle.src.Parser
                 errors.Add(new Error(Error.ErrorType.SyntaxError, "Expected ')' after function arguments", closingToken.Location));
                 return null;
             }
+
 
             return new FunctionInstruction(functionName, arguments, identifierToken.Location);
         }
@@ -504,7 +544,7 @@ namespace pixel_walle.src.Parser
 
             if (Stream.Peek().Value != TokenValue.CloseRoundBracket)
             {
-                do
+                while (true)
                 {
                     Expression arg = ParseExpression(errors);
                     if (arg == null)
@@ -514,8 +554,32 @@ namespace pixel_walle.src.Parser
                     }
 
                     arguments.Add(arg);
-                } while (Stream.Match(TokenValue.Comma));
+
+                    Token next = Stream.Peek();
+
+                    if (next.Value == TokenValue.Comma)
+                    {
+                        Stream.Advance();
+                        continue;
+                    }
+                    else if (next.Value == TokenValue.CloseRoundBracket)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        errors.Add(new Error(Error.ErrorType.SyntaxError, $"Expected ',' or ')' between arguments", next.Location));
+
+                        while (Stream.Peek().Type != TokenType.EOF && Stream.Peek().Value != TokenValue.CloseRoundBracket)
+                        {
+                            Stream.Advance();
+                        }
+
+                        break;
+                    }
+                }
             }
+
 
             Token closingToken = Stream.Advance();
 
@@ -538,7 +602,7 @@ namespace pixel_walle.src.Parser
 
         private Assignment ParseAssignment(List<Error> errors)
         {
-            Token nameToken = Stream.Advance(); 
+            Token nameToken = Stream.Advance();
 
             string varName = nameToken.Value.ToString();
 
@@ -574,7 +638,7 @@ namespace pixel_walle.src.Parser
         {
             Token goToToken = Stream.Advance();
 
- 
+
             Token openBracket = Stream.Peek();
             if (openBracket.Value != TokenValue.OpenSquareBracket)
             {
@@ -653,6 +717,43 @@ namespace pixel_walle.src.Parser
 
 
 
-    }
 
+
+
+
+        private void ExpectNewlineAfterInstruction(List<Error> errors)
+        {
+            Token next = Stream.Peek();
+
+            if (next.Type == TokenType.EOF || next.Type == TokenType.Newline)
+            {
+                if (next.Type == TokenType.Newline)
+                    Stream.Advance(); 
+                return;
+            }
+
+            errors.Add(new Error(
+                Error.ErrorType.SyntaxError,
+                "Expected a newline after instruction",
+                next.Location));
+
+            while (!Stream.End && Stream.Peek().Type != TokenType.Newline)
+            {
+                Stream.Advance();
+            }
+
+            if (Stream.Peek().Type == TokenType.Newline)
+                Stream.Advance();
+        }
+
+        private void SkipInsignificantNewlines()
+        {
+            while (Stream.Peek().Type == TokenType.Newline)
+            {
+                Stream.Advance();
+            }
+        }
+
+
+    }
 }
