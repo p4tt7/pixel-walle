@@ -58,11 +58,13 @@ namespace pixel_walle.src.AST.Instructions
                 return false;
             }
 
-            if (FunctionLibrary.BuiltIns.ContainsKey(name))
+            if (FunctionLibrary.BuiltIns.ContainsKey(name) || FunctionExpressionLibrary.BuiltInsExpressions.ContainsKey(name))
             {
                 errors.Add(new Error(Error.ErrorType.SemanticError, $"Variable name '{name}' conflicts with built-in function.", location));
                 return false;
+
             }
+
 
             foreach (char c in name)
             {

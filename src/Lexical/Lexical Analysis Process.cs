@@ -31,12 +31,12 @@ namespace pixel_walle.src.Lexical
         }
 
 
-       public List<Token> GetTokens(string fileName, string code, List<Error> errors)
-       {
+        public List<Token> GetTokens(string fileName, string code, List<Error> errors)
+        {
             List<Token> tokens = new List<Token>();
             TokenReader stream = new TokenReader(fileName, code);
 
-            while(!stream.EOF)
+            while (!stream.EOF)
             {
                 stream.SkipWhitespace();
 
@@ -45,11 +45,11 @@ namespace pixel_walle.src.Lexical
                 if (stream.IsNewLine())
                 {
                     var loc = stream.Location;
-                    char first = stream.Read(); 
+                    char first = stream.Read();
 
                     if (first == '\r' && !stream.EOF && stream.Peek() == '\n')
                     {
-                        stream.Read(); 
+                        stream.Read();
                     }
                     tokens.Add(new Token(TokenType.Newline, "\\n", loc));
                     continue;
@@ -65,7 +65,7 @@ namespace pixel_walle.src.Lexical
                     if (newline == '\r' && !stream.EOF && stream.Peek() == '\n')
                         stream.Read();
 
-                    tokens.Add(new Token(TokenType.Newline, "\\n", loc)); 
+                    tokens.Add(new Token(TokenType.Newline, "\\n", loc));
                     continue;
                 }
 
@@ -92,12 +92,18 @@ namespace pixel_walle.src.Lexical
                     continue;
                 }
 
-
                 var locNum = stream.Location;
 
                 if (stream.ReadNumber(out value))
                 {
-                    tokens.Add(new Token(TokenType.Number,value, locNum));
+                    tokens.Add(new Token(TokenType.Number, value, locNum));
+                    continue;
+                }
+                else if (!string.IsNullOrEmpty(value))
+                {
+                    errors.Add(new Error(
+                        Error.ErrorType.LexicalError,
+                        $"Malformed number or invalid token: '{value}'", locNum));
                     continue;
                 }
 
@@ -107,29 +113,23 @@ namespace pixel_walle.src.Lexical
                     continue;
                 }
 
-
-
                 if (MatchOperator(stream, tokens))
                 {
                     continue;
                 }
 
-
-                char UnknownOP = stream.ReadAny();
-
+                char unknownOp = stream.ReadAny();
 
                 errors.Add(new Error(
                     Error.ErrorType.InvalidTokenError,
-                    $"Símbolo no reconocido: '{UnknownOP}'", stream.Location));
-
+                    $"Unrecognized symbol: '{unknownOp}'", stream.Location));
             }
 
             return tokens;
+        }
 
 
-       }
 
-      
 
     }
 
@@ -141,5 +141,5 @@ namespace pixel_walle.src.Lexical
 
 
 
-   
+
 }

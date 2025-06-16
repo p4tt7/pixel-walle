@@ -143,7 +143,12 @@ namespace pixel_walle.src.Lexical
                 number += Read();
             }
 
-            return number.Length > 0;
+            if (!EOF && (char.IsLetter(Peek()) || Peek() == '_'))
+            {
+                return false;
+            }
+
+                return number.Length > 0;
         }
 
 
