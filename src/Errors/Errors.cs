@@ -52,14 +52,11 @@ namespace pixel_walle.src.Errors
             ScopeError,                     
             RedefinedVariableError,          
             BracketMismatchError,            
-            UnsupportedOperationError,       
-            MemoryOverflowError,            
-            MissingReturnError,             
+            UnsupportedOperationError,                            
             GoToLabelError,                  
             EmptyStatementError,             
             DuplicateDeclarationError,      
             AssignmentError,                 
-            KeywordError                   
         }
 
 

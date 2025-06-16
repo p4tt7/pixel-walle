@@ -40,6 +40,8 @@ namespace pixel_walle.src.Lexical
             { "/", TokenValue.Div },
             { "**", TokenValue.Pow },
             { "%", TokenValue.Mod },
+            { "&&", TokenValue.And },
+            { "||", TokenValue.Or },
             { "<", TokenValue.LessThan },
             { ">", TokenValue.GreaterThan },
             { "<=", TokenValue.LessOrEqualThan },

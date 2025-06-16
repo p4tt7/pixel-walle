@@ -75,7 +75,11 @@ namespace pixel_walle.src.Lexical
                 {
                     TokenType type;
 
-                    if(keywords.ContainsKey(value))
+                    if (value == "true" || value == "false")
+                    {
+                        type = TokenType.Bool;
+                    }
+                    else if (keywords.ContainsKey(value))
                     {
                         type = TokenType.Keyword;
                     }
@@ -84,10 +88,10 @@ namespace pixel_walle.src.Lexical
                         type = TokenType.Identifier;
                     }
 
-                    tokens.Add(new Token(type,value, locId));
+                    tokens.Add(new Token(type, value, locId));
                     continue;
-
                 }
+
 
                 var locNum = stream.Location;
 

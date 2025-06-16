@@ -36,7 +36,10 @@ namespace pixel_walle.src.Parser
 
             while (Stream.Peek().Type != TokenType.EOF)
             {
-                SkipInsignificantNewlines();
+                while (Stream.Peek().Type == TokenType.Newline)
+                {
+                    Stream.Advance();
+                }
 
                 if (Stream.Peek().Type == TokenType.EOF)
                     break;
@@ -47,22 +50,33 @@ namespace pixel_walle.src.Parser
                 {
                     instructions.Add(instr);
                 }
+                else
+                {
+                    SkipUntilNewline();
+                }
             }
 
-
-            return new PixelWalleProgram(instructions, instructions.Count > 0 ? instructions[0].Location : new CodeLocation { File = "program", Line = 0, Column = 0 });
-
+            return new PixelWalleProgram(
+                instructions,
+                instructions.Count > 0 ? instructions[0].Location : new CodeLocation { File = "program", Line = 0, Column = 0 }
+            );
         }
+
 
         public Instruction ParseInstruction(List<Error> errors)
         {
             Token token = Stream.Peek();
 
+            if (token.Type == TokenType.Newline)
+            {
+                Stream.Advance();
+                return null;
+            }
+
             if (token.Value == TokenValue.GoTo)
             {
                 Instruction? instr = ParseGoTo(errors);
                 if (instr != null)
-                    ExpectNewlineAfterInstruction(errors); 
                 return instr;
             }
 
@@ -79,7 +93,6 @@ namespace pixel_walle.src.Parser
                         return null;
 
                     var instr = new FunctionInstruction(functionExpr.FunctionName, functionExpr.Arguments, identifierToken.Location);
-                    ExpectNewlineAfterInstruction(errors); 
                     return instr;
                 }
 
@@ -87,31 +100,15 @@ namespace pixel_walle.src.Parser
                 {
                     Instruction? instr = ParseAssignment(errors);
                     if (instr != null)
-                        ExpectNewlineAfterInstruction(errors); 
                     return instr;
                 }
 
                 Instruction? labelInstr = ParseLabel(errors);
                 if (labelInstr != null)
-                    ExpectNewlineAfterInstruction(errors); 
                 return labelInstr;
             }
 
-            errors.Add(new Error(Error.ErrorType.SyntaxError, $"Expected an instruction, but found '{token.Value}'", token.Location));
-
-            while (true)
-            {
-                Token next = Stream.Peek();
-
-                if (next.Type == TokenType.EOF ||
-                    next.Type == TokenType.Identifier ||
-                    next.Value == TokenValue.GoTo)
-                {
-                    break;
-                }
-
-                Stream.Advance();
-            }
+            SkipUntilNewline();
 
             return null;
         }
@@ -424,112 +421,6 @@ namespace pixel_walle.src.Parser
 
 
 
-
-
-
-
-
-
-
-
-
-
-        public Expression ParseStatement(List<Error> errors)
-        {
-
-            Token token = Stream.Advance();
-
-            if (token.Type == TokenType.EOF)
-            {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "Unexpected end of input in assignment", token.Location));
-                return null;
-            }
-
-            if (!Assignment.VariableNameValidator(token.Value.ToString(), token.Location, errors))
-            {
-                return null;
-            }
-
-            Token assignToken = Stream.Advance();
-
-            if (assignToken.Type == TokenType.EOF || assignToken.Value != TokenValue.Assign)
-            {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "'<-' expected", assignToken.Location));
-                return null;
-            }
-
-            return ParseExpression(errors);
-
-        }
-
-
-
-        public FunctionInstruction ParseFunctionInstruction(List<Error> errors, Token identifierToken)
-        {
-            string functionName = identifierToken.Value;
-
-            if (!Stream.Match(TokenValue.OpenRoundBracket))
-            {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, $"Expected '(' after function name", Stream.Peek().Location));
-                return null;
-            }
-
-            List<Expression> arguments = new List<Expression>();
-
-            if (Stream.Peek().Value != TokenValue.CloseRoundBracket)
-            {
-                while (true)
-                {
-                    Expression arg = ParseExpression(errors);
-                    if (arg == null)
-                    {
-                        errors.Add(new Error(Error.ErrorType.SyntaxError, "Argument expected", Stream.Peek().Location));
-                        return null;
-                    }
-
-                    arguments.Add(arg);
-
-                    Token next = Stream.Peek();
-
-                    if (next.Value == TokenValue.Comma)
-                    {
-                        Stream.Advance();
-                        continue;
-                    }
-                    else if (next.Value == TokenValue.CloseRoundBracket)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        errors.Add(new Error(Error.ErrorType.SyntaxError, $"Expected ',' or ')' between arguments", next.Location));
-
-                        while (Stream.Peek().Type != TokenType.EOF && Stream.Peek().Value != TokenValue.CloseRoundBracket)
-                        {
-                            Stream.Advance();
-                        }
-
-                        break;
-                    }
-                }
-            }
-
-
-            Token closingToken = Stream.Advance();
-
-            if (closingToken.Type == TokenType.EOF || closingToken.Value != TokenValue.CloseRoundBracket)
-            {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "Expected ')' after function arguments", closingToken.Location));
-                return null;
-            }
-
-
-            return new FunctionInstruction(functionName, arguments, identifierToken.Location);
-        }
-
-
-
-
         public FunctionExpression ParseFunctionExpression(List<Error> errors, Token identifierToken)
         {
             string functionName = identifierToken.Value;
@@ -603,34 +494,46 @@ namespace pixel_walle.src.Parser
         private Assignment ParseAssignment(List<Error> errors)
         {
             Token nameToken = Stream.Advance();
-
             string varName = nameToken.Value.ToString();
 
+            if (Stream.Peek().Value != TokenValue.Assign)
+            {
+                errors.Add(new Error(Error.ErrorType.SyntaxError,
+                    "'<-' expected",
+                    Stream.Peek().Location));
+                return null;
+            }
             Token assignToken = Stream.Advance();
 
-            if (assignToken.Type == TokenType.EOF || assignToken.Value != TokenValue.Assign)
-            {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "'<-' expected", assignToken.Location));
-                return null;
-            }
-
-            if (assignToken.Value != TokenValue.Assign)
-            {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "'<-' expected", assignToken.Location));
-            }
-
             Expression expr = ParseExpression(errors);
-
             if (expr == null)
             {
-                errors.Add(new Error(Error.ErrorType.SyntaxError, "Expression expected after '<-'", assignToken.Location));
+                errors.Add(new Error(Error.ErrorType.SyntaxError,
+                    "Expression expected after '<-'",
+                    assignToken.Location));
                 return null;
             }
 
-            return new Assignment(varName, expr, assignToken.Location);
+            Token endToken = Stream.Peek();
+            if (endToken.Type != TokenType.Newline && endToken.Type != TokenType.EOF)
+            {
+                errors.Add(new Error(Error.ErrorType.SyntaxError,
+                    "New line required after assignment",
+                    endToken.Location));
 
+                while (!Stream.End && Stream.Peek().Type != TokenType.Newline)
+                {
+                    Stream.Advance();
+                }
+            }
+
+            if (endToken.Type == TokenType.Newline)
+            {
+                Stream.Advance();
+            }
+
+            return new Assignment(varName, expr, nameToken.Location);
         }
-
 
 
 
@@ -692,6 +595,12 @@ namespace pixel_walle.src.Parser
             }
             Stream.Advance();
 
+            if (Stream.Peek().Type == TokenType.Newline)
+            {
+                Stream.Advance();
+            }
+
+
             return new GoTo(labelName, condition, goToToken.Location);
         }
 
@@ -716,43 +625,14 @@ namespace pixel_walle.src.Parser
         }
 
 
-
-
-
-
-
-        private void ExpectNewlineAfterInstruction(List<Error> errors)
+        void SkipUntilNewline()
         {
-            Token next = Stream.Peek();
-
-            if (next.Type == TokenType.EOF || next.Type == TokenType.Newline)
-            {
-                if (next.Type == TokenType.Newline)
-                    Stream.Advance(); 
-                return;
-            }
-
-            errors.Add(new Error(
-                Error.ErrorType.SyntaxError,
-                "Expected a newline after instruction",
-                next.Location));
-
             while (!Stream.End && Stream.Peek().Type != TokenType.Newline)
-            {
                 Stream.Advance();
-            }
-
-            if (Stream.Peek().Type == TokenType.Newline)
-                Stream.Advance();
+            if (!Stream.End)
+                Stream.Advance(); 
         }
 
-        private void SkipInsignificantNewlines()
-        {
-            while (Stream.Peek().Type == TokenType.Newline)
-            {
-                Stream.Advance();
-            }
-        }
 
 
     }

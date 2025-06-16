@@ -111,8 +111,8 @@ namespace pixel_walle.src.Lexical
 
         public void SkipWhitespace()
         {
-            while (!EOF && char.IsWhiteSpace(Peek()) && Peek() != '\n' && Peek() != '\r')
-                Read();  
+            while (!EOF && (Peek() == ' ' || Peek() == '\t')) 
+                Read();
         }
 
         public bool ReadID(out string id)
@@ -138,21 +138,14 @@ namespace pixel_walle.src.Lexical
         {
             number = "";
 
-            if (!EOF && Peek() == '-')
+            while (!EOF && char.IsDigit(Peek()))
             {
                 number += Read();
-                if (EOF || !char.IsDigit(Peek()))
-                {
-                    return false;
-                }
             }
 
-
-            while (!EOF && char.IsDigit(Peek()))
-                number += Read();
-
-            return number.Length > 0 && number != "-";
+            return number.Length > 0;
         }
+
 
         public bool ReadText(out string text)
         {

@@ -47,6 +47,20 @@ namespace pixel_walle
 
             if (int.TryParse(RowsBox.Text, out int rows) && int.TryParse(ColsBox.Text, out int cols))
             {
+                if (rows <= 0 || cols <= 0)
+                {
+                    MessageBox.Show("Dimensions must be positive integers.",
+                        "Invalid Dimensions", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (rows > 256 || cols > 256)
+                {
+                    MessageBox.Show("Maximum allowed dimension is 256x256.",
+                        "Dimension Limit Exceeded", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
                 var mainWindow = new MainWindow(rows, cols, fileName);
                 mainWindow.Show();
 

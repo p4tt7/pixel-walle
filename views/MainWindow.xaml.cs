@@ -17,6 +17,7 @@ using System.Resources;
 using System.IO.Enumeration;
 using System.Text.Json;
 using pixel_walle.src.AST;
+using pixel_walle.src.AST.Instructions;
 
 namespace pixel_walle
 {
@@ -117,6 +118,7 @@ namespace pixel_walle
             bool compiled = manager.Compile(out PixelWalleProgram? program);
 
             var renderer = new CanvasRender(PixelGrid, manager.Context);
+            CanvasUtils.ClearCanvas(manager.Context, Colors.White);
             renderer.Render();
 
             if (!compiled)

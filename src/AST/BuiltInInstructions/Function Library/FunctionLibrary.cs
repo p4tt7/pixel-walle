@@ -51,6 +51,12 @@ namespace pixel_walle.src.AST.Instructions
                 Implementation = new DrawCircle()
 
             },
+            ["DrawRhombus"] = new FunctionInfo
+            {
+                Parameters = new() { ExpressionType.Number, ExpressionType.Number, ExpressionType.Number , ExpressionType.Number },
+                Implementation = new DrawRhombus()
+
+            },
             ["Fill"] = new FunctionInfo
             {
                 Parameters = new(),

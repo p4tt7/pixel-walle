@@ -42,9 +42,9 @@ namespace pixel_walle.src.AST.Expressions
 
         public override object? Evaluate(Context context, List<Error> errors)
         {
-
-            value = (int)Right.Evaluate(context, errors) - (int)Left.Evaluate(context, errors);
+            value = (int)Left.Evaluate(context, errors) - (int)Right.Evaluate(context, errors);
             return value;
         }
+
     }
 }

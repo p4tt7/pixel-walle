@@ -143,6 +143,9 @@ namespace pixel_walle.controllers
                 return new BitmapImage(new Uri("pack://application:,,,/pixel_walle;component/assets/transparent.png"));
             }
         }
+
+
+
     }
 
 }
