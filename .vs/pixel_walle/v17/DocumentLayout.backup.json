@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\ast\\pixelwalleprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\ast\\pixelwalleprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|c:\\users\\david\\onedrive\\documents\\universidad\\primer a\u00F1o\\programacion\\proyectos\\pixel_walle\\src\\ast\\builtininstructions\\function library\\fill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{737C7796-2D08-4149-B061-3FD44A787196}|pixel_walle.csproj|solutionrelative:src\\ast\\builtininstructions\\function library\\fill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -18,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 176,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,7 +34,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
+              "Title": "PixelWalleProgram.cs",
+              "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\PixelWalleProgram.cs",
+              "RelativeDocumentMoniker": "src\\AST\\PixelWalleProgram.cs",
+              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\PixelWalleProgram.cs",
+              "RelativeToolTip": "src\\AST\\PixelWalleProgram.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T03:18:29.452Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "CanvasUtils.cs",
               "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\BuiltInInstructions\\CanvasUtils.cs",
               "RelativeDocumentMoniker": "src\\AST\\BuiltInInstructions\\CanvasUtils.cs",
@@ -43,13 +60,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Fill.cs",
               "DocumentMoniker": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\BuiltInInstructions\\Function Library\\Fill.cs",
               "RelativeDocumentMoniker": "src\\AST\\BuiltInInstructions\\Function Library\\Fill.cs",
-              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\BuiltInInstructions\\Function Library\\Fill.cs*",
-              "RelativeToolTip": "src\\AST\\BuiltInInstructions\\Function Library\\Fill.cs*",
-              "ViewState": "AgIAAD8AAAAAAAAAAAAYwFcAAAANAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\david\\OneDrive\\Documents\\Universidad\\Primer A\u00F1o\\Programacion\\Proyectos\\pixel_walle\\src\\AST\\BuiltInInstructions\\Function Library\\Fill.cs",
+              "RelativeToolTip": "src\\AST\\BuiltInInstructions\\Function Library\\Fill.cs",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAQwFYAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-16T01:35:00.309Z",
               "EditorCaption": ""
