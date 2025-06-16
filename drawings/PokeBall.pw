@@ -1,0 +1,1 @@
+{"CodeText":"Spawn(15,20)\r\nnegro \u003C- \u0022Black\u0022\r\nrojo \u003C- \u0022Red\u0022\r\n\r\nColor(negro)\r\nDrawCircle(0,-1,10)\r\nTeleport(5,10)\r\nDrawLine(1,0,20)\r\nTeleport(15,10)\r\nDrawCircle(0,0,3)\r\nColor(\u0022White\u0022)\r\nTeleport(13,10)\r\nDrawLine(1,0,4)\r\nColor(rojo)\r\nTeleport(15,5)\r\nFill()\r\n\r\n","CanvasWidth":30,"CanvasHeight":30}
