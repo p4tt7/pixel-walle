@@ -22,24 +22,26 @@ Pixel Wall-E es una aplicación interactiva diseñada para crear arte pixelado m
 
 ## DOCUMENTACIÓN DEL LENGUAJE
 
-| Categoría       | Función           | Sintaxis                          | Descripción                                                                 | Ejemplo                     |
-|-----------------|-------------------|-----------------------------------|-----------------------------------------------------------------------------|-----------------------------|
-| Inicialización  | Spawn            | Spawn(x, y)                     | Posiciona a Wall-E en coordenadas iniciales (obligatorio primero)           | Spawn(0, 0)              |
-|                 | Teleport         | Teleport(x, y)                  | Mueve instantáneamente a Wall-E a nuevas coordenadas                        | Teleport(100, 50)        |
-| Configuración   | Color            | Color("nombre")                 | Cambia color del pincel (ver paleta disponible)                             | Color("Green")           |
-|                 | Size             | Size(n)                         | Establece grosor del pincel (n impar)                                       | Size(5)                  |
-| Dibujo          | DrawLine         | DrawLine(dirX, dirY, distancia) | Dibuja línea en dirección                                                   | DrawLine(1, 1, 20)       |
-|                 | DrawCircle       | DrawCircle(dirX, dirY, radio)   | Dibuja círculo desplazado en dirección                                      | DrawCircle(0, -1, 15)    |
-|                 | DrawRectangle    | DrawRectangle(dirX, dirY, dist, ancho, alto) | Dibuja rectángulo desplazado                          | DrawRectangle(1, 0, 10, 30, 20) |
-|                 | Fill             | Fill()                          | Rellena área conectada al píxel actual                                      | Fill()                   |
-| Consulta        | GetActualX       | GetActualX()                    | Devuelve coordenada X actual                                                | x ← GetActualX()     |
-|                 | GetActualY       | GetActualY()                    | Devuelve coordenada Y actual                                                | y ← GetActualY()     |
-|                 | GetCanvasSize    | GetCanvasSize()                 | Devuelve tamaño del canvas                                                 | size ← GetCanvasSize()   |
-|                 | GetColorCount    | GetColorCount("color", x1, y1, x2, y2) | Cuenta píxeles de un color en área rectangular                    | GetColorCount("Blue", 0, 0, 50, 50) |
-|                 | IsBrushColor     | IsBrushColor("color")           | Verifica si el pincel tiene el color especificado (retorna 1/0)             | IsBrushColor("Red")      |
-|                 | IsCanvasColor    | IsCanvasColor("color", vert, horz) | Verifica color en posición relativa a Wall-E                           | IsCanvasColor("Black", 1, 0) |
-| Control         | GoTo             | GoTo [etiqueta] (condición)     | Salto condicional a etiqueta                                                | GoTo [loop] (i < 5)      |
-|                 | Etiquetas        | etiqueta                        | Define punto de salto para GoTo                                              | inicio                 |
+| Categoría      | Función       | Sintaxis                                     | Descripción                                                       | Ejemplo                             |
+| -------------- | ------------- | -------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------- |
+| Inicialización | Spawn         | Spawn(x, y)                                  | Posiciona a Wall-E en coordenadas iniciales (obligatorio primero) | Spawn(0, 0)                         |
+|                | Teleport      | Teleport(x, y)                               | Mueve instantáneamente a Wall-E a nuevas coordenadas              | Teleport(100, 50)                   |
+| Configuración  | Color         | Color("nombre")                              | Cambia color del pincel (ver paleta disponible)                   | Color("Green")                      |
+|                | Size          | Size(n)                                      | Establece grosor del pincel (n impar)                             | Size(5)                             |
+| Dibujo         | DrawLine      | DrawLine(dirX, dirY, distancia)              | Dibuja línea en dirección                                         | DrawLine(1, 1, 20)                  |
+|                | DrawCircle    | DrawCircle(dirX, dirY, radio)                | Dibuja círculo desplazado en dirección                            | DrawCircle(0, -1, 15)               |
+|                | DrawRectangle | DrawRectangle(dirX, dirY, dist, ancho, alto) | Dibuja rectángulo desplazado                                      | DrawRectangle(1, 0, 10, 30, 20)     |
+|                | DrawRhombus   | DrawRhombus(dirX, dirY, dist)  | Dibuja un rombo desplazado                                                      | DrawRhombus(0, 1, 10)       |
+|                | Fill          | Fill()                                       | Rellena área conectada al píxel actual                            | Fill()                              |
+| Consulta       | GetActualX    | GetActualX()                                 | Devuelve coordenada X actual                                      | x ← GetActualX()                    |
+|                | GetActualY    | GetActualY()                                 | Devuelve coordenada Y actual                                      | y ← GetActualY()                    |
+|                | GetCanvasSize | GetCanvasSize()                              | Devuelve tamaño del canvas                                        | size ← GetCanvasSize()              |
+|                | GetColorCount | GetColorCount("color", x1, y1, x2, y2)       | Cuenta píxeles de un color en área rectangular                    | GetColorCount("Blue", 0, 0, 50, 50) |
+|                | IsBrushColor  | IsBrushColor("color")                        | Verifica si el pincel tiene el color especificado (retorna 1/0)   | IsBrushColor("Red")                 |
+|                | IsCanvasColor | IsCanvasColor("color", vert, horz)           | Verifica color en posición relativa a Wall-E                      | IsCanvasColor("Black", 1, 0)        |
+| Control        | GoTo          | GoTo \[etiqueta] (condición)                 | Salto condicional a etiqueta                                      | GoTo \[loop] (i < 5)                |
+|                | Etiquetas     | etiqueta                                     | Define punto de salto para GoTo                                   | inicio                              |
+
 
 
 
