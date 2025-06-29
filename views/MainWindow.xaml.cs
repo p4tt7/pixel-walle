@@ -6,7 +6,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.IO;
-using pixel_walle.controllers;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -54,10 +53,10 @@ namespace pixel_walle
 
         private void InitializePixelGrid()
         {
-            const double maxWidth = 402;   
-            const double maxHeight = 400;  
-            const double rectLeft = 430;  
-            const double rectTop = 54;     
+            const double maxWidth = 540;   
+            const double maxHeight = 482;  
+            const double rectLeft = 344;  
+            const double rectTop = 8;     
 
 
             double cellWidth = maxWidth / Columns;
@@ -202,8 +201,8 @@ namespace pixel_walle
                     var project = new PixelWalleProject
                     {
                         CodeText = miTextBox.Text,
-                        CanvasWidth = Rows,
-                        CanvasHeight = Columns 
+                        CanvasWidth = Columns,  
+                        CanvasHeight = Rows    
                     };
 
                     var json = JsonSerializer.Serialize(project);

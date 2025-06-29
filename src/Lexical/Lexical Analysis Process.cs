@@ -107,11 +107,30 @@ namespace pixel_walle.src.Lexical
                     continue;
                 }
 
-                if (stream.ReadText(out value))
+                if (stream.Peek() == '"')
                 {
-                    tokens.Add(new Token(TokenType.Text, value, stream.Location));
+                    var loc = stream.Location;
+                    if (stream.ReadText(out value))
+                    {
+                        tokens.Add(new Token(TokenType.Text, value, loc));
+                    }
+                    else
+                    {
+                        errors.Add(new Error(
+                            Error.ErrorType.LexicalError,
+                            "Unclosed string literal", loc));
+
+                        while (!stream.EOF && stream.Peek() != '\n' && stream.Peek() != '"')
+                        {
+                            stream.Read();
+                        }
+
+                        if (!stream.EOF && stream.Peek() == '"') stream.Read();
+                    }
+
                     continue;
                 }
+
 
                 if (MatchOperator(stream, tokens))
                 {

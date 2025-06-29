@@ -16,9 +16,11 @@ namespace pixel_walle.src
         { "Green", Color.FromRgb(0, 255, 0) },
         { "Yellow", Color.FromRgb(255, 255, 0) },
         { "Orange", Color.FromRgb(255, 165, 0) },
+        {"LightBlue", Color.FromRgb(173,216,230) },
         { "Purple", Color.FromRgb(128, 0, 128) },
-            {"Pink", Color.FromRgb(255, 192, 203) },
+        {"Pink", Color.FromRgb(255, 192, 203) },
         { "Black", Color.FromRgb(0, 0, 0) },
+        {"Gray", Color.FromRgb(128,128,128) },
         { "White", Color.FromRgb(255, 255, 255) },
         { "Transparent", Color.FromArgb(0, 0, 0, 0) }
     };

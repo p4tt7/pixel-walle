@@ -36,9 +36,18 @@ namespace pixel_walle.controllers
         public bool Compile(out PixelWalleProgram? program)
         {
             List<Token> tokens = lexer.GetTokens(FileName, SourceCode, Errors);
-            TokenStream stream = new TokenStream(tokens);
 
+            if (Errors.Any(e =>
+                e.Type == Error.ErrorType.LexicalError ||
+                e.Type == Error.ErrorType.InvalidTokenError))
+            {
+                program = null;
+                return false;
+            }
+
+            TokenStream stream = new TokenStream(tokens);
             Parser parser = new Parser(stream);
+
             List<Error> compilingErrors = new List<Error>();
             program = parser.Parse(compilingErrors);
             Errors.AddRange(compilingErrors);
@@ -57,6 +66,7 @@ namespace pixel_walle.controllers
 
             return false;
         }
+
 
     }
 

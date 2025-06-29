@@ -55,7 +55,7 @@ namespace pixel_walle.controllers
                         Height = grid.Height / grid.Rows,
                         Background = new SolidColorBrush(context.canvas.pixels[x, y].Color),
                         BorderBrush = Brushes.Black,
-                        BorderThickness = new Thickness(0.2)
+                        BorderThickness = new Thickness(0.1)
                     };
                     grid.Children.Add(rect);
                 }

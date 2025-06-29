@@ -156,30 +156,36 @@ namespace pixel_walle.src.Lexical
         {
             text = "";
 
-            if(Peek() != '"')
+            if (Peek() != '"')
             {
                 return false;
             }
 
             Read();
 
-            while(!EOF && Peek() != '"')
+            while (!EOF)
             {
-                char c = Read();
+                char c = Peek();
 
-                if(c == '\n' || c == '\r')
+                if (c == '"')
+                {
+                    Read(); 
+                    return true;
+                }
+
+                if (c == '\n' || c == '\r')
                 {
                     return false;
                 }
-                text += c;
-            
+
+                text += Read();
             }
 
-            Read();
-            return true;
+            return false;
         }
 
-        
+
+
 
         public bool ReadWhiteSpace()
         {

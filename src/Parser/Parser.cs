@@ -45,15 +45,16 @@ namespace pixel_walle.src.Parser
                     break;
 
                 Instruction? instr = ParseInstruction(errors);
-
                 if (instr != null)
                 {
+                
                     instructions.Add(instr);
                 }
                 else
                 {
                     SkipUntilNewline();
                 }
+
             }
 
             return new PixelWalleProgram(
@@ -73,14 +74,13 @@ namespace pixel_walle.src.Parser
                 return null;
             }
 
+            Instruction? instr = null;
+
             if (token.Value == TokenValue.GoTo)
             {
-                Instruction? instr = ParseGoTo(errors);
-                if (instr != null)
-                return instr;
+                instr = ParseGoTo(errors);
             }
-
-            if (token.Type == TokenType.Identifier)
+            else if (token.Type == TokenType.Identifier)
             {
                 Token next = Stream.Peek(1);
 
@@ -89,28 +89,38 @@ namespace pixel_walle.src.Parser
                     Token identifierToken = Stream.Advance();
                     FunctionExpression? functionExpr = ParseFunctionExpression(errors, identifierToken);
 
-                    if (functionExpr == null)
-                        return null;
-
-                    var instr = new FunctionInstruction(functionExpr.FunctionName, functionExpr.Arguments, identifierToken.Location);
-                    return instr;
+                    if (functionExpr != null)
+                    {
+                        instr = new FunctionInstruction(functionExpr.FunctionName, functionExpr.Arguments, identifierToken.Location);
+                    }
                 }
-
-                if (next.Type == TokenType.Symbol && next.Value == TokenValue.Assign)
+                else if (next.Type == TokenType.Symbol && next.Value == TokenValue.Assign)
                 {
-                    Instruction? instr = ParseAssignment(errors);
-                    if (instr != null)
-                    return instr;
+                    instr = ParseAssignment(errors);
                 }
-
-                Instruction? labelInstr = ParseLabel(errors);
-                if (labelInstr != null)
-                return labelInstr;
+                else
+                {
+                    instr = ParseLabel(errors);
+                }
             }
 
-            SkipUntilNewline();
+            if (instr != null)
+            {
+                Token next = Stream.Peek();
+                if (next.Type != TokenType.Newline && next.Type != TokenType.EOF)
+                {
+                    errors.Add(new Error(Error.ErrorType.SyntaxError,
+                        "Expected newline after instruction",
+                        next.Location));
+                    SkipUntilNewline();
+                }
+                else if (next.Type == TokenType.Newline)
+                {
+                    Stream.Advance();
+                }
+            }
 
-            return null;
+            return instr;
         }
 
 
@@ -527,11 +537,6 @@ namespace pixel_walle.src.Parser
                 }
             }
 
-            if (endToken.Type == TokenType.Newline)
-            {
-                Stream.Advance();
-            }
-
             return new Assignment(varName, expr, nameToken.Location);
         }
 
@@ -595,11 +600,6 @@ namespace pixel_walle.src.Parser
             }
             Stream.Advance();
 
-            if (Stream.Peek().Type == TokenType.Newline)
-            {
-                Stream.Advance();
-            }
-
 
             return new GoTo(labelName, condition, goToToken.Location);
         }
@@ -624,13 +624,12 @@ namespace pixel_walle.src.Parser
             return new Label(labelToken.Value, labelToken.Location);
         }
 
-
         void SkipUntilNewline()
         {
             while (!Stream.End && Stream.Peek().Type != TokenType.Newline)
                 Stream.Advance();
             if (!Stream.End)
-                Stream.Advance(); 
+                Stream.Advance();
         }
 
 
