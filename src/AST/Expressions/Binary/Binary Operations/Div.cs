@@ -24,6 +24,24 @@ namespace pixel_walle.src.AST.Expressions
         public Expression Left { get; }
         public Expression Right { get; }
 
+        public override bool TryEvaluateConstant(out object? constantValue)
+        {
+            constantValue = null;
+
+            if (Left.TryEvaluateConstant(out var leftVal) && Right.TryEvaluateConstant(out var rightVal))
+            {
+                if (leftVal is int a && rightVal is int b)
+                {
+                    if (b == 0)
+                        return false;
+
+                    constantValue = a / b;
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
@@ -40,25 +58,30 @@ namespace pixel_walle.src.AST.Expressions
                 return false;
             }
 
+            if (Right.TryEvaluateConstant(out var constRight) && constRight is int val && val == 0)
+            {
+                errors.Add(new Error(Error.ErrorType.SemanticError,
+                    "Division by zero detected at compile time.", Location));
+                return false;
+            }
+
             return true; 
         }
 
         public override object? Evaluate(Context context, List<Error> errors)
         {
-
             var leftVal = Left.Evaluate(context, errors);
             var rightVal = Right.Evaluate(context, errors);
 
-            if (leftVal == null || rightVal == null)
-                return null;
-
             if ((int)rightVal == 0)
             {
-                errors.Add(new Error(Error.ErrorType.DivisionByZeroError,
-                    "Division by zero",
-                    Location));
+                errors.Add(new Error(Error.ErrorType.SemanticError,
+                    "Division by zero during execution.", Location));
                 return null;
             }
+
+            if (leftVal == null || rightVal == null)
+                return null;
 
             return (int)leftVal / (int)rightVal;
         }

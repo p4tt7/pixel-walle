@@ -20,8 +20,15 @@ namespace pixel_walle.src.AST.Expressions.Atomic
             Type = ExpressionType.Bool;
         }
 
+        public override bool TryEvaluateConstant(out object? constantValue)
+        {
+            constantValue = BoolValue;
+            return true;
+        }
 
-            public override bool CheckSemantic(Scope scope, List<Error> errors)
+
+
+        public override bool CheckSemantic(Scope scope, List<Error> errors)
             {
                 return true;
             }

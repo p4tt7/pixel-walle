@@ -20,8 +20,14 @@ namespace pixel_walle.src.AST.Expressions
             Type = ExpressionType.Text;
 
         }
+        public override bool TryEvaluateConstant(out object? constantValue)
+        {
+            constantValue = TextValue;
+            return true;
+        }
 
-            public override bool CheckSemantic(Scope scope, List<Error> errors)
+
+        public override bool CheckSemantic(Scope scope, List<Error> errors)
             {
                 if (string.IsNullOrEmpty(TextValue?.ToString()))
                 {

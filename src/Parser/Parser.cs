@@ -420,7 +420,6 @@ namespace pixel_walle.src.Parser
                 case TokenType.Bool:
                     return ParseBool();
                 default:
-                    errors.Add(new Error(Error.ErrorType.SyntaxError, "Unexpected token", token.Location));
                     Stream.Advance();
                     return null;
             }

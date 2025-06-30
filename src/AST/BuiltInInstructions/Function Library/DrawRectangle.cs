@@ -20,6 +20,12 @@ namespace pixel_walle.src.AST.Instructions
                 return;
             }
 
+            if (arguments.Count < 5)
+            {
+                errors.Add(new Error(Error.ErrorType.SemanticError, "Missing arguments for rectangle drawing.", location));
+                return;
+            }
+
             var dirX = (int)arguments[0];
             var dirY = (int)arguments[1];
             var distance = (int)arguments[2];
@@ -47,8 +53,8 @@ namespace pixel_walle.src.AST.Instructions
             int centerX = context.Robot.X + dirX * distance;
             int centerY = context.Robot.Y + dirY * distance;
 
-            int startX = centerX - width / 2;
-            int startY = centerY - height / 2;
+            int startX = centerX - (width - 1) / 2;  
+            int startY = centerY - (height - 1) / 2;
             int endX = startX + width - 1;
             int endY = startY + height - 1;
 
@@ -58,23 +64,20 @@ namespace pixel_walle.src.AST.Instructions
                 return;
             }
 
-            context.Robot.X = centerX;
-            context.Robot.Y = centerY;
-
             for (int x = startX; x <= endX; x++)
             {
-                CanvasUtils.DrawPixel(x, startY, context);
-                CanvasUtils.DrawPixel(x, endY, context);
+                CanvasUtils.DrawPixel(x, startY, context); 
+                CanvasUtils.DrawPixel(x, endY, context); 
             }
 
-            for (int y = startY; y <= endY; y++)
+            for (int y = startY + 1; y < endY; y++)
             {
-                CanvasUtils.DrawPixel(startX, y, context);
-                CanvasUtils.DrawPixel(endX, y, context);
+                CanvasUtils.DrawPixel(startX, y, context); 
+                CanvasUtils.DrawPixel(endX, y, context);   
             }
+
+            context.Robot.X = centerX;
+            context.Robot.Y = centerY;
         }
-
-
-
     }
 }

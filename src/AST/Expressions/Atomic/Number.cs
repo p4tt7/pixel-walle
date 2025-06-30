@@ -20,14 +20,8 @@ namespace pixel_walle.src.AST.Expressions
         }
 
 
-        public bool IsInt
-        {
-            get
-            {
-                if (NumberValue == null) return false;
-                return int.TryParse(NumberValue.ToString(), out _);
-            }
-        }
+
+
 
         public override bool CheckSemantic(Scope scope, List<Error> errors)
         {
@@ -38,6 +32,13 @@ namespace pixel_walle.src.AST.Expressions
         {
             return NumberValue;
         }
+        public override bool TryEvaluateConstant(out object? constantValue)
+        {
+            constantValue = NumberValue;
+            return true;
+        }
+
+
     }
 
 

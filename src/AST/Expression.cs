@@ -15,6 +15,13 @@ namespace pixel_walle.src.AST.Expressions
         public Expression(CodeLocation location) : base(location) { }
 
         public abstract object? Evaluate(Context context, List<Error> errors);
+
+        public virtual bool TryEvaluateConstant(out object? constantValue)
+        {
+            constantValue = null;
+            return false;
+        }
+
     }
 
 
