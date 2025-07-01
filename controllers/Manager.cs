@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using pixel_walle.src.AST;
 using pixel_walle.src;
+using pixel_walle.src.AST.Expressions;
 
 
 namespace pixel_walle.controllers
@@ -60,12 +61,57 @@ namespace pixel_walle.controllers
 
                 if (Errors.Count == 0)
                 {
+
                     return true;
                 }
             }
 
             return false;
         }
+
+        public void PrintAstTree(Expression expr, string indent = "", bool isRight = false)
+        {
+            if (expr == null) return;
+
+            string branch = indent + (isRight ? "└── " : "├── ");
+            Console.WriteLine(branch + expr.GetType().Name);
+
+            // Tipos binarios
+            if (expr is Add add)
+            {
+                PrintAstTree(add.Left, indent + (isRight ? "    " : "│   "), false);
+                PrintAstTree(add.Right, indent + (isRight ? "    " : "│   "), true);
+            }
+            else if (expr is Sub sub)
+            {
+                PrintAstTree(sub.Left, indent + (isRight ? "    " : "│   "), false);
+                PrintAstTree(sub.Right, indent + (isRight ? "    " : "│   "), true);
+            }
+            else if (expr is Multiplication mul)
+            {
+                PrintAstTree(mul.Left, indent + (isRight ? "    " : "│   "), false);
+                PrintAstTree(mul.Right, indent + (isRight ? "    " : "│   "), true);
+            }
+            else if (expr is Div div)
+            {
+                PrintAstTree(div.Left, indent + (isRight ? "    " : "│   "), false);
+                PrintAstTree(div.Right, indent + (isRight ? "    " : "│   "), true);
+            }
+            else if (expr is Pow pow)
+            {
+                PrintAstTree(pow.Left, indent + (isRight ? "    " : "│   "), false);
+                PrintAstTree(pow.Right, indent + (isRight ? "    " : "│   "), true);
+            }
+            else if (expr is Number num)
+            {
+                Console.WriteLine(indent + (isRight ? "    " : "│   ") + "└── " + num);
+            }
+            else if (expr is Variable var)
+            {
+                Console.WriteLine(indent + (isRight ? "    " : "│   ") + "└── " + var.Name);
+            }
+        }
+
 
 
     }

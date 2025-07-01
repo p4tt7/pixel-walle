@@ -207,19 +207,19 @@ namespace pixel_walle.src.Parser
 
         private Expression ParseAnd(List<Error> errors)
         {
-            Expression left = ParseComparison(errors);
-            if (left == null) return null;
+            Expression operationLeft = ParseComparison(errors);  //se asocia a la izquierda del proximo nivel
+            if (operationLeft == null) return null;
 
             while (Stream.Peek().Value == TokenValue.And)
             {
                 Token op = Stream.Advance();
-                Expression right = ParseComparison(errors);
-                if (right == null) return left;
+                Expression right = ParseComparison(errors); // parte derecha, proximo nivel
+                if (right == null) return operationLeft;
 
-                left = new And(left, right, op.Location);
+                operationLeft = new And(operationLeft, right, op.Location);
             }
 
-            return left;
+            return operationLeft;
         }
 
 
@@ -227,8 +227,8 @@ namespace pixel_walle.src.Parser
 
         private Expression ParseComparison(List<Error> errors)
         {
-            Expression left = ParseAdditive(errors);
-            if (left == null) return null;
+            Expression leftOperation = ParseAdditive(errors); 
+            if (leftOperation == null) return null;
 
             while (true)
             {
@@ -240,44 +240,43 @@ namespace pixel_walle.src.Parser
                     case TokenValue.LessThan:
                         Stream.Advance();
                         right = ParseAdditive(errors);
-                        if (right == null) return left;
-                        left = new LessThan(left, right, op.Location);
+                        if (right == null) return leftOperation;
+                        leftOperation = new LessThan(leftOperation, right, op.Location);
                         break;
                     case TokenValue.GreaterThan:
                         Stream.Advance();
                         right = ParseAdditive(errors);
-                        if (right == null) return left;
-                        left = new GreaterThan(left, right, op.Location);
+                        if (right == null) return leftOperation;
+                        leftOperation = new GreaterThan(leftOperation, right, op.Location);
                         break;
                     case TokenValue.Equal:
                         Stream.Advance();
                         right = ParseAdditive(errors);
-                        if (right == null) return left;
-                        left = new Equal(left, right, op.Location);
+                        if (right == null) return leftOperation;
+                        leftOperation = new Equal(leftOperation, right, op.Location);
                         break;
                     case TokenValue.LessOrEqualThan:
                         Stream.Advance();
                         right = ParseAdditive(errors);
-                        if (right == null) return left;
-                        left = new LessThanOrEqual(left, right, op.Location);
+                        if (right == null) return leftOperation;
+                        leftOperation = new LessThanOrEqual(leftOperation, right, op.Location);
                         break;
                     case TokenValue.GreaterOrEqualThan:
                         Stream.Advance();
                         right = ParseAdditive(errors);
-                        if (right == null) return left;
-                        left = new GreaterThanOrEqual(left, right, op.Location);
+                        if (right == null) return leftOperation;
+                        leftOperation = new GreaterThanOrEqual(leftOperation, right, op.Location);
                         break;
                     default:
-                        return left;
+                        return leftOperation;
                 }
             }
         }
 
         private Expression ParseAdditive(List<Error> errors)
         {
-            Expression left = ParseTerm(errors);
-            if (left == null) return null;
-
+            Expression leftOperation = ParseTerm(errors);
+            if (leftOperation == null) return null;
             while (true)
             {
                 Token op = Stream.Peek();
@@ -288,19 +287,19 @@ namespace pixel_walle.src.Parser
                 Stream.Advance();
                 Expression right = ParseTerm(errors);
 
-                left = op.Value == TokenValue.Add
-                    ? new Add(left, right, op.Location)
-                    : new Sub(left, right, op.Location);
+                leftOperation = op.Value == TokenValue.Add
+                    ? new Add(leftOperation, right, op.Location)
+                    : new Sub(leftOperation, right, op.Location);
             }
 
-            return left;
+            return leftOperation;
         }
 
 
         public Expression ParseTerm(List<Error> errors)
         {
-            Expression left = ParsePower(errors);
-            if (left == null) return null;
+            Expression leftOperation = ParsePower(errors);
+            if (leftOperation == null) return null;
 
             while (true)
             {
@@ -312,46 +311,46 @@ namespace pixel_walle.src.Parser
 
                 Stream.Advance();
                 Expression right = ParsePower(errors);
-                if (right == null) return left;
+                if (right == null) return leftOperation;
 
                 switch (op.Value)
                 {
                     case TokenValue.Mul:
-                        left = new Multiplication(left, right, op.Location);
+                        leftOperation = new Multiplication(leftOperation, right, op.Location);
                         break;
                     case TokenValue.Div:
-                        left = new Div(left, right, op.Location);
+                        leftOperation = new Div(leftOperation, right, op.Location);
                         break;
                     case TokenValue.Mod:
-                        left = new Mod(left, right, op.Location);
+                        leftOperation = new Mod(leftOperation, right, op.Location);
                         break;
                 }
             }
 
-            return left;
+            return leftOperation;
         }
 
 
 
         public Expression ParsePower(List<Error> errors)
         {
-            Expression left = ParsePrimary(errors);
-            if (left == null) return null;
+            Expression baseExpr = ParsePrimary(errors); // asociatividad a la derecha en las potencias, (5**2)**3) 
+            if (baseExpr == null) return null;
 
             Token op = Stream.Peek();
             if (op.Value == TokenValue.Pow)
             {
                 Stream.Advance();
-                Expression right = ParsePower(errors);
-                if (right == null)
+                Expression exponent = ParsePower(errors);
+                if (exponent == null)
                 {
                     errors.Add(new Error(Error.ErrorType.SyntaxError, "Expected expression after '**'", op.Location));
-                    return left;
+                    return baseExpr;
                 }
-                return new Pow(left, right, op.Location);
+                return new Pow(baseExpr, exponent, op.Location);
             }
 
-            return left;
+            return baseExpr;
         }
 
 
